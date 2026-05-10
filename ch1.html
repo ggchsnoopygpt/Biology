@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Ch.1 — Characteristics & Classification</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjE4IiBmaWxsPSIjMmQ2YTRmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmb250LXNpemU9IjU1IiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QjwvdGV4dD48L3N2Zz4=" />
+
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('nlcs-bio-theme');
+      if (saved === null || saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch(e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #fafaf7;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  .loader { position: fixed; inset: 0; background: #fafaf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 100; transition: opacity 0.3s; }
+  .loader.hidden { opacity: 0; pointer-events: none; }
+  .loader-spinner { width: 36px; height: 36px; border: 3px solid #d8f3dc; border-top-color: #2d6a4f; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .loader-text { font-size: 13px; color: #888; letter-spacing: 0.5px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    top: max(env(safe-area-inset-top), 14px);
+    right: 14px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e4e4e0;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .theme-toggle:hover { transform: scale(1.08); }
+  .theme-toggle svg { width: 18px; height: 18px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: #2d6a4f; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     DARK MODE
+     ═══════════════════════════════════════════════════════════════════════ */
+  html.dark { background: #1a1a1a; }
+  html.dark body { background: #1a1a1a; color: #e8e8e8; }
+  html.dark .loader { background: #1a1a1a; }
+  html.dark .loader-text { color: #999; }
+  html.dark .theme-toggle { background: rgba(40, 40, 40, 0.92); border-color: #3a3a3a; }
+  html.dark .theme-toggle svg { stroke: #f3d488; }
+  html.dark .theme-toggle .icon-sun { display: block; }
+  html.dark .theme-toggle .icon-moon { display: none; }
+
+  /* ─── Pure white & off-white backgrounds → dark ─── */
+  html.dark #root [style*="background: rgb(255, 255, 255)"],
+  html.dark #root [style*="background:#fff"],
+  html.dark #root [style*="background: #fff"] {
+    background: #2a2a2a !important;
+  }
+  html.dark #root [style*="rgb(245, 245, 243)"],
+  html.dark #root [style*="#f5f5f3"] { background: #232323 !important; }
+  html.dark #root [style*="rgb(248, 248, 246)"],
+  html.dark #root [style*="#f8f8f6"] { background: #252525 !important; }
+  html.dark #root [style*="rgb(250, 250, 247)"],
+  html.dark #root [style*="#fafaf7"] { background: #1a1a1a !important; }
+
+  /* ─── Pastel backgrounds (exam cards, flashcard backs) → dark ─── */
+  /* RL #fdf0f0 - light red/pink (exam card hard) */
+  html.dark #root [style*="rgb(253, 240, 240)"],
+  html.dark #root [style*="#fdf0f0"] { background: #2a1a1a !important; color: #e8e8e8 !important; }
+  /* AL #fff3e0 - light amber */
+  html.dark #root [style*="rgb(255, 243, 224)"],
+  html.dark #root [style*="#fff3e0"] { background: #2a200f !important; color: #e8e8e8 !important; }
+  /* PL #ede9fe - light purple */
+  html.dark #root [style*="rgb(237, 233, 254)"],
+  html.dark #root [style*="#ede9fe"] { background: #1f1c2e !important; color: #e8e8e8 !important; }
+  /* GL #d8f3dc - light green */
+  html.dark #root [style*="rgb(216, 243, 220)"],
+  html.dark #root [style*="#d8f3dc"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  /* TLL #e6f4f2 - light teal */
+  html.dark #root [style*="rgb(230, 244, 242)"],
+  html.dark #root [style*="#e6f4f2"] { background: #1a2a28 !important; color: #e8e8e8 !important; }
+  /* Flashcard back: #fffdf6 - cream */
+  html.dark #root [style*="rgb(255, 253, 246)"],
+  html.dark #root [style*="#fffdf6"] { background: #2a2820 !important; color: #e8e8e8 !important; }
+  /* Exam card backgrounds (e8f7ec, fff4e6, fdf0f0 used in diffMeta.bg) */
+  html.dark #root [style*="rgb(232, 247, 236)"],
+  html.dark #root [style*="#e8f7ec"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  html.dark #root [style*="rgb(255, 244, 230)"],
+  html.dark #root [style*="#fff4e6"] { background: #2a200f !important; color: #e8e8e8 !important; }
+
+  /* Default text */
+  html.dark #root > div { color: #e8e8e8 !important; }
+
+  /* Grey text → light */
+  html.dark #root [style*="color: rgb(61, 61, 61)"],
+  html.dark #root [style*="color:#3d3d3d"],
+  html.dark #root [style*="color: #3d3d3d"] { color: #e8e8e8 !important; }
+  html.dark #root [style*="color: rgb(102, 102, 102)"],
+  html.dark #root [style*="color:#666"],
+  html.dark #root [style*="color: #666"] { color: #b8b8b8 !important; }
+  html.dark #root [style*="color: rgb(136, 136, 136)"],
+  html.dark #root [style*="color:#888"],
+  html.dark #root [style*="color: #888"] { color: #999 !important; }
+  html.dark #root [style*="color: rgb(153, 153, 153)"],
+  html.dark #root [style*="color:#999"],
+  html.dark #root [style*="color: #999"] { color: #888 !important; }
+
+  /* Border default */
+  html.dark #root [style*="rgb(228, 228, 224)"],
+  html.dark #root [style*="#e4e4e0"] { border-color: #3a3a3a !important; }
+
+  /* Dark text on colored backgrounds (exam card question text "#2a0000") → light */
+  html.dark #root [style*="rgb(42, 0, 0)"],
+  html.dark #root [style*="#2a0000"] { color: #f0d4d4 !important; }
+  /* Dark amber text on AL background */
+  html.dark #root [style*="rgb(42, 16, 0)"],
+  html.dark #root [style*="#2a1000"] { color: #f0d8b5 !important; }
+  /* Highlighted dark red */
+  html.dark #root [style*="rgb(58, 0, 0)"],
+  html.dark #root [style*="#3a0000"] { color: #f0c8c8 !important; }
+
+  /* SVG diagrams: keep white card */
+  html.dark #root svg[viewBox] {
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb { background: #444; }
+
+  html.dark #root strong[style*="color: rgb(61, 61, 61)"],
+  html.dark #root strong[style*="#3d3d3d"] { color: #f0f0f0 !important; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     TAB COLORS — vibrant neon for the 5 main tab buttons
+     ═══════════════════════════════════════════════════════════════════════ */
+  /* Tab text color (when not active) */
+  html.dark #root button[style*="color: rgb(181, 84, 10)"],
+  html.dark #root button[style*="color:#b5540a"],
+  html.dark #root button[style*="color: #b5540a"] { color: #ffa726 !important; }
+  html.dark #root button[style*="color: rgb(176, 32, 32)"],
+  html.dark #root button[style*="color:#b02020"],
+  html.dark #root button[style*="color: #b02020"] { color: #ff6b6b !important; }
+  html.dark #root button[style*="color: rgb(91, 63, 166)"],
+  html.dark #root button[style*="color:#5b3fa6"],
+  html.dark #root button[style*="color: #5b3fa6"] { color: #a78bfa !important; }
+  html.dark #root button[style*="color: rgb(45, 106, 79)"],
+  html.dark #root button[style*="color:#2d6a4f"],
+  html.dark #root button[style*="color: #2d6a4f"] { color: #5dcaa5 !important; }
+  html.dark #root button[style*="color: rgb(26, 122, 110)"],
+  html.dark #root button[style*="color:#1a7a6e"],
+  html.dark #root button[style*="color: #1a7a6e"] { color: #5eead4 !important; }
+
+  /* Tab active background */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"] { background-color: #ffa726 !important; border-color: #ffa726 !important; }
+  html.dark #root button[style*="background: rgb(176, 32, 32)"] { background-color: #ff6b6b !important; border-color: #ff6b6b !important; }
+  html.dark #root button[style*="background: rgb(91, 63, 166)"] { background-color: #a78bfa !important; border-color: #a78bfa !important; }
+  html.dark #root button[style*="background: rgb(45, 106, 79)"] { background-color: #5dcaa5 !important; border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="background: rgb(26, 122, 110)"] { background-color: #5eead4 !important; border-color: #5eead4 !important; }
+
+  /* Active tab: white text → dark text on neon bg */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(176, 32, 32)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(91, 63, 166)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(45, 106, 79)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(26, 122, 110)"][style*="color: rgb(255, 255, 255)"] {
+    color: #1a1a1a !important;
+  }
+
+  /* Tab borders */
+  html.dark #root button[style*="2px solid rgb(181, 84, 10)"] { border-color: #ffa726 !important; }
+  html.dark #root button[style*="2px solid rgb(176, 32, 32)"] { border-color: #ff6b6b !important; }
+  html.dark #root button[style*="2px solid rgb(91, 63, 166)"] { border-color: #a78bfa !important; }
+  html.dark #root button[style*="2px solid rgb(45, 106, 79)"] { border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="2px solid rgb(26, 122, 110)"] { border-color: #5eead4 !important; }
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<div class="loader" id="loader"><div class="loader-spinner"></div><div class="loader-text">Loading Ch.1…</div></div>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+// ── Colour palette ──────────────────────────────────────────────────────────
+const G = "#2d6a4f";   // forest green (chapter colour)
+const GL = "#d8f3dc";  // light green
+const GM = "#52b788";  // mid green
+const AM = "#b5540a";  // amber
+const AL = "#fff3e0";  // light amber
+const PU = "#5b3fa6";  // purple
+const PL = "#ede9fe";  // light purple
+const RD = "#b02020";  // red
+const RL = "#fdf0f0";  // light red
+const GR = "#3d3d3d";  // dark grey text
+const BD = "#e4e4e0";  // border
+
+// ── Highlight / keyword helper ───────────────────────────────────────────────
+const KW = ({ c = G, children }) => (
+  <span style={{ background: c === G ? GL : c === AM ? AL : c === PU ? PL : RL,
+    color: c, fontWeight: 700, borderRadius: 3, padding: "1px 5px", fontSize: "0.95em" }}>
+    {children}
+  </span>
+);
+const Bold = ({ children }) => <strong style={{ color: GR }}>{children}</strong>;
+
+// ── Tab config ───────────────────────────────────────────────────────────────
+const TL = "#1a7a6e";   // teal (flashcard tab)
+const TLL = "#e6f4f2";  // light teal
+
+// ════════════════════════════════════════════════════════════════════════════
+// CHAPTER METADATA — only edit this block when creating a new chapter
+// ════════════════════════════════════════════════════════════════════════════
+const CHAPTER_META = {
+  number: 1,
+  title: "Characteristics & Classification of Living Organisms",
+  subtitle: "MRS GREN · Species & Binomial System · Five Kingdoms · Arthropods · Vertebrates · Viruses",
+  flashcardCount: 32,
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// TABS — standard 5-tab structure, identical across all chapters
+// Do NOT modify this array; only CHAPTER_META above is chapter-specific.
+// ════════════════════════════════════════════════════════════════════════════
+const TABS = [
+  { id: "essence",   label: "① Quick Essence",  color: AM, bg: AL,  sub: "Last-minute 5-min review" },
+  { id: "exam",      label: "② Exam Practice",  color: RD, bg: RL,  sub: "Past & predicted questions" },
+  { id: "summary",   label: "③ Summary",        color: PU, bg: PL,  sub: "Concept flow & key tables" },
+  { id: "textbook",  label: "④ Textbook",       color: G,  bg: GL,  sub: "Hodder complete notes" },
+  { id: "flashcard", label: "⑤ SME Flashcard",  color: TL, bg: TLL, sub: "Save My Exams · click to flip" },
+];
+// ════════════════════════════════════════════════════════════════════════════
+// SVG DIAGRAMS
+// ════════════════════════════════════════════════════════════════════════════
+
+function MrsGrenDiagram() {
+  const items = [
+    { letter: "M", word: "Movement",    desc: "Action causing change of position",        color: "#2d6a4f" },
+    { letter: "R", word: "Respiration", desc: "Chemical reactions releasing energy",       color: "#1e6091" },
+    { letter: "S", word: "Sensitivity", desc: "Detect & respond to environmental changes", color: "#6a0dad" },
+    { letter: "G", word: "Growth",      desc: "Permanent increase in size & dry mass",     color: "#b5540a" },
+    { letter: "R", word: "Reproduction",desc: "Produce more of the same organism",         color: "#c0392b" },
+    { letter: "E", word: "Excretion",   desc: "Remove waste products of metabolism",       color: "#1a7a6e" },
+    { letter: "N", word: "Nutrition",   desc: "Take in materials for energy & growth",     color: "#6d4c41" },
+  ];
+  return (
+    <svg viewBox="0 0 680 320" style={{ width: "100%", maxWidth: 680, display: "block", margin: "10px auto" }}>
+      <rect width="680" height="320" rx="12" fill="#f8fffe" stroke={G} strokeWidth="1.5"/>
+      <text x="340" y="28" textAnchor="middle" fontFamily="Georgia,serif" fontSize="16" fontWeight="700" fill={G}>
+        MRS GREN — 7 Characteristics of Living Organisms
+      </text>
+      {items.map((item, i) => {
+        const x = 20 + (i % 4) * 163;
+        const y = i < 4 ? 48 : 188;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width="150" height="118" rx="8" fill="white" stroke={item.color} strokeWidth="1.5"/>
+            <rect x={x} y={y} width="150" height="36" rx="8" fill={item.color}/>
+            <rect x={x} y={y + 28} width="150" height="8" fill={item.color}/>
+            <text x={x + 22} y={y + 23} fontFamily="Georgia,serif" fontSize="22" fontWeight="900" fill="white">{item.letter}</text>
+            <text x={x + 46} y={y + 23} fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill="white">{item.word}</text>
+            <text x={x + 10} y={y + 58} fontFamily="sans-serif" fontSize="11" fill={GR} width="130">
+              {item.desc.split(" ").reduce((acc, word, wi) => {
+                const line = Math.floor(wi / 4);
+                if (!acc[line]) acc[line] = [];
+                acc[line].push(word);
+                return acc;
+              }, []).map((line, li) => (
+                <tspan key={li} x={x + 10} dy={li === 0 ? 0 : 14}>{line.join(" ")}</tspan>
+              ))}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function FiveKingdomDiagram() {
+  const kingdoms = [
+    { name: "Animal",     features: "Multicellular · No cell wall · No chloroplasts · Ingest food", color: "#c0392b", ex: "Insects, Fish, Mammals" },
+    { name: "Plant",      features: "Multicellular · Cellulose cell wall · Chloroplasts · Photosynthesis", color: "#2d6a4f", ex: "Ferns, Flowering plants" },
+    { name: "Fungus",     features: "Thread-like hyphae · No chloroplasts · Absorb food externally", color: "#6d4c41", ex: "Mushrooms, Moulds, Yeasts" },
+    { name: "Prokaryote", features: "Single cell · No membrane-bound nucleus · Circular DNA", color: "#1e6091", ex: "Bacteria, Blue-green algae" },
+    { name: "Protoctist", features: "Single cell · Nucleus present · Varied feeding", color: "#6a0dad", ex: "Amoeba, Euglena, Paramecium" },
+  ];
+  return (
+    <svg viewBox="0 0 680 290" style={{ width: "100%", maxWidth: 680, display: "block", margin: "10px auto" }}>
+      <rect width="680" height="290" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="340" y="26" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        The Five-Kingdom Classification Scheme
+      </text>
+      {kingdoms.map((k, i) => {
+        const x = 10 + i * 134;
+        return (
+          <g key={i}>
+            <rect x={x} y="40" width="124" height="230" rx="8" fill="white" stroke={k.color} strokeWidth="1.5"/>
+            <rect x={x} y="40" width="124" height="32" rx="8" fill={k.color}/>
+            <rect x={x} y="62" width="124" height="10" fill={k.color}/>
+            <text x={x + 62} y={60} textAnchor="middle" fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fill="white">{k.name}</text>
+            {k.features.split(" · ").map((f, fi) => (
+              <text key={fi} x={x + 8} y={96 + fi * 30} fontFamily="sans-serif" fontSize="10" fill={GR}>
+                <tspan>• {f}</tspan>
+              </text>
+            ))}
+            <rect x={x + 6} y="218" width="112" height="44" rx="5" fill={k.color + "22"}/>
+            <text x={x + 62} y="232" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fontWeight="600" fill={k.color}>Examples:</text>
+            <text x={x + 62} y="246" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>{k.ex.split(", ")[0]}</text>
+            <text x={x + 62} y="258" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>{k.ex.split(", ").slice(1).join(", ")}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function ArthropodDiagram() {
+  const classes = [
+    { name: "Insects",    legs: "3 pairs (6)", body: "Head · Thorax · Abdomen", antenna: "1 pair", eyes: "Compound", extra: "Usually 2 pairs wings", color: "#2d6a4f", ex: "Wasp, Dragonfly" },
+    { name: "Arachnids",  legs: "4 pairs (8)", body: "Cephalothorax · Abdomen", antenna: "None", eyes: "Simple (several pairs)", extra: "Pedipalps for biting", color: "#c0392b", ex: "Spider, Mite" },
+    { name: "Crustacea",  legs: "5+ pairs",    body: "Cephalothorax · Abdomen", antenna: "2 pairs", eyes: "Compound", extra: "Hard exoskeleton", color: "#1e6091", ex: "Crab, Woodlouse" },
+    { name: "Myriapods",  legs: "10+ pairs",   body: "Head · Segmented body", antenna: "1 pair", eyes: "Simple", extra: "No thorax/abdomen division", color: "#6d4c41", ex: "Centipede, Millipede" },
+  ];
+  return (
+    <svg viewBox="0 0 680 260" style={{ width: "100%", maxWidth: 680, display: "block", margin: "10px auto" }}>
+      <rect width="680" height="260" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="340" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Arthropod Classes — Key Distinguishing Features
+      </text>
+      {classes.map((c, i) => {
+        const x = 10 + i * 168;
+        const rows = [
+          ["Legs", c.legs], ["Body", c.body], ["Antennae", c.antenna], ["Eyes", c.eyes], ["Special", c.extra]
+        ];
+        return (
+          <g key={i}>
+            <rect x={x} y="35" width="158" height="212" rx="8" fill="white" stroke={c.color} strokeWidth="1.5"/>
+            <rect x={x} y="35" width="158" height="30" rx="8" fill={c.color}/>
+            <rect x={x} y="55" width="158" height="10" fill={c.color}/>
+            <text x={x + 79} y={54} textAnchor="middle" fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fill="white">{c.name}</text>
+            <text x={x + 79} y="76" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontStyle="italic" fill="#888">{c.ex}</text>
+            {rows.map(([label, val], ri) => (
+              <g key={ri}>
+                <rect x={x + 6} y={85 + ri * 30} width="50" height="22" rx="3" fill={c.color + "33"}/>
+                <text x={x + 31} y={100 + ri * 30} textAnchor="middle" fontFamily="sans-serif" fontSize="9" fontWeight="700" fill={c.color}>{label}</text>
+                <text x={x + 62} y={100 + ri * 30} fontFamily="sans-serif" fontSize="9.5" fill={GR}>{val}</text>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function VertebrateTable() {
+  const cols = ["Fish","Amphibia","Reptiles","Birds","Mammals"];
+  const colors = ["#1e6091","#2d6a4f","#6d4c41","#b5540a","#6a0dad"];
+  const rows = [
+    { label: "Body covering", vals: ["Scales","Moist skin","Dry scales","Feathers","Fur/hair"] },
+    { label: "Temperature",   vals: ["Cold-blooded","Cold-blooded","Cold-blooded","Warm-blooded","Warm-blooded"] },
+    { label: "Breathing",     vals: ["Gills","Lungs + skin","Lungs","Lungs","Lungs"] },
+    { label: "Reproduction",  vals: ["Jelly eggs in water","Jelly eggs in water","Rubbery eggs on land","Hard eggs on land","Live young"] },
+    { label: "Fertilisation", vals: ["External","External","Internal","Internal","Internal"] },
+    { label: "Example",       vals: ["Trout, Shark","Frog, Newt","Lizard, Snake","Sparrow, Eagle","Mouse, Human"] },
+  ];
+  return (
+    <svg viewBox="0 0 680 280" style={{ width: "100%", maxWidth: 680, display: "block", margin: "10px auto" }}>
+      <rect width="680" height="280" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="340" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>Table 1.2 — Five Classes of Vertebrates</text>
+      <rect x="8" y="30" width="102" height="26" rx="4" fill="#eee"/>
+      <text x="59" y="47" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={GR}>Feature</text>
+      {cols.map((col, i) => (
+        <g key={i}>
+          <rect x={114 + i * 114} y="30" width="110" height="26" rx="4" fill={colors[i]}/>
+          <text x={169 + i * 114} y="47" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill="white">{col}</text>
+        </g>
+      ))}
+      {rows.map((row, ri) => (
+        <g key={ri}>
+          <rect x="8" y={58 + ri * 36} width="102" height="34" rx="3" fill={ri % 2 === 0 ? "#f0f0f0" : "#fafafa"}/>
+          <text x="59" y={78 + ri * 36} textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="600" fill={GR}>{row.label}</text>
+          {row.vals.map((val, vi) => (
+            <g key={vi}>
+              <rect x={114 + vi * 114} y={58 + ri * 36} width="110" height="34" rx="3"
+                fill={ri % 2 === 0 ? colors[vi] + "15" : colors[vi] + "08"} stroke={colors[vi] + "44"} strokeWidth="0.5"/>
+              <text x={169 + vi * 114} y={76 + ri * 36} textAnchor="middle" fontFamily="sans-serif" fontSize="9.5" fill={GR}>
+                {val.length > 18 ? val.substring(0, 17) + "…" : val}
+              </text>
+            </g>
+          ))}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+function DichotomousKeyDiagram() {
+  return (
+    <svg viewBox="0 0 660 220" style={{ width: "100%", maxWidth: 660, display: "block", margin: "10px auto" }}>
+      <rect width="660" height="220" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Dichotomous Key — How It Works
+      </text>
+      {/* boxes */}
+      {[
+        { x: 20, y: 50, w: 140, h: 40, text: "Question 1", sub: "Yes/No choice", c: G },
+        { x: 220, y: 30, w: 140, h: 40, text: "Question 2", sub: "Yes → Fish", c: "#1e6091" },
+        { x: 220, y: 90, w: 140, h: 40, text: "Question 3", sub: "Warm-blooded?", c: "#b5540a" },
+        { x: 430, y: 30, w: 100, h: 30, text: "FISH", sub: "", c: "#1e6091" },
+        { x: 430, y: 75, w: 100, h: 30, text: "AMPHIBIAN", sub: "", c: "#2d6a4f" },
+        { x: 430, y: 120, w: 100, h: 30, text: "BIRD", sub: "", c: "#b5540a" },
+        { x: 430, y: 165, w: 100, h: 30, text: "MAMMAL", sub: "", c: "#6a0dad" },
+      ].map((b, i) => (
+        <g key={i}>
+          <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="6" fill={b.c} opacity="0.85"/>
+          <text x={b.x + b.w/2} y={b.y + (b.sub ? 18 : 20)} textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill="white">{b.text}</text>
+          {b.sub && <text x={b.x + b.w/2} y={b.y + 32} textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill="white" opacity="0.9">{b.sub}</text>}
+        </g>
+      ))}
+      {/* arrows */}
+      {[
+        { x1: 160, y1: 70, x2: 220, y2: 50, label: "Cold-blooded" },
+        { x1: 160, y1: 70, x2: 220, y2: 110, label: "Warm-blooded" },
+        { x1: 360, y1: 50, x2: 430, y2: 45, label: "Has fins" },
+        { x1: 360, y1: 50, x2: 430, y2: 90, label: "4 limbs" },
+        { x1: 360, y1: 110, x2: 430, y2: 135, label: "Feathers" },
+        { x1: 360, y1: 110, x2: 430, y2: 180, label: "Fur" },
+      ].map((a, i) => (
+        <g key={i}>
+          <line x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#888" strokeWidth="1.5" markerEnd="url(#arr)"/>
+          <text x={(a.x1 + a.x2)/2} y={(a.y1 + a.y2)/2 - 4} textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill="#555">{a.label}</text>
+        </g>
+      ))}
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1 L8,5 L1,9" fill="none" stroke="#888" strokeWidth="1.5"/>
+        </marker>
+      </defs>
+      <text x="330" y="210" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill="#888">
+        Each step splits organisms into 2 groups using contrasting features → narrows to a single identification
+      </text>
+    </svg>
+  );
+}
+
+function VirusDiagram() {
+  return (
+    <svg viewBox="0 0 500 200" style={{ width: "100%", maxWidth: 500, display: "block", margin: "10px auto" }}>
+      <rect width="500" height="200" rx="12" fill="#fafafa" stroke={RD} strokeWidth="1.5"/>
+      <text x="250" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fill={RD}>Structure of a Virus — NOT a living organism</text>
+      {/* virus body */}
+      <ellipse cx="150" cy="110" rx="70" ry="55" fill="#fff0f0" stroke={RD} strokeWidth="2"/>
+      {/* capsomeres around edge */}
+      {Array.from({length: 16}).map((_, i) => {
+        const angle = (i / 16) * 2 * Math.PI;
+        const x = 150 + 68 * Math.cos(angle);
+        const y = 110 + 53 * Math.sin(angle);
+        return <rect key={i} x={x - 5} y={y - 5} width="10" height="10" rx="2" fill={RD} opacity="0.7" transform={`rotate(${i*22.5}, ${x}, ${y})`}/>;
+      })}
+      {/* RNA strand */}
+      {Array.from({length: 8}).map((_, i) => (
+        <path key={i} d={`M ${130 + i*5} ${85 + Math.sin(i) * 20} Q ${133 + i*5} ${95 + Math.sin(i+1)*20} ${136 + i*5} ${105 + Math.sin(i+2)*20}`}
+          fill="none" stroke="#1e6091" strokeWidth="2.5" strokeLinecap="round"/>
+      ))}
+      {/* labels */}
+      {[
+        { x: 250, y: 65, text: "Protein coat (capsid)", tx: 330, ty: 65 },
+        { x: 220, y: 100, text: "RNA/DNA strand", tx: 330, ty: 100 },
+        { x: 200, y: 140, text: "Capsomeres", tx: 330, ty: 140 },
+      ].map((l, i) => (
+        <g key={i}>
+          <line x1={l.x} y1={l.y} x2={l.tx - 5} y2={l.ty} stroke="#bbb" strokeWidth="1" strokeDasharray="3,2"/>
+          <text x={l.tx} y={l.ty + 4} fontFamily="sans-serif" fontSize="11" fill={GR}>{l.text}</text>
+        </g>
+      ))}
+      <rect x="10" y="158" width="480" height="30" rx="6" fill={RD + "22"}/>
+      <text x="250" y="177" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="600" fill={RD}>
+        ⚠ Viruses: no nucleus · no cytoplasm · no cell membrane · only reproduce inside host cells
+      </text>
+    </svg>
+  );
+}
+
+// ── NEW SVG #1: Linnaeus Hierarchy (Kingdom → Species pyramid) ──────────────
+function LinnaeusHierarchy() {
+  const levels = [
+    { rank: "Kingdom", example: "Animalia",     w: 380 },
+    { rank: "Phylum",  example: "Chordata",     w: 340 },
+    { rank: "Class",   example: "Mammalia",     w: 300 },
+    { rank: "Order",   example: "Primates",     w: 260 },
+    { rank: "Family",  example: "Hominidae",    w: 220 },
+    { rank: "Genus",   example: "Homo",         w: 180 },
+    { rank: "Species", example: "Homo sapiens", w: 140 },
+  ];
+  return (
+    <svg viewBox="0 0 620 380" style={{ width: "100%", maxWidth: 620, display: "block", margin: "10px auto" }}>
+      <rect width="620" height="380" rx="12" fill="#fafffe" stroke={G} strokeWidth="1.5"/>
+      <text x="310" y="26" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Linnaeus's Classification Hierarchy
+      </text>
+      {/* Left arrow: GENERAL → SPECIFIC */}
+      <text x="40" y="60"  fontSize="10" fontWeight="700" fill="#1a7a3a">GENERAL</text>
+      <line x1="55" y1="68" x2="55" y2="320" stroke="#1a7a3a" strokeWidth="2" markerEnd="url(#arr)"/>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#1a7a3a"/>
+        </marker>
+      </defs>
+      <text x="40" y="338" fontSize="10" fontWeight="700" fill="#1a7a3a">SPECIFIC</text>
+
+      {levels.map((lv, i) => {
+        const y = 60 + i * 40;
+        const cx = 310;
+        const x = cx - lv.w / 2;
+        const colors = ["#5b3fa6","#6a4cb8","#7858c8","#8666d4","#9474de","#a282e6","#b090ee"];
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width={lv.w} height={32} rx="5" fill={colors[i]} opacity="0.85"/>
+            <text x={cx} y={y + 21} textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">
+              {lv.rank}
+            </text>
+            <rect x={460} y={y + 4} width={140} height={24} rx="4" fill="#fff" stroke={colors[i]} strokeWidth="1.5"/>
+            <text x={530} y={y + 21} textAnchor="middle" fontSize="11" fontStyle={i===6?"italic":"normal"} fontWeight="600" fill={colors[i]}>
+              {lv.example}
+            </text>
+            <line x1={x + lv.w} y1={y + 16} x2={460} y2={y + 16} stroke="#999" strokeWidth="1" strokeDasharray="2,2"/>
+          </g>
+        );
+      })}
+      <text x="310" y="358" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#666">
+        Mnemonic: <tspan fontWeight="700" fill={G}>K</tspan>ing <tspan fontWeight="700" fill={G}>P</tspan>hilip <tspan fontWeight="700" fill={G}>C</tspan>ame <tspan fontWeight="700" fill={G}>O</tspan>ver <tspan fontWeight="700" fill={G}>F</tspan>or <tspan fontWeight="700" fill={G}>G</tspan>ran's <tspan fontWeight="700" fill={G}>S</tspan>paghetti
+      </text>
+    </svg>
+  );
+}
+
+// ── NEW SVG #2: Dichotomous Key Visual (Leaf example) ───────────────────────
+function DichotomousKeyVisual() {
+  return (
+    <svg viewBox="0 0 660 320" style={{ width: "100%", maxWidth: 660, display: "block", margin: "10px auto" }}>
+      <rect width="660" height="320" rx="12" fill="#fafffe" stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Dichotomous Key — Leaf Identification
+      </text>
+      {/* Step 1 */}
+      <rect x="240" y="46" width="180" height="40" rx="6" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="62" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>Step 1</text>
+      <text x="330" y="78" textAnchor="middle" fontSize="10" fill={GR}>Compound or simple leaf?</text>
+      {/* Branch lines */}
+      <line x1="240" y1="86" x2="130" y2="120" stroke={G} strokeWidth="1.5"/>
+      <line x1="420" y1="86" x2="530" y2="120" stroke={G} strokeWidth="1.5"/>
+      {/* Step 2 left */}
+      <rect x="40" y="120" width="180" height="40" rx="6" fill="#fff8e7" stroke={AM} strokeWidth="1.5"/>
+      <text x="130" y="136" textAnchor="middle" fontSize="10" fontWeight="700" fill={AM}>Several leaflets</text>
+      <text x="130" y="152" textAnchor="middle" fontSize="10" fill={GR}>→ Step 2</text>
+      {/* Step 3 right */}
+      <rect x="440" y="120" width="180" height="40" rx="6" fill="#fff8e7" stroke={AM} strokeWidth="1.5"/>
+      <text x="530" y="136" textAnchor="middle" fontSize="10" fontWeight="700" fill={AM}>One leaf blade</text>
+      <text x="530" y="152" textAnchor="middle" fontSize="10" fill={GR}>→ Step 3</text>
+      {/* Branches from step 2 */}
+      <line x1="80"  y1="160" x2="50"  y2="200" stroke={AM} strokeWidth="1.5"/>
+      <line x1="180" y1="160" x2="210" y2="200" stroke={AM} strokeWidth="1.5"/>
+      <rect x="10"  y="200" width="80" height="44" rx="6" fill="#e8f7ec" stroke="#1a7a3a" strokeWidth="1.5"/>
+      <text x="50" y="218" textAnchor="middle" fontSize="9" fill={GR}>Broad &amp; flat</text>
+      <text x="50" y="234" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1a7a3a">Species A</text>
+      <rect x="170" y="200" width="80" height="44" rx="6" fill="#e8f7ec" stroke="#1a7a3a" strokeWidth="1.5"/>
+      <text x="210" y="218" textAnchor="middle" fontSize="9" fill={GR}>Narrow, hair-like</text>
+      <text x="210" y="234" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1a7a3a">Species B</text>
+      {/* Branches from step 3 */}
+      <line x1="480" y1="160" x2="450" y2="200" stroke={AM} strokeWidth="1.5"/>
+      <line x1="580" y1="160" x2="610" y2="200" stroke={AM} strokeWidth="1.5"/>
+      <rect x="410" y="200" width="80" height="44" rx="6" fill="#e8f7ec" stroke="#1a7a3a" strokeWidth="1.5"/>
+      <text x="450" y="218" textAnchor="middle" fontSize="9" fill={GR}>Smooth edge</text>
+      <text x="450" y="234" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1a7a3a">Species C</text>
+      <rect x="570" y="200" width="80" height="44" rx="6" fill="#e8f7ec" stroke="#1a7a3a" strokeWidth="1.5"/>
+      <text x="610" y="218" textAnchor="middle" fontSize="9" fill={GR}>Toothed edge</text>
+      <text x="610" y="234" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1a7a3a">Species D</text>
+      {/* Tip box */}
+      <rect x="40" y="266" width="580" height="42" rx="6" fill="#fff" stroke={G} strokeWidth="1" strokeDasharray="3,3"/>
+      <text x="60" y="285" fontSize="10" fontWeight="700" fill={G}>Key rule:</text>
+      <text x="60" y="299" fontSize="10" fill={GR}>Always start at Step 1. Each step gives TWO contrasting choices → pick one → follow the path → arrive at the species name.</text>
+    </svg>
+  );
+}
+
+// ── NEW SVG #3: DNA Sequence Comparison (evolutionary relatedness) ──────────
+function DNAComparison() {
+  const seqs = [
+    { name: "Pheropsophus",       seq: "CTTAGATCGTTCCAC", color: "#5b3fa6" },
+    { name: "Brachinus armiger",  seq: "ATTAGATCGTACCAC", color: "#1e6091", highlight: true },
+    { name: "Brachinus hirsutus", seq: "ATTAGATCGTACCAC", color: "#1e6091", highlight: true },
+    { name: "Aptinus",            seq: "CTTAGATCGTACCAC", color: "#5b3fa6" },
+    { name: "Pseudomorpha",       seq: "CTTAGATCGTACC--", color: "#5b3fa6" },
+  ];
+  const baseColor = { A: "#e76f51", T: "#2a9d8f", G: "#e9c46a", C: "#264653", "-": "#bbb" };
+  return (
+    <svg viewBox="0 0 660 280" style={{ width: "100%", maxWidth: 660, display: "block", margin: "10px auto" }}>
+      <rect width="660" height="280" rx="12" fill="#fafffe" stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        DNA Sequence Comparison — Evolutionary Closeness
+      </text>
+      <text x="330" y="42" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#666">
+        More similar bases = more closely related (more recent common ancestor)
+      </text>
+      {seqs.map((s, i) => {
+        const y = 64 + i * 36;
+        return (
+          <g key={i}>
+            {s.highlight && (
+              <rect x="10" y={y - 4} width="640" height="32" fill="#fff8e7" rx="4"/>
+            )}
+            <text x="20" y={y + 16} fontSize="10" fontStyle="italic" fontWeight="600" fill={s.color}>
+              {s.name}
+            </text>
+            {s.seq.split("").map((b, j) => (
+              <g key={j}>
+                <rect x={170 + j * 30} y={y} width="26" height="24" rx="3"
+                  fill={baseColor[b]} opacity="0.9"/>
+                <text x={183 + j * 30} y={y + 17} textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">
+                  {b}
+                </text>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+      {/* Legend / annotation */}
+      <rect x="20" y="240" width="620" height="32" rx="6" fill="#fff" stroke={G} strokeDasharray="3,3"/>
+      <text x="32" y="260" fontSize="10" fill={GR}>
+        <tspan fontWeight="700" fill={G}>Highlighted rows:</tspan> <tspan fontStyle="italic">B. armiger</tspan> &amp; <tspan fontStyle="italic">B. hirsutus</tspan> share identical sequences → most closely related (same genus).
+      </text>
+    </svg>
+  );
+}
+
+// ── NEW SVG #4: Five Kingdoms Cells side-by-side ────────────────────────────
+function FiveKingdomsCells() {
+  const cells = [
+    { name: "Animal",     fill: "#ffd6e0", wall: false, chloro: false, nucleus: true,  vacuole: false, x: 70  },
+    { name: "Plant",      fill: "#c8f7d0", wall: true,  chloro: true,  nucleus: true,  vacuole: true,  x: 220 },
+    { name: "Fungal",     fill: "#ffe6c0", wall: true,  chloro: false, nucleus: true,  vacuole: false, x: 370, chitin: true },
+    { name: "Protoctist", fill: "#d4e8ff", wall: false, chloro: false, nucleus: true,  vacuole: false, x: 520, flagellum: true },
+    { name: "Bacterial",  fill: "#ffd0d0", wall: true,  chloro: false, nucleus: false, vacuole: false, x: 670, plasmid: true },
+  ];
+  return (
+    <svg viewBox="0 0 800 280" style={{ width: "100%", maxWidth: 800, display: "block", margin: "10px auto" }}>
+      <rect width="800" height="280" rx="12" fill="#fafffe" stroke={G} strokeWidth="1.5"/>
+      <text x="400" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Five Kingdoms — Cell Comparison
+      </text>
+      {cells.map((c, i) => (
+        <g key={i}>
+          {/* Cell wall (if any) */}
+          {c.wall && (
+            <ellipse cx={c.x} cy="140" rx="55" ry="48" fill="none"
+              stroke={c.chitin ? "#8b5a2b" : c.name === "Plant" ? "#1a7a3a" : "#b02020"} strokeWidth="3"/>
+          )}
+          {/* Cell membrane / body */}
+          <ellipse cx={c.x} cy="140" rx={c.wall ? 50 : 53} ry={c.wall ? 43 : 46} fill={c.fill} stroke="#444" strokeWidth="1"/>
+          {/* Nucleus */}
+          {c.nucleus && (
+            <>
+              <circle cx={c.x - 8} cy="135" r="11" fill="#a02060" opacity="0.85"/>
+              <text x={c.x - 8} y="139" textAnchor="middle" fontSize="8" fill="#fff" fontWeight="700">N</text>
+            </>
+          )}
+          {/* Chloroplast */}
+          {c.chloro && (
+            <ellipse cx={c.x + 18} cy="125" rx="8" ry="5" fill="#1a7a3a"/>
+          )}
+          {/* Vacuole */}
+          {c.vacuole && (
+            <circle cx={c.x + 12} cy="155" r="9" fill="#88c8ff" opacity="0.7"/>
+          )}
+          {/* Plasmid (bacteria) */}
+          {c.plasmid && (
+            <>
+              <circle cx={c.x - 5} cy="138" r="4" fill="none" stroke="#5b3fa6" strokeWidth="1.5"/>
+              <path d={`M ${c.x + 5} 130 Q ${c.x + 15} 140 ${c.x + 5} 150 Q ${c.x - 5} 145 ${c.x + 5} 130`} fill="none" stroke="#b02020" strokeWidth="1.5"/>
+            </>
+          )}
+          {/* Flagellum (protoctist) */}
+          {c.flagellum && (
+            <path d={`M ${c.x + 50} 140 Q ${c.x + 70} 130, ${c.x + 80} 145 T ${c.x + 95} 138`} fill="none" stroke="#444" strokeWidth="1.5"/>
+          )}
+          {/* Mitochondria (eukaryotes) */}
+          {c.nucleus && c.name !== "Bacterial" && (
+            <ellipse cx={c.x + 5} cy="118" rx="6" ry="3" fill="#b85c00"/>
+          )}
+          {/* Label */}
+          <text x={c.x} y="208" textAnchor="middle" fontSize="12" fontWeight="700" fill={G}>{c.name}</text>
+          <text x={c.x} y="222" textAnchor="middle" fontSize="9" fill={GR}>
+            {c.name === "Animal"     && "no wall, no chloroplast"}
+            {c.name === "Plant"      && "cellulose wall + chloroplast"}
+            {c.name === "Fungal"     && "chitin wall, no chloroplast"}
+            {c.name === "Protoctist" && "varied; some photosynthesise"}
+            {c.name === "Bacterial"  && "no nucleus, has plasmids"}
+          </text>
+          <text x={c.x} y="234" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#666">
+            {c.name === "Animal"     && "multicellular"}
+            {c.name === "Plant"      && "multicellular"}
+            {c.name === "Fungal"     && "usually multicellular"}
+            {c.name === "Protoctist" && "uni- or multicellular"}
+            {c.name === "Bacterial"  && "unicellular (prokaryote)"}
+          </text>
+        </g>
+      ))}
+      {/* Legend */}
+      <g transform="translate(40, 248)">
+        <rect x="0" y="0" width="14" height="10" fill="#a02060" opacity="0.85"/>
+        <text x="20" y="9" fontSize="9" fill={GR}>Nucleus</text>
+        <rect x="80" y="0" width="14" height="10" fill="#1a7a3a"/>
+        <text x="100" y="9" fontSize="9" fill={GR}>Chloroplast</text>
+        <rect x="180" y="0" width="14" height="10" fill="#88c8ff" opacity="0.7"/>
+        <text x="200" y="9" fontSize="9" fill={GR}>Vacuole</text>
+        <rect x="270" y="0" width="14" height="10" fill="#b85c00"/>
+        <text x="290" y="9" fontSize="9" fill={GR}>Mitochondrion</text>
+        <line x1="380" y1="2" x2="394" y2="2" stroke="#1a7a3a" strokeWidth="3"/>
+        <text x="400" y="9" fontSize="9" fill={GR}>Cell wall (cellulose / chitin / peptidoglycan)</text>
+      </g>
+    </svg>
+  );
+}
+
+// ── NEW SVG #5: Monocot vs Dicot Comparison ─────────────────────────────────
+function MonocotDicotCompare() {
+  return (
+    <svg viewBox="0 0 660 320" style={{ width: "100%", maxWidth: 660, display: "block", margin: "10px auto" }}>
+      <rect width="660" height="320" rx="12" fill="#fafffe" stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Monocotyledons vs Dicotyledons
+      </text>
+
+      {/* MONOCOT side (left) */}
+      <text x="160" y="50" textAnchor="middle" fontSize="13" fontWeight="700" fill="#b85c00">MONOCOT</text>
+      <text x="160" y="65" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#666">e.g. wheat, grass, lily</text>
+
+      {/* Monocot leaf with parallel veins */}
+      <ellipse cx="80" cy="130" rx="20" ry="50" fill="#a8e6a8" stroke="#1a7a3a" strokeWidth="1.5"/>
+      {[110, 120, 130, 140, 150].map((y, i) => (
+        <line key={i} x1="65" y1={y} x2="95" y2={y} stroke="#1a5a1a" strokeWidth="0.8"/>
+      ))}
+      <text x="80" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill={GR}>parallel veins</text>
+      <text x="80" y="214" textAnchor="middle" fontSize="9" fill={GR}>narrow leaf</text>
+
+      {/* Monocot flower with 3 petals */}
+      <g transform="translate(220, 130)">
+        {[0, 120, 240].map((deg, i) => (
+          <ellipse key={i} cx="0" cy="-22" rx="9" ry="20" fill="#ffd700" stroke="#b85c00" strokeWidth="1"
+            transform={`rotate(${deg})`}/>
+        ))}
+        <circle cx="0" cy="0" r="7" fill="#8b5a2b"/>
+      </g>
+      <text x="220" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill={GR}>petals in 3s</text>
+      <text x="220" y="214" textAnchor="middle" fontSize="9" fill={GR}>flower parts × 3</text>
+
+      {/* Vertical divider */}
+      <line x1="330" y1="40" x2="330" y2="290" stroke={BD} strokeWidth="1.5" strokeDasharray="4,4"/>
+
+      {/* DICOT side (right) */}
+      <text x="490" y="50" textAnchor="middle" fontSize="13" fontWeight="700" fill="#5b3fa6">DICOT</text>
+      <text x="490" y="65" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#666">e.g. sunflower, rose, oak</text>
+
+      {/* Dicot leaf with reticulated veins */}
+      <ellipse cx="420" cy="130" rx="35" ry="45" fill="#a8e6a8" stroke="#1a7a3a" strokeWidth="1.5"/>
+      <line x1="420" y1="90" x2="420" y2="170" stroke="#1a5a1a" strokeWidth="1.2"/>
+      {[100, 115, 130, 145, 160].map((y, i) => {
+        const off = i % 2 === 0 ? 1 : -1;
+        return <g key={i}>
+          <line x1="420" y1={y} x2={420 + 22*off} y2={y - 6*off} stroke="#1a5a1a" strokeWidth="0.7"/>
+          <line x1={420 + 12*off} y1={y - 3*off} x2={420 + 18*off} y2={y - 9*off} stroke="#1a5a1a" strokeWidth="0.5"/>
+        </g>;
+      })}
+      <text x="420" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill={GR}>net (reticulated) veins</text>
+      <text x="420" y="214" textAnchor="middle" fontSize="9" fill={GR}>broad leaf</text>
+
+      {/* Dicot flower with 5 petals */}
+      <g transform="translate(560, 130)">
+        {[0, 72, 144, 216, 288].map((deg, i) => (
+          <ellipse key={i} cx="0" cy="-20" rx="9" ry="18" fill="#ff80a0" stroke="#a02050" strokeWidth="1"
+            transform={`rotate(${deg})`}/>
+        ))}
+        <circle cx="0" cy="0" r="6" fill="#8b1a3a"/>
+      </g>
+      <text x="560" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill={GR}>petals in 4s or 5s</text>
+      <text x="560" y="214" textAnchor="middle" fontSize="9" fill={GR}>flower parts × 4 or 5</text>
+
+      {/* Comparison table at bottom */}
+      <g transform="translate(40, 240)">
+        <rect x="0" y="0" width="580" height="60" rx="6" fill={GL} stroke={G} strokeWidth="1"/>
+        <text x="10" y="16" fontSize="10" fontWeight="700" fill={G}>Quick comparison:</text>
+        <text x="10" y="32" fontSize="10" fill={GR}>• <tspan fontWeight="700">Cotyledons:</tspan> Monocot = 1 seed leaf | Dicot = 2 seed leaves</text>
+        <text x="10" y="46" fontSize="10" fill={GR}>• <tspan fontWeight="700">Veins:</tspan> Monocot = parallel | Dicot = network/reticulated</text>
+        <text x="320" y="32" fontSize="10" fill={GR}>• <tspan fontWeight="700">Leaves:</tspan> Monocot = narrow | Dicot = broad</text>
+        <text x="320" y="46" fontSize="10" fill={GR}>• <tspan fontWeight="700">Flower parts:</tspan> ×3 | ×4 or ×5</text>
+      </g>
+    </svg>
+  );
+}
+
+// ── NEW SVG #6: Virus Structure ─────────────────────────────────────────────
+function VirusStructure() {
+  return (
+    <svg viewBox="0 0 540 280" style={{ width: "100%", maxWidth: 540, display: "block", margin: "10px auto" }}>
+      <rect width="540" height="280" rx="12" fill="#fafffe" stroke={RD} strokeWidth="1.5"/>
+      <text x="270" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={RD}>
+        Basic Virus Structure
+      </text>
+      {/* Outer envelope */}
+      <ellipse cx="200" cy="155" rx="120" ry="100" fill="none" stroke="#b85c00" strokeWidth="2" strokeDasharray="3,2"/>
+      {/* Capsid (protein coat) — made of capsomeres */}
+      {Array.from({ length: 14 }).map((_, i) => {
+        const angle = (i / 14) * 2 * Math.PI;
+        const r = 80;
+        const cx = 200 + r * Math.cos(angle);
+        const cy = 155 + r * Math.sin(angle);
+        return <ellipse key={i} cx={cx} cy={cy} rx="14" ry="20"
+          fill="#ffd700" stroke="#b85c00" strokeWidth="1.2"
+          transform={`rotate(${(angle * 180 / Math.PI) + 90} ${cx} ${cy})`}/>;
+      })}
+      {/* Genetic material — wavy DNA/RNA strand */}
+      <path d="M 165 130 Q 180 145, 200 135 Q 220 125, 235 145 Q 220 165, 200 175 Q 180 165, 165 180 Q 180 155, 165 130 Z"
+        fill="none" stroke="#5b3fa6" strokeWidth="2.5"/>
+      {/* Labels */}
+      <line x1="245" y1="100" x2="320" y2="80" stroke="#444" strokeWidth="1"/>
+      <rect x="320" y="68" width="140" height="24" rx="4" fill="#fff" stroke="#b85c00" strokeWidth="1.5"/>
+      <text x="390" y="84" textAnchor="middle" fontSize="11" fontWeight="700" fill="#b85c00">Protein coat (capsid)</text>
+
+      <line x1="195" y1="155" x2="320" y2="140" stroke="#444" strokeWidth="1"/>
+      <rect x="320" y="128" width="140" height="24" rx="4" fill="#fff" stroke="#5b3fa6" strokeWidth="1.5"/>
+      <text x="390" y="144" textAnchor="middle" fontSize="11" fontWeight="700" fill="#5b3fa6">Genetic material (DNA or RNA)</text>
+
+      <line x1="305" y1="200" x2="320" y2="200" stroke="#444" strokeWidth="1"/>
+      <rect x="320" y="188" width="140" height="24" rx="4" fill="#fff" stroke="#888" strokeWidth="1.5" strokeDasharray="3,2"/>
+      <text x="390" y="204" textAnchor="middle" fontSize="11" fontWeight="700" fill="#888">Envelope (some viruses)</text>
+
+      {/* Bottom note */}
+      <rect x="40" y="240" width="460" height="30" rx="6" fill={RL} stroke={RD} strokeWidth="1"/>
+      <text x="270" y="259" textAnchor="middle" fontSize="10" fill={RD}>
+        Viruses are <tspan fontWeight="700">NOT classified within the five kingdoms</tspan> — they are not living organisms.
+      </text>
+    </svg>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ① ESSENCE TAB
+// ════════════════════════════════════════════════════════════════════════════
+function EssenceTab() {
+  const cards = [
+    {
+      title: "🔑 MNEMONICS — Memorise these first",
+      highlight: true,
+      items: [
+        "MRS GREN → Movement · Respiration · Sensitivity · Growth · Reproduction · Excretion · Nutrition",
+        "KPCOFGS → King Philip Came Over For Gran's Spaghetti = Kingdom · Phylum · Class · Order · Family · Genus · Species",
+        "5 Kingdoms → \"All Plants Find Pretty Places\" = Animals · Plants · Fungi · Protoctists · Prokaryotes",
+        "Vertebrate classes (5) → Fish · Amphibians · Reptiles · Birds · Mammals (cold→warm blood progression)",
+        "Arthropod groups (4) → Myriapods · Insects · Arachnids · Crustaceans",
+      ]
+    },
+    {
+      title: "MRS GREN — 7 Characteristics (MUST memorise)",
+      items: [
+        "Movement — action causing change of position",
+        "Respiration — chemical reactions releasing energy in cells (NOT breathing!)",
+        "Sensitivity — detect & respond to internal/external stimuli",
+        "Growth — permanent increase in size and DRY mass",
+        "Reproduction — produce more of the same organism",
+        "Excretion — remove waste products of metabolism (NOT faeces — that's egestion)",
+        "Nutrition — take in materials for energy, growth & development",
+      ]
+    },
+    {
+      title: "Species & Binomial System",
+      items: [
+        "Species = group that can reproduce to produce FERTILE offspring",
+        "Binomial system = 2-part Latin name: Genus species (e.g. Homo sapiens)",
+        "Genus → capital letter; species → lowercase; both italicised (or underlined)",
+        "Same name worldwide → eliminates language confusion (e.g. \"robin\" varies by country)",
+        "Linnaeus (Swedish, 18th C) — the inventor",
+      ]
+    },
+    {
+      title: "Dichotomous Keys — How to use",
+      items: [
+        "ALWAYS start at step 1 — never skip ahead",
+        "Each step gives TWO contrasting choices — pick the one that fits",
+        "Follow the instruction (\"go to step X\" or species name) to next step",
+        "Repeat from step 1 for each new organism",
+        "Exam tip: usually asked to USE a key, not construct one",
+      ]
+    },
+    {
+      title: "Five Kingdoms — Quick Recall",
+      items: [
+        "Animal: multi · nucleus · NO wall · NO chloroplast · heterotrophic (ingest food)",
+        "Plant: multi · nucleus · cellulose wall · chloroplast · autotrophic (photosynthesis)",
+        "Fungus (EXT): usually multi · chitin wall (NOT cellulose) · saprophytic / parasitic",
+        "Protoctist (EXT): uni- or multi · always nucleus · varies (some photosynthesise, some feed)",
+        "Prokaryote (EXT): uni · NO nucleus · cell wall (not cellulose) · plasmids · bacteria",
+      ]
+    },
+    {
+      title: "Arthropod Classes — Exam Favourite",
+      items: [
+        "Insects: 3 body parts · 3 leg pairs · 1 antennae pair · usually wings",
+        "Arachnids: 2 body parts · 4 leg pairs · NO antennae · spider, scorpion",
+        "Crustaceans: segmented · >4 leg pairs · 2 antennae pairs · GILLS · crab",
+        "Myriapods: many segments · 1 leg pair per segment · 1 antennae pair · centipede",
+      ]
+    },
+    {
+      title: "Vertebrate Key Features",
+      items: [
+        "Fish: cold-blooded · wet scales · gills · eggs (no shell) in water",
+        "Amphibians: cold-blooded · moist skin · larvae have gills, adults have lungs · jelly eggs in water",
+        "Reptiles: cold-blooded · DRY fixed scales · lungs · rubbery-shelled eggs on land",
+        "Birds: WARM-blooded · feathers · lungs · beak · hard-shelled eggs on land",
+        "Mammals: WARM-blooded · fur/hair · placenta · MAMMARY glands (milk) · external ears (pinnae) · diaphragm",
+      ]
+    },
+    {
+      title: "Plants — Ferns vs Flowering (EXT)",
+      items: [
+        "Ferns: fronds (leaves) · reproduce by SPORES (under fronds) · no flowers",
+        "Flowering plants: reproduce by flowers + seeds (in ovary)",
+        "Monocot: 1 cotyledon · NARROW leaves · PARALLEL veins · flower parts ×3",
+        "Dicot: 2 cotyledons · BROAD leaves · NET (reticulated) veins · flower parts ×4 or 5",
+        "Memory: 'mono = 3' / 'di = 4 or 5'",
+      ]
+    },
+    {
+      title: "Viruses (EXT) — NOT living organisms",
+      items: [
+        "Structure: genetic material (DNA OR RNA) + protein coat (capsid). Some have envelope.",
+        "NO nucleus · NO cytoplasm · NO cell membrane · NOT cells",
+        "Cannot perform 7 life processes independently",
+        "Reproduce ONLY by hijacking host cell's machinery",
+        "NOT classified within the 5 kingdoms",
+      ]
+    },
+    {
+      title: "DNA in Classification (EXT)",
+      items: [
+        "More similar DNA base sequences → more closely related → more recent common ancestor",
+        "Same logic for amino acid sequences in proteins",
+        "Replaces older method of using only morphology/anatomy",
+        "Mammals' DNA closer to other mammals than to any other vertebrate group",
+      ]
+    },
+    {
+      title: "💡 Top exam pitfalls",
+      highlight: true,
+      items: [
+        "MAIN feature (shared by group) ≠ DEFINING feature (unique to subgroup)",
+        "Respiration ≠ breathing (one is cellular chemistry, one is gas exchange)",
+        "Excretion ≠ egestion (waste of metabolism vs undigested food)",
+        "Growth = increase in DRY mass (water doesn't count)",
+        "Always start dichotomous keys at step 1",
+        "Mammals' defining feature = mammary glands (not just \"warm-blooded\" — birds are too)",
+      ]
+    },
+  ];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ background: AM, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13 }}>
+        <strong>5-minute final review.</strong> 2nd-stage condensed essence — every exam-likely point in Chapter 1.
+      </div>
+      <MrsGrenDiagram />
+      {cards.map((c, i) => (
+        <div key={i} style={{ border: `1.5px solid ${c.highlight ? RD : AM}`, borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ background: c.highlight ? RD : AM, color: "#fff", padding: "8px 14px", fontSize: 13, fontWeight: 700 }}>{c.title}</div>
+          <div style={{ padding: "10px 14px", background: c.highlight ? RL : AL }}>
+            {c.items.map((item, j) => (
+              <div key={j} style={{ display: "flex", gap: 8, marginBottom: 5, fontSize: 13, color: c.highlight ? "#3a0000" : "#2a1000", lineHeight: 1.55 }}>
+                <span style={{ color: c.highlight ? RD : AM, fontWeight: 800, flexShrink: 0 }}>▶</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ② EXAM TAB
+// ════════════════════════════════════════════════════════════════════════════
+function ExamTab() {
+  const [rev, setRev] = useState({});
+  const [diff, setDiff] = useState("all");
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setRev(p => ({ ...p, [id]: !p[id] }));
+
+  // ── Question bank — append new questions to this array ──────────────
+  const qs = [
+    // ═══ EASY (single concept, 1–4 marks each) ═══
+    {
+      id: "e1", diff: "easy", topic: "mrs-gren", marks: 6, star: "★★★",
+      type: "matching",
+      q: "Match each of the seven characteristics of living organisms to its correct definition.",
+      hint: "Use MRS GREN — the verbs in each definition are the clue.",
+      a: <>
+        <strong>Movement</strong> → an action by an organism (or part of it) causing a change of position or place [1]<br/>
+        <strong>Respiration</strong> → chemical reactions in cells that break down nutrient molecules and release energy [1]<br/>
+        <strong>Sensitivity</strong> → the ability to detect and respond to changes in the environment [1]<br/>
+        <strong>Growth</strong> → a permanent increase in size and dry mass [1]<br/>
+        <strong>Reproduction</strong> → the processes that produce more of the same kind of organism [1]<br/>
+        <strong>Excretion</strong> → the removal of toxic waste products of metabolism and substances in excess [1]<br/>
+        <strong>Nutrition</strong> → taking in materials for energy, growth and development [1]
+      </>
+    },
+    {
+      id: "e2", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★",
+      type: "calc",
+      q: "A student measured plant heights at light intensity 20 units across three replicates: 4.8, 4.5, 4.5 cm. Calculate the mean height.",
+      hint: "Add all values, divide by the number of values.",
+      a: "(4.8 + 4.5 + 4.5) ÷ 3\n= 13.8 ÷ 3\n= 4.6 cm [1]"
+    },
+    {
+      id: "e3", diff: "easy", topic: "binomial", marks: 2, star: "★★★",
+      type: "standard",
+      q: "A lion has the scientific name Panthera leo. (i) State the genus. (ii) State one visible mammalian feature you would expect to see in a photograph of a lion.",
+      hint: "Genus = first part of binomial name. Mammals: think hair, ears, mammary glands.",
+      a: "(i) Panthera [1]\n(ii) Any one visible: fur/hair on body · external ears (pinnae) · four limbs/legs (with mammalian shape) · accept tail with fur. [1]"
+    },
+    {
+      id: "e4", diff: "easy", topic: "vertebrates", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Identify the vertebrate group from each clue: (i) lay soft-shelled eggs; (ii) feathers; (iii) smooth, moist skin.",
+      hint: "5 classes: fish, amphibians, reptiles, birds, mammals.",
+      a: "(i) Reptiles [1]\n(ii) Birds [1]\n(iii) Amphibians [1]"
+    },
+    {
+      id: "e5", diff: "easy", topic: "cells", marks: 6, star: "★★★",
+      type: "labelling",
+      q: "An animal cell diagram shows three labels A (the largest region inside), B (the boundary), C (the small dark organelle). (i) Identify A, B, C. (ii) Name two structures present in plant cells but absent from animal cells. (iii) Name one structure found in both bacterial and plant cells but absent from animal cells.",
+      hint: "A is the jelly-like contents; B is the outer barrier; C is the control centre.",
+      a: "(i) A = cytoplasm [1] · B = cell membrane [1] · C = nucleus [1]\n(ii) Any two: cell wall · chloroplasts · permanent vacuole [2]\n(iii) Cell wall [1]"
+    },
+    {
+      id: "e6", diff: "easy", topic: "cells", marks: 4, star: "★★",
+      type: "matching",
+      q: "Match each specialised cell to its function: ciliated cell · neurone · palisade mesophyll cell · red blood cell · root hair cell.",
+      hint: "Cilia move things; neurones carry signals; palisade cells are full of chloroplasts; RBC has haemoglobin; root hair has long projection.",
+      a: <>
+        <strong>Ciliated cell</strong> → movement of mucus [1]<br/>
+        <strong>Neurone</strong> → conduction of impulses [1]<br/>
+        <strong>Palisade mesophyll cell</strong> → photosynthesis [1]<br/>
+        <strong>Red blood cell</strong> → transport of oxygen [1]<br/>
+        <strong>Root hair cell</strong> → absorption of water (given as example)
+      </>
+    },
+    {
+      id: "e7", diff: "easy", topic: "vertebrates", marks: 1, star: "★★★",
+      type: "standard",
+      q: "State one feature used to identify an animal as a vertebrate.",
+      hint: "It's in the name — vertebr-?",
+      a: "Has a backbone / vertebral column / spinal column [1]"
+    },
+    {
+      id: "e8", diff: "easy", topic: "arthropods", marks: 1, star: "★★★",
+      type: "standard",
+      q: "State one feature used to classify an animal as an arthropod.",
+      hint: "All arthropods share three: jointed legs, exoskeleton, segmented body.",
+      a: "Any one: jointed legs/limbs · hard exoskeleton · segmented body [1]"
+    },
+    {
+      id: "e9", diff: "easy", topic: "kingdoms", marks: 6, star: "★★",
+      type: "standard",
+      q: "(EXT) Complete: Vertebrates belong to the kingdom ___. All vertebrates have a ___. There are ___ classes of vertebrates. The four other kingdoms are plants, ___, ___ and ___.",
+      hint: "Five kingdoms total — animals, plants, then three more.",
+      a: "Animalia / Animals [1] · backbone (vertebral column) [1] · 5 / five [1] · fungi [1] · protoctists [1] · prokaryotes [1]"
+    },
+
+    // ═══ MEDIUM (multi-step, 5–8 marks) ═══
+    {
+      id: "m1", diff: "medium", topic: "arthropods", marks: 3, star: "★★★",
+      type: "table",
+      q: "Complete the table with ✓ for each characteristic present in the group.",
+      hint: "Arachnids = 4 leg pairs, no antennae, 2 body parts. Crustaceans = 2 antennae pairs, gills, segmented. Myriapods = many segments, 1 antennae pair.",
+      a: <>
+        <table style={{ borderCollapse: "collapse", fontSize: 12, marginTop: 4 }}>
+          <thead>
+            <tr style={{ background: RD, color: "#fff" }}>
+              <th style={{ padding: "5px 10px", textAlign: "left" }}>Characteristic</th>
+              <th style={{ padding: "5px 10px" }}>Arachnids</th>
+              <th style={{ padding: "5px 10px" }}>Crustaceans</th>
+              <th style={{ padding: "5px 10px" }}>Myriapods</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style={{ padding: "4px 10px" }}>Four pairs of legs</td><td style={{ textAlign: "center" }}>✓</td><td style={{ textAlign: "center" }}>✗</td><td style={{ textAlign: "center" }}>✗</td></tr>
+            <tr><td style={{ padding: "4px 10px" }}>One pair of antennae</td><td style={{ textAlign: "center" }}>✗</td><td style={{ textAlign: "center" }}>✗</td><td style={{ textAlign: "center" }}>✓</td></tr>
+            <tr><td style={{ padding: "4px 10px" }}>Body in two main parts</td><td style={{ textAlign: "center" }}>✓</td><td style={{ textAlign: "center" }}>✗</td><td style={{ textAlign: "center" }}>✗</td></tr>
+          </tbody>
+        </table>
+        <div style={{ marginTop: 6, fontSize: 11, color: "#666" }}>1 mark per fully correct row.</div>
+      </>
+    },
+    {
+      id: "m2", diff: "medium", topic: "mrs-gren", marks: 4, star: "★★★",
+      type: "standard",
+      q: "State four characteristics of living organisms.",
+      hint: "Pick any 4 from MRS GREN.",
+      a: "Any four from: Movement · Respiration · Sensitivity · Growth · Reproduction · Excretion · Nutrition [1 each]"
+    },
+    {
+      id: "m3", diff: "medium", topic: "vertebrates", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Look at a chimpanzee photograph. (i) State the vertebrate group it belongs to. (ii) State two visible features supporting this classification.",
+      hint: "Hair? Ears? Body covering?",
+      a: "(i) Mammals [1]\n(ii) Any two visible: fur/hair on body · external ears (pinnae) · facial features typical of mammals · four limbs / mammalian limb structure [2]"
+    },
+    {
+      id: "m4", diff: "medium", topic: "binomial", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Define what is meant by (i) the binomial system [2] and (ii) a species [1].",
+      hint: "Binomial: 2 parts, Latin, internationally agreed. Species: reproduce + offspring.",
+      a: "(i) An internationally agreed system of naming organisms using two Latin names [1] — the genus (capitalised) followed by the species (lowercase) [1].\n(ii) A group of organisms able to reproduce to produce fertile offspring [1]."
+    },
+    {
+      id: "m5", diff: "medium", topic: "kingdoms", marks: 5, star: "★★",
+      type: "standard",
+      q: "An organism is multicellular, has a chitin cell wall, contains nuclei and mitochondria, and feeds saprophytically. (i) Identify its kingdom and justify with two features. (ii) Name one type of nutrition this kingdom uses other than saprophytic. (iii) State one structure that distinguishes this kingdom from plants.",
+      hint: "Chitin wall + saprophytic = which kingdom?",
+      a: "(i) Fungi [1] — justified by: chitin cell wall (not cellulose, like plants) [1] AND saprophytic / parasitic feeding (no photosynthesis) [1].\n(ii) Parasitic nutrition [1].\n(iii) No chloroplasts (plants have them) / cell wall is chitin not cellulose [1]."
+    },
+
+    // ═══ HARD (synthesis, evaluation, EXT-tier, 6–14 marks) ═══
+    {
+      id: "h1", diff: "hard", topic: "dna", marks: 1, star: "★★", ext: true,
+      type: "ranking",
+      q: "(EXT) Rank these from least detailed to most detailed for studying differences between organisms: anatomical · DNA base sequences · amino acid sequences · morphological · microscopic.",
+      hint: "Visible-with-eyes → microscope → molecules.",
+      a: "Least → Most:\nMorphological → Anatomical → Microscopic → Amino acid sequences → DNA base sequences [1 for full correct order]\nReason: each step reveals more detail, with DNA being the most precise (single-base differences detectable)."
+    },
+    {
+      id: "h2", diff: "hard", topic: "dna", marks: 2, star: "★★", ext: true,
+      type: "standard",
+      q: "(EXT) When comparing DNA between species to determine relatedness, explain why the same gene must be selected from each species.",
+      hint: "Different genes have different functions and mutate at different rates.",
+      a: "Different genes code for different proteins / functions [1]; comparing different genes would not give a fair comparison because each gene has its own mutation rate and selection pressure [1]. Using the same gene ensures any differences detected reflect true evolutionary divergence between the species."
+    },
+    {
+      id: "h3", diff: "hard", topic: "dna", marks: 4, star: "★", ext: true,
+      type: "calc",
+      q: "(EXT) Humans and gibbons diverged ~18 million years ago and their haemoglobin differs by 2 amino acids. If frog haemoglobin differs from human by 67 amino acids, estimate when frogs diverged from humans (assume constant rate). Give answer in standard form.",
+      hint: "Calculate years per amino acid difference, then multiply.",
+      a: "Step 1 — rate per amino acid difference:\n18,000,000 ÷ 2 = 9,000,000 years per difference [1]\n\nStep 2 — frog divergence:\n67 × 9,000,000 = 603,000,000 years [2]\n\nStep 3 — standard form:\n= 6.03 × 10⁸ years ago [1]"
+    },
+    {
+      id: "h4", diff: "hard", topic: "kingdoms", marks: 4, star: "★★", ext: true,
+      type: "standard",
+      q: "(EXT) Compare the main features of animals and prokaryotes. Give at least two similarities and two differences.",
+      hint: "Cells: membrane, cytoplasm, DNA — but where is the DNA?",
+      a: "Similarities (any 2):\n• Both have a cell membrane [1]\n• Both have cytoplasm [1]\n• Both contain DNA / genetic material [1]\n• Both have ribosomes [1]\n\nDifferences (any 2):\n• Animals are multicellular; prokaryotes usually unicellular [1]\n• Animal cells have a true nucleus (membrane-bound); prokaryotes have circular DNA free in cytoplasm [1]\n• Animals have membrane-bound organelles (mitochondria etc); prokaryotes do not [1]\n• Animals have no cell wall; prokaryotes have a cell wall (not cellulose) [1]"
+    },
+    {
+      id: "h5", diff: "hard", topic: "plants", marks: 7, star: "★★★", ext: true,
+      type: "standard",
+      q: "(EXT) (i) Name the two groups of flowering plants [1]. (ii) Explain three ways to distinguish them [3]. (iii) A plant has frond-like leaves and reproduces by spores produced under the leaves. Identify and justify [2]. (iv) Give one feature that classifies any plant as a plant [1].",
+      hint: "Mono vs di — count parts, look at veins. Spores ≠ flowering plant.",
+      a: "(i) Monocotyledons and dicotyledons [1]\n\n(ii) Any three: [3]\n• Cotyledons in seed: monocots = 1, dicots = 2\n• Leaf shape: monocots narrow, dicots broad\n• Leaf veins: monocots parallel, dicots reticulated (network)\n• Flower parts: monocots in multiples of 3, dicots in multiples of 4 or 5\n\n(iii) This is a fern [1]. Justification: ferns have fronds and reproduce by spores produced on the underside of fronds (not by flowers/seeds) [1].\n\n(iv) Any one: chloroplasts present (chlorophyll for photosynthesis) · cellulose cell wall · multicellular with photosynthetic nutrition [1]"
+    },
+
+    // ═════════════════════════════════════════════════════════
+    // ═══ THEORY QUESTIONS (additional set, SME 19 Qs) ═══════
+    // ═════════════════════════════════════════════════════════
+
+    // ─── Easy theory additions (te1–te9) ───
+    {
+      id: "te1", diff: "easy", topic: "cells", marks: 6, star: "★★★",
+      type: "labelling",
+      q: "An animal cell diagram shows three labelled parts: A (the bulk of the cell interior), B (the outermost boundary), C (the dense circular structure inside). (i) Identify A, B and C [3]. (ii) Name two structures present in plant cells but absent in animal cells [2]. (iii) Name one structure present in BOTH bacterial and plant cells but absent in animal cells [1].",
+      hint: "Outer = membrane. Centre = control. Plant-only = wall, large vacuole, chloroplasts. Both bacteria & plants have a wall.",
+      a: "(i) A = cytoplasm [1] · B = cell membrane [1] · C = nucleus [1]\n(ii) Any two: cell wall · large permanent vacuole · chloroplasts [2]\n(iii) Cell wall [1]"
+    },
+    {
+      id: "te2", diff: "easy", topic: "cells", marks: 4, star: "★★",
+      type: "matching",
+      q: "Match each specialised cell to its correct function: ciliated cell · neurone · palisade mesophyll cell · red blood cell · root hair cell.",
+      hint: "Cilia = move mucus. Neurone = signals. Palisade = photosynthesis. RBC = O₂. Root hair = water uptake.",
+      a: "Ciliated cell → movement of mucus [1]\nNeurone → conduction of impulses [1]\nPalisade mesophyll cell → photosynthesis [1]\nRed blood cell → transport of oxygen [1]\nRoot hair cell → absorption of water [1]\n(Distractor: 'conduction and support' belongs to xylem, not listed.)"
+    },
+    {
+      id: "te3", diff: "easy", topic: "vertebrates", marks: 7, star: "★★★",
+      type: "standard",
+      q: "Three Australian vertebrates lay eggs that develop on land: an emu, a saltwater crocodile and a duck-billed platypus. (i) Name the vertebrate group of the emu and one visible feature [2]. (ii) Name the vertebrate group of the crocodile and one visible feature [2]. (iii) The platypus is classified as a mammal — give evidence FOR and AGAINST this from a labelled image [3].",
+      hint: "Emu has feathers. Crocodile has dry scaly skin. Platypus = lays eggs (against) but has fur (for).",
+      a: "(i) Birds [1]; visible feature: feathers / beak / two legs [1]\n(ii) Reptiles [1]; visible feature: dry scaly skin / four short legs [1]\n(iii) FOR mammal: fur / hair visible on body [1] · four limbs typical of mammal [1]\nAGAINST: lays eggs (most mammals give birth to live young) [1]"
+    },
+    {
+      id: "te4", diff: "easy", topic: "kingdoms", marks: 6, star: "★★",
+      type: "standard",
+      q: "(EXT-flavoured) Complete: Vertebrates belong to the kingdom ____. All vertebrates have a ____. There are ____ classes of vertebrates; one class is mammals. The four other kingdoms (excluding animals) include plants, ____, ____ and ____.",
+      ext: true,
+      hint: "5 kingdoms: animals · plants · fungi · protoctists · prokaryotes.",
+      a: "Animalia (animal) [1] · backbone / vertebral column [1] · five (5) [1] · fungi [1] · protoctists [1] · prokaryotes (bacteria) [1]"
+    },
+    {
+      id: "te5", diff: "easy", topic: "arthropods", marks: 4, star: "★★★",
+      type: "standard",
+      q: "A figure shows six arthropods (A–F: bee, dragonfly, fly, millipede, crab, spider). (i) State one general feature classifying any animal as an arthropod [1]. (ii) State one visible feature that A, B and C share but D, E and F lack [1]. (iii) Which letter is the crustacean? Justify [2].",
+      hint: "Arthropods: jointed legs + exoskeleton. Insects (A,B,C) have wings & 3 pairs of legs.",
+      a: "(i) Jointed legs and an exoskeleton (any one) [1]\n(ii) Wings present (insects A, B, C have wings; D millipede, E crab, F spider do not) [1]\n(iii) E (the crab) [1]; reason: two pairs of antennae / chalky exoskeleton / typical crustacean body plan with claws [1]"
+    },
+    {
+      id: "te6", diff: "easy", topic: "arthropods", marks: 2, star: "★★★",
+      type: "standard",
+      q: "An arthropod called Araneus diadematus has a body in two segments and 8 legs. (i) Which group does it belong to? [1] (ii) State the number of LIVING groups within the phylum Arthropoda [1].",
+      hint: "8 legs + 2 body parts = ?",
+      a: "(i) Arachnids [1]\n(ii) Four (4) — insects, arachnids, crustaceans, myriapods [1]"
+    },
+    {
+      id: "te7", diff: "easy", topic: "vertebrates", marks: 4, star: "★★★",
+      type: "standard",
+      q: "Marine iguanas are reptiles. (i) State two features used to classify animals as reptiles [2]. (ii) State two structures present in plant cells that are NOT present in iguana (animal) cells [2].",
+      hint: "Reptile: dry scaly skin, eggs with rubbery shells. Plants only: wall, chloroplast, large vacuole.",
+      a: "(i) Any two: dry scaly skin · lay eggs with soft/rubbery shells on land · ectothermic (cold-blooded) · breathe via lungs · four limbs (tetrapod) [2]\n(ii) Any two: cell wall (cellulose) · chloroplasts · large permanent vacuole [2]"
+    },
+    {
+      id: "te8", diff: "easy", topic: "plants", marks: 5, star: "★★",
+      type: "standard",
+      q: "A dichotomous key for tree leaves uses these branches: 'single leaf shape?' (yes → smooth or lobed → narrow/wide/spiky → Plumeria/Syringa/Ilex/Quercus); (no → leaflets joined at one point? yes → Aesculus, no → Sorbus). For six leaves shown — (1) jagged spiky single leaf, (2) lobed single leaf wider than long, (3) heart-shaped smooth single leaf wider than long, (4) compound leaflets along a stalk, (5) compound leaflets joined at one point, (6) smooth oval single leaf narrower than long — name each.",
+      hint: "Walk the key for each leaf step-by-step.",
+      a: "(1) Ilex (spiky edges) [1]\n(2) Quercus (lobed, not spiky) [1]\n(3) Syringa (smooth, width ≥ length) [1]\n(4) Sorbus (leaflets along stalk, not at one point) [1]\n(5) Aesculus (leaflets join at one point) [1]\n(6) Plumeria (smooth, narrow oval) [1]\n(Maximum 5 marks awarded.)"
+    },
+    {
+      id: "te9", diff: "easy", topic: "cells", marks: 5, star: "★★",
+      type: "standard",
+      q: "A plant leaf cell observed under microscope shows three labelled structures: A (rectangular outer boundary), B (large central clear space), C (small green oval bodies). (i) Name A, B, C [3]. (ii) The diagram is 60 mm wide; the actual cell is 0.03 mm wide. Calculate the magnification [2].",
+      hint: "Magnification = image size ÷ actual size — convert units first!",
+      a: "(i) A = cell wall [1] · B = vacuole [1] · C = chloroplast [1]\n(ii) Magnification = image ÷ actual = 60 ÷ 0.03 [1] = ×2000 [1]"
+    },
+
+    // ─── Medium theory additions (tm1–tm5) ───
+    {
+      id: "tm1", diff: "medium", topic: "mrs-gren", marks: 6, star: "★★★",
+      type: "calc",
+      q: "Arthropods are sealed in a chamber with a CO₂ absorber and a water-vapour absorber. A red dye drop in an attached capillary tube moves toward the arthropods. (i) Explain why the dye moves toward the arthropods [3]. (ii) The investigation was repeated at 10°C, 20°C and 30°C, giving rates of 5, 9.5 and 20.5 mm/h. Calculate the percentage increase in rate from 10 → 20°C [2]. (iii) State the trend [1].",
+      hint: "Respiration uses O₂ → pressure drops → dye sucked in. % change = (new−old)/old × 100.",
+      a: "(i) Arthropods respire and use O₂ [1]; CO₂ they release is absorbed (and water vapour absorbed) [1]; total gas pressure inside falls so the dye is drawn in toward the arthropods [1].\n(ii) % increase = (9.5 − 5) ÷ 5 × 100 [1] = 90 % [1]\n(iii) Rate of respiration (dye movement) increases as temperature increases [1]"
+    },
+    {
+      id: "tm2", diff: "medium", topic: "arthropods", marks: 4, star: "★★★",
+      type: "standard",
+      q: "In the chamber experiment above, the arthropods used had three pairs of legs, three body sections (head/thorax/abdomen), one pair of antennae and wings. (i) Which arthropod group is this? [1] (ii) Describe three visible features that identify this group [3].",
+      hint: "3 pairs of legs = which group?",
+      a: "(i) Insects [1]\n(ii) Any three: three pairs of legs [1] · body in three sections (head, thorax, abdomen) [1] · one pair of antennae [1] · usually wings (most insects have wings) [1]"
+    },
+    {
+      id: "tm3", diff: "medium", topic: "vertebrates", marks: 6, star: "★★",
+      type: "standard",
+      q: "A chimpanzee population in central/west African forests has decreased greatly and is endangered. (i) Suggest two reasons for the decrease [2]. (ii) Describe how a captive breeding programme can help conservation in the wild [2]. (iii) State two methods of conserving endangered species OTHER than captive breeding [2].",
+      hint: "Threats: habitat + hunting. Captive breeding → release. Other: protected areas, gene/seed banks, education.",
+      a: "(i) Any two: deforestation / habitat loss · hunting / poaching · disease · the bushmeat trade · climate change [2]\n(ii) Animals are bred under controlled conditions (zoos/sanctuaries) to increase numbers safely [1]; healthy individuals can be released back into protected wild habitat to boost wild populations [1].\n(iii) Any two: establishing nature reserves / protected areas · seed banks (for plants) · sperm/embryo banks · monitoring/anti-poaching laws · public education / ecotourism · habitat restoration [2]"
+    },
+    {
+      id: "tm4", diff: "medium", topic: "kingdoms", marks: 6, star: "★★",
+      type: "standard",
+      q: "(EXT) DNA-base-sequence comparison of four cat species shows: African leopard ATTCCGGGATCGGTTATCA · African lion AGTGTAGAAACTTTACTAC · cheetah ATTACGGGAGCCGTTATGA · African wildcat GTACGATGTAGCATAGTGG. (i) Which two species are MOST closely related and why? [2] (ii) Why does a scientist use DNA sequencing rather than only morphology? [2] (iii) Compare two main features of animals vs prokaryotes [2].",
+      ext: true,
+      hint: "Count matching bases position-by-position.",
+      a: "(i) African leopard and cheetah [1]; their DNA sequences match in the most positions (only a few base differences) so they are most closely related [1].\n(ii) DNA shows molecular differences invisible to the eye [1]; closely related species share more matching bases, giving a more accurate evolutionary relationship than morphology [1].\n(iii) Any two contrasts: animals multicellular vs prokaryotes unicellular [1] · animals have a true (membrane-bound) nucleus vs prokaryotes have circular DNA free in cytoplasm [1] · animals have membrane-bound organelles vs prokaryotes do not [1] · animals have no cell wall vs prokaryotes have a cell wall [1]"
+    },
+    {
+      id: "tm5", diff: "medium", topic: "plants", marks: 7, star: "★★",
+      type: "standard",
+      q: "(EXT) (i) Name the two groups of flowering plants [1]. (ii) Explain three differences used to distinguish them [3]. (iii) A student finds a plant with feathery fronds and reproduces by spores under the leaves; classify it and justify [2]. (iv) Suggest one way to improve the reliability of leaf-count data taken from one plant per site [1].",
+      ext: true,
+      hint: "Mono vs di. Spores under fronds = fern.",
+      a: "(i) Monocotyledons and dicotyledons [1]\n(ii) Any three: cotyledons in seed (mono = 1, di = 2) [1] · leaf shape (mono narrow, di broad) [1] · leaf veins (mono parallel, di reticulated/branching) [1] · flower parts (mono in 3s, di in 4s/5s) [1]\n(iii) Fern [1]; ferns reproduce by spores from the underside of fronds (no flowers/seeds), so it is NOT a flowering plant [1].\n(iv) Repeat counts on multiple plants per site and calculate a mean (and/or use the same age/conditions of plant) [1]"
+    },
+
+    // ─── Hard theory additions (th1–th5) ───
+    {
+      id: "th1", diff: "hard", topic: "dna", marks: 4, star: "★★", ext: true,
+      type: "calc",
+      q: "(EXT) Haemoglobin amino-acid differences from human: gibbon = 2 (diverged 18 million years ago, Mya); frog = 67. Assume amino-acid differences accumulate at a constant rate. (i) Estimate when the frog lineage diverged from humans (give answer in standard form) [3]. (ii) Why must the SAME gene be compared across species in DNA sequencing? [1]",
+      hint: "Rate per Mya = 2 ÷ 18. Frog time = 67 ÷ rate.",
+      a: "(i) Rate from gibbon: 2 differences ÷ 18 Mya = ~0.111 differences per Mya [1]\nFrog time = 67 ÷ 0.111 = ~603 Mya [1]\nIn standard form: 6.0 × 10⁸ years [1]\n(ii) The same gene must be used so the comparison is valid — different genes mutate at different rates and would not be a fair comparison [1]"
+    },
+    {
+      id: "th2", diff: "hard", topic: "binomial", marks: 6, star: "★★★", ext: true,
+      type: "standard",
+      q: "(EXT) (i) Suggest four benefits of classifying organisms hierarchically (kingdom → species) [4]. (ii) Explain why, in evolutionary terms, the more recent the common ancestor of two species, the more closely related they are [2].",
+      hint: "Benefits: prediction, organisation, naming. Recent ancestor = less time for changes.",
+      a: "(i) Any four benefits: \n• Organisms with similar features are grouped together so similarities/differences are easy to compare [1]\n• Universal Latin names avoid confusion across languages [1]\n• Evolutionary relationships are made visible (recent common ancestors group together) [1]\n• Predictions can be made about unknown species (members of a group share traits) [1]\n• Aids communication, identification & study among scientists worldwide [1]\n(ii) A more recent common ancestor means less time has passed since the two species separated [1]; less time = fewer accumulated genetic mutations / structural changes between them, so they share more features and are more closely related [1]"
+    },
+    {
+      id: "th3", diff: "hard", topic: "dna", marks: 4, star: "★★★", ext: true,
+      type: "standard",
+      q: "(EXT) A primate phylogenetic tree compares DNA sequences of Homo sapiens, Pan troglodytes, Gorilla and Pongo pygmaeus, with shaded matched bases and unshaded gaps. Homo and Pan show the most matching shaded sections; Pongo shows the fewest. (i) Determine which two primates are MOST closely related and justify [2]. (ii) What does this tell you about the ancestors of primates? [2]",
+      hint: "More matched bases = more recent common ancestor.",
+      a: "(i) Homo sapiens and Pan troglodytes [1]; their DNA sequences share the highest proportion of matched bases (fewest differences), indicating the most recent common ancestor [1].\n(ii) All four primates share a common ancestor [1]; Homo + Pan diverged most recently, then Gorilla diverged earlier, and Pongo (orangutan) diverged earliest from the shared lineage [1]"
+    },
+    {
+      id: "th4", diff: "hard", topic: "mrs-gren", marks: 7, star: "★★★", ext: true,
+      type: "standard",
+      q: "(EXT) A unicellular freshwater organism has a nucleus, food vacuole and a contractile vacuole. (i) Name its kingdom [1]. (ii) Name two features that distinguish it from animal cells [2]. (iii) Water moves in/out across its membrane — name the process [1]. (iv) After digesting prey, internal solute concentration rises (water potential lowers) — predict the effect on water movement [1]. (v) Name the characteristic of life that the contractile vacuole performs [1]. (vi) The organism engulfs prey in 4 steps shown — name two characteristics expressed [1].",
+      ext: true,
+      hint: "Amoeba-like = Protoctista. Contractile vacuole removes water + waste = excretion. Engulfing = sensitivity + nutrition.",
+      a: "(i) Protoctista (Protoctists) [1]\n(ii) Any two: unicellular vs multicellular animals · contractile vacuole present (animals lack one) · no specialised tissues [2]\n(iii) Osmosis [1]\n(iv) More water moves INTO the cell (down the water-potential gradient by osmosis) [1]\n(v) Excretion [1]\n(vi) Any two of: sensitivity (detects prey) · movement (engulfs/extends pseudopodia) · nutrition (ingests + digests) [1]"
+    },
+    {
+      id: "th5", diff: "hard", topic: "plants", marks: 5, star: "★★", ext: true,
+      type: "standard",
+      q: "(EXT) Four plant images: A = rosette of long narrow leaves with parallel-looking veins; B = single flower with 4 broad petals showing a network of veins; C = dandelion-like plant with broad serrated leaves and a tap root; D = a leafy frond with brown spore patches under the leaves. (i) Classify A, B, C as monocot or dicot [3]. (ii) Identify the plant type in D and justify [2].",
+      hint: "Parallel veins / single petal counts of 3 = mono. Net veins / petals in 4s or 5s = dicot. Spores = fern.",
+      a: "(i) A = monocotyledon (long narrow leaves, parallel-looking veins) [1]\nB = dicotyledon (4 broad petals + network/reticulated veins) [1]\nC = dicotyledon (broad serrated leaves, network veins, tap root) [1]\n(ii) D = fern [1]; ferns are NOT flowering plants — they have fronds and reproduce by spores produced in patches under the leaves (no flowers or seeds) [1]"
+    },
+
+    // ═════════════════════════════════════════════════════════
+    // ═══ ALTERNATIVE TO PRACTICAL QUESTIONS (ap1–ap3) ════════
+    // ═════════════════════════════════════════════════════════
+    {
+      id: "ap1", diff: "medium", topic: "practical", marks: 7, star: "★★★",
+      type: "calc",
+      q: "(ATP) A monarch butterfly study recorded body mass (g) and forewing length (mm) for 5 specimens: A 0.2/38, B 0.3/42, C 0.5/50, D 0.7/58, E 0.8/62. (i) Describe how to plot the relationship correctly [4]. (ii) Describe the relationship shown [1]. (iii) Estimate the body mass of a butterfly with a forewing length of 55 mm [2].",
+      hint: "Independent (cause) on x-axis; mark axes with units; plot accurately; line of best fit. Use the line to read off.",
+      a: "(i) Drawing rules — any 4 [4]:\n• Use linear scales that fill more than half the grid in both directions\n• X-axis = body mass / g (independent); Y-axis = forewing length / mm (dependent)\n• Both axes labelled with quantity AND unit\n• Plot all 5 points accurately (within ½ small square)\n• Draw a straight line of best fit (do NOT join dot-to-dot)\n(ii) As body mass increases, forewing length increases — a positive (linear) correlation [1]\n(iii) Read 55 mm on the forewing axis → trace to line of best fit → drop to mass axis [1]; body mass ≈ 0.6 g (accept 0.55–0.65) [1]"
+    },
+    {
+      id: "ap2", diff: "medium", topic: "practical", marks: 13, star: "★★★",
+      type: "standard",
+      q: "(ATP) A choice chamber has four compartments (light+dry, light+moist, dark+dry, dark+moist). 15 woodlice are placed in the centre and counted in each section after 10 min; this is repeated three times. (i) Why leave the woodlice for 10 min before counting? [1] (ii) State two variables that must be kept constant and how to control ONE [3]. (iii) Identify one hazard and a safety precaution [2]. (iv) Describe two ethical considerations when using living organisms [2]. (v) Sketch a results table [3]. (vi) Suggest how to adapt this set-up to test sensitivity to TEMPERATURE [2].",
+      hint: "10 min lets them respond. Constants: woodlice count, time, lighting source. Hazards: allergic reaction. Ethics: minimise stress, return safely. Table: 4 conditions × 3 trials + mean.",
+      a: "(i) Time is needed for the woodlice to detect, respond to and move toward their preferred conditions [1]\n(ii) Any two of: number of woodlice per trial · time allowed (10 min) · light intensity for the 'light' sections · temperature [2]; control example: use the same lamp at the same distance for both light sections, OR weigh out the same amount of moisture-absorbing chemical in each dry section [1]\n(iii) Hazard: woodlice may cause an allergic reaction OR a student may drop/crush them [1]; precaution: wash hands after handling / handle gently with a small brush [1]\n(iv) Any two: do not harm or kill the woodlice · keep time in the chamber short · return them to their original habitat afterwards · provide air via the air hole [2]\n(v) Table needs: condition column (4 rows: light+dry, light+moist, dark+dry, dark+moist), three trial columns, mean column [3]\n(vi) Replace the moist/dry contrast with two temperatures (e.g. one half on ice, one half on a warm pad) [1]; keep humidity & light constant in both halves [1]"
+    },
+    {
+      id: "ap3", diff: "medium", topic: "practical", marks: 9, star: "★★★",
+      type: "standard",
+      q: "(ATP) Two-point discrimination is tested by placing 1 or 2 hairpin prongs on different skin areas (palm/forearm/elbow) at gaps of 5, 10, 15 mm. Subject closes eyes and guesses. (i) State one variable to keep constant [1]. (ii) Suggest one improvement to make results more reliable [1]. (iii) State the dependent variable [1]. (iv) Describe one source of error and how to overcome it [2]. (v) Sketch the axes for a graph of these results [4].",
+      hint: "Constants: pressure, contact time. Reliability = repeats. DV = number correct. Error = subject sees / pressure varies.",
+      a: "(i) Any one: pressure applied · contact time (1 s) · same hairpin / same operator · order of areas tested [1]\n(ii) Repeat each test multiple times and calculate a mean (or use multiple subjects) [1]\n(iii) Number of occasions on which the prong number was detected correctly [1]\n(iv) Error: subject can hear/see the test and guess [1]; improvement: blindfold the subject AND keep silent during testing OR use a screen [1]\n(v) Axes — must include [4]:\n• X-axis = distance between prongs / mm (5, 10, 15)\n• Y-axis = number of correct detections (0–3)\n• Both axes labelled with quantity AND unit\n• Three lines/bars (one per body area) clearly distinguished with a key/legend"
+    },
+
+    // ═════════════════════════════════════════════════════════
+    // ═══ MULTIPLE CHOICE QUESTIONS (mc1–mc28) ════════════════
+    // ═════════════════════════════════════════════════════════
+
+    // ─── MCQ Easy (mc1–mc14) ───
+    {
+      id: "mc1", diff: "easy", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) The house mouse has the scientific name Mus musculus. Which genus does it belong to?  A) Mammal  B) musculus  C) Mus  D) Vertebrate",
+      hint: "First word (capitalised) = genus.",
+      a: "C — Mus [1]\nThe first word of a binomial name is the genus (always capitalised); the second word is the species."
+    },
+    {
+      id: "mc2", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Which of the following is NOT a characteristic of all living organisms?  A) Reproduction  B) Respiration  C) Excretion  D) Photosynthesis",
+      hint: "MRS GREN — does P fit? Animals don't do it.",
+      a: "D — Photosynthesis [1]\nOnly plants and some protoctists/bacteria photosynthesise; it is NOT one of the seven characteristics of ALL living organisms."
+    },
+    {
+      id: "mc3", diff: "easy", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) What is a group of organisms with similar features that can reproduce to produce fertile offspring called?  A) Kingdom  B) Genus  C) Family  D) Species",
+      hint: "Smallest, most specific category.",
+      a: "D — Species [1]"
+    },
+    {
+      id: "mc4", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Yeast + glucose + water in a test tube produces gas bubbles after one hour. Which process is responsible?  A) Reproduction  B) Respiration  C) Growth  D) Sensitivity",
+      hint: "Yeast respires anaerobically → CO₂ bubbles.",
+      a: "B — Respiration [1]\nYeast respires the glucose anaerobically, producing CO₂ (the bubbles) and ethanol."
+    },
+    {
+      id: "mc5", diff: "easy", topic: "vertebrates", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Which class of vertebrate typically gives birth to live young?  A) Mammals  B) Birds  C) Amphibians  D) Reptiles",
+      hint: "Hairy/furry warm-blooded class.",
+      a: "A — Mammals [1]"
+    },
+    {
+      id: "mc6", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) A potted plant grown beside a window bends its shoots toward the light. Which characteristic of life does this show?  A) Excretion  B) Reproduction  C) Respiration  D) Sensitivity",
+      hint: "Detects → responds.",
+      a: "D — Sensitivity [1]\nThe plant detects light direction and responds by bending its shoots toward it (a tropic response)."
+    },
+    {
+      id: "mc7", diff: "easy", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Humans have the scientific name Homo sapiens. What do the two parts of this name refer to?  A) Genus and species  B) Group and genus  C) Kingdom and genus  D) Kingdom and species",
+      hint: "Binomial = 2 names = 2 ranks.",
+      a: "A — Genus and species [1]"
+    },
+    {
+      id: "mc8", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) All living organisms release energy from nutrient molecules in their cells. What is this characteristic called?  A) Growth  B) Nutrition  C) Respiration  D) Sensitivity",
+      hint: "Glucose + O₂ → energy.",
+      a: "C — Respiration [1]"
+    },
+    {
+      id: "mc9", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Which of the following is one of the 7 characteristics of ALL living organisms?  A) Breathing  B) Circulation  C) Egestion  D) Sensitivity",
+      hint: "Only one of these is in MRS GREN.",
+      a: "D — Sensitivity [1]\nBreathing/circulation are not universal characteristics; egestion ≠ excretion (egestion is removal of undigested food, not a 7-characteristic)."
+    },
+    {
+      id: "mc10", diff: "easy", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) The names are: 1) Camelus dromedarius  2) Camelus ferus  3) Equus ferus  4) Struthio camelus. Which animals share the SAME genus?  A) 1, 2 and 3  B) 1, 2 and 4  C) 1 and 2 only  D) 2 and 3 only",
+      hint: "Same FIRST word = same genus. Don't be fooled by 'camelus' as a species name.",
+      a: "C — 1 and 2 only [1]\nOnly Camelus dromedarius and Camelus ferus share the genus 'Camelus'. In Struthio camelus, 'camelus' is the species name (not the genus)."
+    },
+    {
+      id: "mc11", diff: "easy", topic: "arthropods", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) A new species has a segmented body with two pairs of legs on each segment. Which arthropod group does it belong to?  A) Arachnids  B) Crustaceans  C) Insects  D) Myriapods",
+      hint: "Segments × many legs = ?",
+      a: "D — Myriapods [1]\nMillipedes (a myriapod) have two pairs of legs per body segment."
+    },
+    {
+      id: "mc12", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) An organism: 1) takes in glucose, 2) releases CO₂ from cells, 3) moves away from a harmful chemical, 4) increases biomass over time. Which row matches all four to characteristics?  A) respiration/excretion/sensitivity/growth  B) nutrition/excretion/sensitivity/growth  C) nutrition/respiration/movement/reproduction  D) excretion/nutrition/sensitivity/growth",
+      hint: "Glucose IN = nutrition. CO₂ OUT (from respiration) = excretion. Move from danger = sensitivity.",
+      a: "B — nutrition / excretion / sensitivity / growth [1]\n(Tricky: CO₂ release is 'excretion' here because it is a metabolic waste removed from the cell.)"
+    },
+    {
+      id: "mc13", diff: "easy", topic: "arthropods", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) An organism has antennae, a head, thorax, abdomen and 6 legs. Which arthropod group?  A) Arachnid  B) Crustacean  C) Insect  D) Myriapod",
+      hint: "3 body parts + 3 leg pairs = ?",
+      a: "C — Insect [1]"
+    },
+    {
+      id: "mc14", diff: "easy", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Which characteristic allows an organism to detect stimuli (internal or external) and respond appropriately?  A) Movement  B) Excretion  C) Sensitivity  D) Nutrition",
+      hint: "Definition of one of MRS GREN.",
+      a: "C — Sensitivity [1]"
+    },
+
+    // ─── MCQ Medium (mc15–mc24) ───
+    {
+      id: "mc15", diff: "medium", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) A planted seed in well-watered soil sprouts a radicle, then a shoot, then leaves. Which two characteristics are demonstrated?  A) Nutrition + reproduction  B) Reproduction + growth  C) Nutrition + sensitivity  D) Sensitivity + growth",
+      hint: "Roots respond to gravity (sensitivity) AND the seedling enlarges (growth).",
+      a: "D — Sensitivity + growth [1]\nThe radicle responds to gravity & the shoot to light (sensitivity); the seedling enlarges as cells divide (growth). It does NOT reproduce — germination is just one organism developing."
+    },
+    {
+      id: "mc16", diff: "medium", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) A diagram shows: light energy + O₂ from atmosphere → green plant; plant releases CO₂ to atmosphere; plant → rabbit; both release waste. The arrows W (O₂ in to plant), X (CO₂ out from plant), Y (plant → rabbit) represent which processes?  A) respiration/photosynthesis/respiration  B) respiration/respiration/nutrition  C) photosynthesis/respiration/excretion  D) photosynthesis/excretion/nutrition",
+      hint: "O₂ enters during respiration. CO₂ out at night = respiration. Plant → rabbit = food.",
+      a: "B — respiration / respiration / nutrition [1]\nW = plant taking O₂ in for respiration; X = plant releasing CO₂ from respiration; Y = rabbit eating the plant (nutrition)."
+    },
+    {
+      id: "mc17", diff: "medium", topic: "binomial", marks: 1, star: "★★★", ext: true,
+      type: "standard",
+      q: "(MCQ-EXT) The 8 names are: Canis lupus, Cygnus buccinator, Dasypus novemcinctus, Dasyurus maculatus, Equus burchelli, Eumetopias jubatus, Felis chaus, Felis lybica. Which TWO are most closely related?  A) Dasypus novemcinctus & Dasyurus maculatus  B) Felis chaus & Felis lybica  C) Cygnus buccinator & Dasyurus maculatus  D) Equus burchelli & Eumetopias jubatus",
+      hint: "Same genus = closest relatives.",
+      a: "B — Felis chaus & Felis lybica [1]\nThey share the same genus (Felis) — different species but the same genus = closest evolutionary relatives. (Dasypus and Dasyurus only sound similar; they are different genera.)"
+    },
+    {
+      id: "mc18", diff: "medium", topic: "vertebrates", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Which row correctly describes characteristics of birds (skin covered in feathers / maintain constant body temp / jelly-covered eggs / external ears present)?  A) ✓✗✓✗  B) ✗✗✗✓  C) ✓✓✗✗  D) ✗✓✓✓",
+      hint: "Birds: feathers ✓, warm-blooded ✓, hard-shelled (NOT jelly) eggs, no external ear flaps.",
+      a: "C — ✓ ✓ ✗ ✗ [1]\nBirds have feathers (✓) and are endothermic (✓); their eggs have HARD shells, not jelly (jelly is amphibians); they lack external ear pinnae (just an opening)."
+    },
+    {
+      id: "mc19", diff: "medium", topic: "mrs-gren", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Glucose + oxygen → carbon dioxide + water. Which characteristics are associated with this equation? (nutrition / respiration)  A) ✓ / ✓  B) ✗ / ✓  C) ✗ / ✗  D) ✓ / ✗",
+      hint: "Equation = aerobic respiration. Did the organism eat glucose first?",
+      a: "A — nutrition ✓ AND respiration ✓ [1]\nThe equation is aerobic respiration (✓ respiration). The glucose had to be taken in via nutrition first (✓ nutrition)."
+    },
+    {
+      id: "mc20", diff: "medium", topic: "kingdoms", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Lichens contain X (made of hyphae with cell walls and many nuclei) and Y (single-celled with chloroplasts). Which kingdoms?  A) X fungus / Y prokaryote  B) X fungus / Y protoctist  C) X protoctist / Y fungus  D) X protoctist / Y plant",
+      hint: "Hyphae = fungus. Single-celled with chloroplast = protoctist (algae).",
+      a: "B — X fungus / Y protoctist [1]\nHyphae and chitin walls = fungi. Single-celled organisms with chloroplasts (e.g. algae) = Protoctista, NOT prokaryotes (which have no nucleus and no chloroplasts)."
+    },
+    {
+      id: "mc21", diff: "medium", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) Equus ferus (horse) × Equus asinus (donkey) → mule. Which statement is correct?  A) Same genus; mule is infertile  B) Same species; mule is infertile  C) Same genus; mule is fertile  D) Same species; mule is fertile",
+      hint: "Same Equus = same genus. Mule famously can't breed.",
+      a: "A — Same genus; mule is infertile [1]\nHorse and donkey share genus Equus but are different species (different number of chromosomes). Their hybrid (the mule) is infertile — this is in fact the test that confirms they are different species."
+    },
+    {
+      id: "mc22", diff: "medium", topic: "dna", marks: 1, star: "★★★", ext: true,
+      type: "standard",
+      q: "(MCQ-EXT) DNA sequences:\nW: CACAATCGAA\nX: GTCAATGGTG\nY: CTCAATCGTA\nZ: CTCATTCGTA\nWhich TWO organisms are MOST DISTANTLY related?  A) W & X  B) W & Z  C) X & Y  D) X & Z",
+      hint: "Most differences (mismatches) = most distant.",
+      a: "A — W & X [1]\nCount the position-by-position differences:\nW vs X: mismatches at positions 1, 2, 3, 7, 9, 10 → 6 differences (most)\nY vs Z is only 1 difference; W vs Y is 2; X vs Z is several.\nMost mismatches = most distantly related."
+    },
+    {
+      id: "mc23", diff: "medium", topic: "plants", marks: 1, star: "★★★", ext: true,
+      type: "standard",
+      q: "(MCQ-EXT) Which flower is from a MONOCOTYLEDON?  A) flower with 4 broad petals + reticulated veins  B) flower with 5 broad petals + branching veins  C) flower with 5 narrow petals  D) flower with 6 narrow petals + parallel veins",
+      hint: "Monocot floral parts come in multiples of 3.",
+      a: "D — 6 narrow petals + parallel veins [1]\nMonocots: petals in multiples of 3 (so 3 or 6); narrow leaves with parallel veins. Dicots: petals in multiples of 4 or 5; net/reticulated veins."
+    },
+    {
+      id: "mc24", diff: "medium", topic: "binomial", marks: 1, star: "★★★",
+      type: "standard",
+      q: "(MCQ) A hare and a rabbit cannot reproduce to give fertile offspring. Which BEST explains this?  A) They are different species  B) They belong to different kingdoms  C) They have different habitats  D) Their DNA base sequences are different",
+      hint: "By definition of species.",
+      a: "A — They are different species [1]\nThis is the textbook DEFINITION of species: only members of the same species can reproduce to produce FERTILE offspring. (D is true but trivial — every individual differs in DNA; it is not the explanation. B is wrong — both are animals.)"
+    },
+
+    // ─── MCQ Hard (mc25–mc28) ───
+    {
+      id: "mc25", diff: "hard", topic: "arthropods", marks: 1, star: "★★", ext: true,
+      type: "standard",
+      q: "(MCQ-EXT) Use the key:\n1. Three pairs of legs → Class W\n   Four+ pairs of legs → Go to 2\n2. Head + many-segmented body → Class X\n   Cephalothorax (head+thorax fused) → Go to 3\n3. No antennae → Class Y\n   Antennae present → Class Z\nIdentify: Arthropod 1 = a crab (cephalothorax + 5 leg pairs + 2 antennae pairs); Arthropod 2 = a millipede (head + many segments, 2 leg pairs per segment).  A) 1=Y, 2=X  B) 1=X, 2=Z  C) 1=Z, 2=W  D) 1=Z, 2=X",
+      hint: "Crab has antennae (so Z, not Y). Millipede has many segments (X).",
+      a: "D — 1 = Z (crab), 2 = X (millipede) [1]\nCrab: has cephalothorax (skip past 2) → has antennae → Class Z.\nMillipede: 4+ leg pairs → has head + segmented body (not cephalothorax) → Class X."
+    },
+    {
+      id: "mc26", diff: "hard", topic: "plants", marks: 1, star: "★★", ext: true,
+      type: "standard",
+      q: "(MCQ-EXT) The leaf shown has multiple separate leaflets joined to a single stalk; each leaflet has smooth edges. Use this key:\nleaves → if in more than one piece: smooth edge = F. americana / jagged = S. aucuparia\nleaves → if in one piece: smooth edge = F. sylvatica / jagged = U. minor\nWhich plant?  A) F. americana  B) S. aucuparia  C) F. sylvatica  D) U. minor",
+      hint: "Multiple leaflets = 'in more than one piece'. Leaflets are smooth.",
+      a: "A — F. americana [1]\nMultiple leaflets = leaf in more than one piece → smooth-edged leaflets → F. americana."
+    },
+    {
+      id: "mc27", diff: "hard", topic: "vertebrates", marks: 1, star: "★★",
+      type: "standard",
+      q: "(MCQ) Use the key:\n1. Fur absent → go to 2; Fur present → mammals\n2. Eggs without hard shell → go to 3; Eggs with hard shell → group A\n3. Reproduction in water → go to 4; Reproduction on land → group B\n4. Scaly skin → group C; Smooth skin → group D\nWhich group are FISH?  A) Group A  B) Group B  C) Group C  D) Group D",
+      hint: "Fish: no fur, jelly eggs, reproduce in water, scaly skin.",
+      a: "C — Group C [1]\nFish path: no fur → soft jelly eggs (no hard shell) → reproduce in water → scaly skin = Group C. (Group A = birds; Group B = reptiles; Group D = amphibians.)"
+    },
+    {
+      id: "mc28", diff: "hard", topic: "arthropods", marks: 1, star: "★★",
+      type: "standard",
+      q: "(MCQ) An organism is shown with a long worm-like body of many segments, each segment carrying multiple legs. Which arthropod group?  A) Myriapod  B) Insect  C) Crustacean  D) Arachnid",
+      hint: "Many segments + many legs = ?",
+      a: "A — Myriapod [1]\nCentipedes (1 leg pair per segment) and millipedes (2 leg pairs per segment) are myriapods."
+    },
+  ];
+
+  const topics = [
+    { id: "all",        label: "All topics",      color: RD },
+    { id: "mrs-gren",   label: "MRS GREN",        color: "#1e6091" },
+    { id: "binomial",   label: "Binomial/Class.", color: "#6a0dad" },
+    { id: "vertebrates",label: "Vertebrates",     color: "#b5540a" },
+    { id: "arthropods", label: "Arthropods",      color: "#c0392b" },
+    { id: "kingdoms",   label: "Kingdoms",        color: "#1a7a3a" },
+    { id: "cells",      label: "Cells",           color: "#5b3fa6" },
+    { id: "plants",     label: "Plants",          color: "#1a7a6e" },
+    { id: "dna",        label: "DNA (EXT)",       color: "#b85c00" },
+    { id: "practical",  label: "Practical (ATP)", color: "#0d5e8a" },
+  ];
+
+  const diffs = [
+    { id: "all",    label: "All",    color: RD,        bg: RL },
+    { id: "easy",   label: "Easy",   color: "#1a7a3a", bg: "#e8f7ec" },
+    { id: "medium", label: "Medium", color: "#b85c00", bg: "#fff4e6" },
+    { id: "hard",   label: "Hard",   color: "#b02020", bg: "#fdf0f0" },
+  ];
+
+  const filtered = qs.filter(q =>
+    (diff === "all" || q.diff === diff) &&
+    (topic === "all" || q.topic === topic)
+  );
+
+  const totalMarks = filtered.reduce((s, q) => s + q.marks, 0);
+  const revealedCount = filtered.filter(q => rev[q.id]).length;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* Header */}
+      <div style={{ background: RD, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13, lineHeight: 1.55 }}>
+        <div style={{ fontWeight: 700, marginBottom: 3 }}>📝 Exam Practice — Infinite Test Bank</div>
+        <div style={{ fontSize: 12, opacity: 0.95 }}>
+          Filter by difficulty &amp; topic · Try first, then reveal · ★★★ = frequently examined
+        </div>
+      </div>
+
+      {/* Difficulty filter */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#666", marginBottom: 5, letterSpacing: 0.5 }}>DIFFICULTY</div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {diffs.map(d => {
+            const count = qs.filter(q => d.id === "all" || q.diff === d.id).length;
+            return (
+              <button key={d.id} onClick={() => setDiff(d.id)}
+                style={{
+                  padding: "6px 12px", borderRadius: 6,
+                  border: diff === d.id ? `2px solid ${d.color}` : `1.5px solid ${BD}`,
+                  background: diff === d.id ? d.color : "#fff",
+                  color: diff === d.id ? "#fff" : d.color,
+                  fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+                }}>
+                {d.label} <span style={{ opacity: 0.8, fontWeight: 500 }}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Topic filter */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#666", marginBottom: 5, letterSpacing: 0.5 }}>TOPIC</div>
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+          {topics.map(t => {
+            const count = qs.filter(q => t.id === "all" || q.topic === t.id).length;
+            return (
+              <button key={t.id} onClick={() => setTopic(t.id)}
+                style={{
+                  padding: "5px 10px", borderRadius: 14,
+                  border: topic === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+                  background: topic === t.id ? t.color : "#fff",
+                  color: topic === t.id ? "#fff" : t.color,
+                  fontSize: 10.5, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+                }}>
+                {t.label} <span style={{ opacity: 0.75, fontWeight: 500 }}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Stats bar */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        background: RL, borderRadius: 8, padding: "8px 14px", fontSize: 12, color: RD, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <Bold>{filtered.length}</Bold> question{filtered.length !== 1 ? "s" : ""} ·
+          <Bold> /{totalMarks} marks total</Bold> ·
+          <span style={{ color: "#666" }}> {revealedCount} revealed</span>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => setRev({})} style={{
+            padding: "5px 10px", borderRadius: 5, fontSize: 11, fontWeight: 600, cursor: "pointer",
+            border: `1.5px solid ${RD}`, background: "#fff", color: RD,
+          }}>Hide all</button>
+        </div>
+      </div>
+
+      {filtered.length === 0 && (
+        <div style={{ textAlign: "center", padding: "30px 20px", color: "#999", fontSize: 13, background: "#f8f8f6", borderRadius: 10 }}>
+          No questions match the selected filters. Try a different combination.
+        </div>
+      )}
+
+      {/* Question cards */}
+      {filtered.map(q => {
+        const diffMeta = diffs.find(d => d.id === q.diff);
+        const topicMeta = topics.find(t => t.id === q.topic);
+        return (
+          <div key={q.id} style={{ border: `1.5px solid ${BD}`, borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ background: diffMeta.bg, padding: "10px 16px", borderBottom: `1px solid ${BD}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, flexWrap: "wrap", gap: 6 }}>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+                  <span style={{ background: diffMeta.color, color: "#fff", borderRadius: 3, padding: "2px 7px", fontSize: 9.5, fontWeight: 700, letterSpacing: 0.5 }}>{q.diff.toUpperCase()}</span>
+                  <span style={{ color: topicMeta.color, fontWeight: 700, fontSize: 10.5, padding: "2px 7px", border: `1px solid ${topicMeta.color}`, borderRadius: 3 }}>{topicMeta.label}</span>
+                  {q.ext && <span style={{ background: PU, color: "#fff", borderRadius: 3, padding: "2px 6px", fontSize: 9.5, fontWeight: 700 }}>EXT</span>}
+                  <span style={{ color: diffMeta.color, fontSize: 12 }}>{q.star}</span>
+                </div>
+                <span style={{ background: diffMeta.color, color: "#fff", borderRadius: 14, padding: "2px 10px", fontSize: 11, fontWeight: 700 }}>[{q.marks} mark{q.marks !== 1 ? "s" : ""}]</span>
+              </div>
+              <div style={{ fontSize: 13, color: "#2a0000", lineHeight: 1.6, fontWeight: 500 }}>{q.q}</div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 5, fontStyle: "italic" }}>💭 Hint: {q.hint}</div>
+            </div>
+            <div style={{ padding: "10px 16px", background: "#fff" }}>
+              {rev[q.id] ? (
+                <>
+                  <div style={{ fontSize: 12, whiteSpace: "pre-line", background: "#f8f8f6", borderRadius: 8, padding: "10px 14px", borderLeft: `3px solid ${diffMeta.color}`, lineHeight: 1.7, color: GR }}>
+                    {q.a}
+                  </div>
+                  <button onClick={() => toggle(q.id)} style={{ marginTop: 8, background: "none", border: `1px solid ${diffMeta.color}`, color: diffMeta.color, borderRadius: 6, padding: "5px 14px", fontSize: 11, cursor: "pointer", fontWeight: 600 }}>
+                    Hide answer
+                  </button>
+                </>
+              ) : (
+                <button onClick={() => toggle(q.id)} style={{ background: diffMeta.color, color: "#fff", border: "none", borderRadius: 6, padding: "7px 18px", fontSize: 12, cursor: "pointer", fontWeight: 600 }}>
+                  Show answer
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Footer note for adding more */}
+      <div style={{ marginTop: 8, padding: "10px 14px", background: RL, borderRadius: 8, fontSize: 11, color: RD, textAlign: "center", lineHeight: 1.55 }}>
+        💡 <Bold>Infinite test mode:</Bold> {qs.length} questions loaded. Add more by appending to the <code style={{ background: "#fff", padding: "1px 5px", borderRadius: 3 }}>qs</code> array — the filters &amp; stats update automatically.
+      </div>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ③ SUMMARY TAB
+// ════════════════════════════════════════════════════════════════════════════
+function SummaryTab() {
+  const [open, setOpen] = useState({ s1: true, s2: false, s3: false, s4: false, s5: false });
+  const tog = k => setOpen(p => ({ ...p, [k]: !p[k] }));
+
+  const Sec = ({ id, title, children }) => (
+    <div style={{ border: `1.5px solid ${PU}`, borderRadius: 10, overflow: "hidden", marginBottom: 12 }}>
+      <button onClick={() => tog(id)} style={{ width: "100%", background: open[id] ? PU : PL, color: open[id] ? "#fff" : PU, border: "none", padding: "11px 16px", textAlign: "left", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", justifyContent: "space-between" }}>
+        {title}<span>{open[id] ? "▲" : "▼"}</span>
+      </button>
+      {open[id] && <div style={{ padding: "14px 16px", background: "#fff" }}>{children}</div>}
+    </div>
+  );
+
+  return (
+    <div>
+      <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 8, padding: "10px 16px", marginBottom: 12, fontSize: 12, color: "#3a2a6a" }}>
+        <strong>1st-stage summary</strong> — the chapter compressed into key concepts, diagrams, and comparison tables. Use after reading <Bold>④ Textbook</Bold> in detail.
+      </div>
+
+      <Sec id="s1" title="① Characteristics of Living Organisms — MRS GREN">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 12 }}>
+          All living organisms — single-celled or multicellular, plant or animal — share <KW>seven characteristics</KW> remembered by the mnemonic <KW c={AM}>MRS GREN</KW>.
+        </p>
+        <MrsGrenDiagram />
+        <div style={{ background: GL, borderRadius: 8, padding: "10px 14px", marginTop: 10, fontSize: 12, lineHeight: 1.7 }}>
+          <strong style={{ color: G }}>Compact definitions:</strong><br/>
+          <Bold>Movement</Bold> — change of position by an organism (or part of it).<br/>
+          <Bold>Respiration</Bold> — chemical reactions in <KW>cells</KW> that release energy from nutrients.<br/>
+          <Bold>Sensitivity</Bold> — detect &amp; respond to stimuli.<br/>
+          <Bold>Growth</Bold> — permanent increase in size and <KW>dry mass</KW>.<br/>
+          <Bold>Reproduction</Bold> — making more of the same kind.<br/>
+          <Bold>Excretion</Bold> — removal of <KW>metabolic waste</KW> &amp; excess substances.<br/>
+          <Bold>Nutrition</Bold> — taking in materials for energy &amp; growth.
+        </div>
+      </Sec>
+
+      <Sec id="s2" title="② Classification — Species, Binomial & 7 Levels">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          Biologists sort organisms into nested groups using <KW>natural classification</KW> that reflects <KW c={AM}>evolutionary relationships</KW>.
+        </p>
+        <div style={{ fontSize: 13, color: GR, lineHeight: 1.8, marginBottom: 10 }}>
+          <Bold>Species</Bold> — group able to <KW>reproduce to produce fertile offspring</KW>.<br/>
+          <Bold>Binomial system</Bold> — two-part Latin name: <em>Genus species</em>. Genus capitalised, species lowercase, both italic. Universal — no language barriers.
+        </div>
+        <LinnaeusHierarchy />
+        <div style={{ background: PL, borderRadius: 8, padding: "10px 14px", marginTop: 10, fontSize: 12, lineHeight: 1.7, color: "#3a2a6a" }}>
+          <strong>7 levels mnemonic:</strong> "<Bold>K</Bold>ing <Bold>P</Bold>hilip <Bold>C</Bold>ame <Bold>O</Bold>ver <Bold>F</Bold>or <Bold>G</Bold>ran's <Bold>S</Bold>paghetti" → <KW c={PU}>Kingdom · Phylum · Class · Order · Family · Genus · Species</KW>. The further down, the more features in common.
+        </div>
+      </Sec>
+
+      <Sec id="s3" title="③ Dichotomous Keys & DNA Classification">
+        <DichotomousKeyVisual />
+        <div style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginTop: 10, marginBottom: 12 }}>
+          <Bold>Dichotomous key</Bold> — pairs of <KW>contrasting features</KW> at each step. Always start at step 1; never skip ahead. Used to <Bold>identify</Bold> unknown organisms.
+        </div>
+
+        <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 8, padding: "10px 14px", fontSize: 12.5, color: "#3a2a6a", lineHeight: 1.7 }}>
+          <strong>DNA-based classification</strong> <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: "#fff", color: PU, fontWeight: 700 }}>EXT</span><br/>
+          Old: morphology &amp; anatomy → unreliable for distant relatives.<br/>
+          New: compare <KW c={PU}>DNA base sequences</KW>. More similar bases → more recent common ancestor → more closely related. Same logic for <Bold>amino acid sequences</Bold> in proteins.
+        </div>
+        <DNAComparison />
+      </Sec>
+
+      <Sec id="s4" title="④ Five Kingdoms & Animal Groups">
+        <FiveKingdomsCells />
+
+        <div style={{ marginTop: 12, overflowX: "auto" }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Five Kingdoms — quick reference</strong>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+            <thead>
+              <tr style={{ background: PU, color: "#fff" }}>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Kingdom</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Cells</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Nucleus</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Cell wall</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Nutrition</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Animals",     "Multi",      "Yes", "No",                    "Heterotrophic"],
+                ["Plants",      "Multi",      "Yes", "Cellulose",             "Photosynthesis"],
+                ["Fungi",       "Usually multi", "Yes", "Chitin (not cellulose)", "Saprophytic / parasitic"],
+                ["Protoctists", "Uni or multi", "Yes", "Some",                "Photosynthesis or feeding"],
+                ["Prokaryotes", "Uni",        "No",  "Yes (not cellulose)",   "Various"],
+              ].map((row, i) => (
+                <tr key={i} style={{ background: i % 2 ? PL : "#fff" }}>
+                  {row.map((c, j) => (
+                    <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? PU : GR }}>{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div style={{ marginTop: 16 }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Vertebrates — five classes</strong>
+          <VertebrateTable />
+        </div>
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Arthropods — four groups</strong>
+          <ArthropodDiagram />
+          <div style={{ marginTop: 8, overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+              <thead>
+                <tr style={{ background: PU, color: "#fff" }}>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Group</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Body parts</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Leg pairs</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Antennae</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Myriapods",  "Many segments", "1 per segment", "1 pair"],
+                  ["Insects",    "3 (head, thorax, abdomen)", "3 pairs", "1 pair"],
+                  ["Arachnids",  "2", "4 pairs", "None"],
+                  ["Crustaceans","Segmented", ">4 pairs (gills)", "2 pairs"],
+                ].map((row, i) => (
+                  <tr key={i} style={{ background: i % 2 ? PL : "#fff" }}>
+                    {row.map((c, j) => (
+                      <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? PU : GR }}>{c}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Sec>
+
+      <Sec id="s5" title="⑤ Plants & Viruses (EXT) + Revision Checklist">
+        <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Plant Kingdom — Ferns vs Flowering plants</strong>
+        <div style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          <Bold>Ferns</Bold> — leaves called <KW>fronds</KW>, reproduce by <KW>spores</KW> on the underside, no flowers.<br/>
+          <Bold>Flowering plants</Bold> — reproduce by <KW>flowers and seeds</KW>; seeds form in the ovary. Two sub-groups: <Bold>monocots</Bold> &amp; <Bold>dicots</Bold>.
+        </div>
+        <MonocotDicotCompare />
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Viruses</strong>
+          <VirusStructure />
+          <div style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, marginTop: 6 }}>
+            <KW c={RD}>NOT living organisms</KW>, NOT in any kingdom. Just <KW>genetic material (DNA or RNA)</KW> in a <KW>protein coat (capsid)</KW>. Replicate only inside host cells.
+          </div>
+        </div>
+
+        <div style={{ marginTop: 16 }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>✓ Revision checklist</strong>
+          {[
+            "Seven characteristics of life — MRS GREN definitions",
+            "Species = can reproduce to produce fertile offspring",
+            "Binomial system = Genus species (Latin, italics)",
+            "7 classification levels: KPCOFGS",
+            "Classification reflects evolutionary relationships",
+            "Dichotomous keys use paired contrasting features",
+            "DNA base sequences (and amino acid sequences) used to classify",
+            "More similar DNA → more recent common ancestor",
+            "Five kingdoms: Animal, Plant, Fungi, Protoctist, Prokaryote",
+            "Animals: multi, no wall/chloroplast, heterotrophic",
+            "Plants: multi, cellulose wall, chloroplast, autotrophic",
+            "Fungi: chitin wall, saprophytic/parasitic",
+            "Prokaryotes: no nucleus, no membrane-bound organelles",
+            "Vertebrate classes: mammals, birds, reptiles, amphibians, fish",
+            "Arthropod groups: myriapods, insects, arachnids, crustaceans",
+            "Ferns reproduce by spores; flowering plants by seeds",
+            "Monocots: 1 cotyledon, parallel veins, ×3 flower parts",
+            "Dicots: 2 cotyledons, net veins, ×4 or 5 flower parts",
+            "Viruses are NOT living — protein coat + DNA/RNA only",
+          ].map((item, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, padding: "5px 0", borderBottom: `1px solid ${BD}`, fontSize: 12, color: GR }}>
+              <span style={{ color: PU, fontWeight: 700, flexShrink: 0 }}>✓</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </Sec>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ④ TEXTBOOK TAB
+// ════════════════════════════════════════════════════════════════════════════
+function TextbookTab() {
+  const [open, setOpen] = useState({ t1: true });
+  const [showAll, setShowAll] = useState(false);
+  const tog = k => setOpen(p => ({ ...p, [k]: !p[k] }));
+  const expandAll = () => {
+    const next = {};
+    ["t1","t2","t3","t4","t5","t6","t7","t8","t9"].forEach(k => next[k] = !showAll);
+    setOpen(next); setShowAll(!showAll);
+  };
+
+  const Sec = ({ id, title, page, ext, children }) => (
+    <div style={{ border: `1.5px solid ${G}`, borderRadius: 10, overflow: "hidden", marginBottom: 12 }}>
+      <button onClick={() => tog(id)} style={{ width: "100%", background: open[id] ? G : GL, color: open[id] ? "#fff" : G, border: "none", padding: "11px 16px", textAlign: "left", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 8, flex: 1 }}>
+          <span>{title}</span>
+          {ext && <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 3, background: open[id] ? "rgba(255,255,255,0.25)" : PL, color: open[id] ? "#fff" : PU, fontWeight: 700 }}>EXT</span>}
+        </span>
+        <span style={{ fontSize: 11, opacity: 0.8, flexShrink: 0 }}>{page && `p.${page} `}{open[id] ? "▲" : "▼"}</span>
+      </button>
+      {open[id] && <div style={{ padding: "14px 16px", background: "#fff" }}>{children}</div>}
+    </div>
+  );
+
+  const Tip = ({ children }) => (
+    <div style={{ background: "#fff8e7", borderLeft: `4px solid ${AM}`, borderRadius: "0 6px 6px 0", padding: "8px 12px", margin: "10px 0", fontSize: 12, lineHeight: 1.6, color: "#5a3a00" }}>
+      <strong style={{ color: AM }}>💡 Examiner Tip — </strong>{children}
+    </div>
+  );
+
+  const Def = ({ term, children }) => (
+    <div style={{ display: "flex", gap: 10, marginBottom: 8, fontSize: 13, lineHeight: 1.65 }}>
+      <span style={{ flexShrink: 0, minWidth: 110, color: G, fontWeight: 700 }}>{term}</span>
+      <span style={{ color: GR }}>{children}</span>
+    </div>
+  );
+
+  const TY = ({ qs }) => (
+    <div style={{ background: "#f0f9f0", border: `1px solid ${G}`, borderRadius: 8, padding: "10px 14px", marginTop: 12 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: G, marginBottom: 6 }}>▶ Test Yourself</div>
+      {qs.map((q, i) => <div key={i} style={{ fontSize: 12, color: GR, marginBottom: 4, lineHeight: 1.5 }}><strong>{i + 1}.</strong> {q}</div>)}
+    </div>
+  );
+
+  return (
+    <div>
+      {/* Header banner */}
+      <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 8, padding: "10px 16px", marginBottom: 10, fontSize: 12, color: "#1a3a26" }}>
+        <strong>Complete reference for Chapter 1</strong> — every concept, every diagram, every definition.<br/>
+        Use this as a lookup when something is unclear. Sections marked <span style={{ background: PL, color: PU, padding: "1px 5px", borderRadius: 3, fontWeight: 700, fontSize: 10 }}>EXT</span> are Extended-tier only.
+      </div>
+
+      {/* Expand-all toggle */}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10 }}>
+        <button onClick={expandAll} style={{ padding: "5px 12px", borderRadius: 6, border: `1.5px solid ${G}`, background: showAll ? G : "#fff", color: showAll ? "#fff" : G, fontSize: 11, fontWeight: 600, cursor: "pointer" }}>
+          {showAll ? "Collapse all" : "Expand all"}
+        </button>
+      </div>
+
+      {/* ───── Section 1: Characteristics of Living Organisms ───── */}
+      <Sec id="t1" title="1 · Characteristics of Living Organisms" page="2">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          The seven characteristics shared by every living organism, summarised by the mnemonic <KW c={AM}>MRS GREN</KW>:
+        </p>
+        <MrsGrenDiagram />
+        <div style={{ marginTop: 12 }}>
+          <Def term="Movement">An action by an organism (or part of it) causing a <Bold>change of position or place</Bold>.</Def>
+          <Def term="Respiration">Chemical reactions in living cells that <Bold>break down nutrient molecules</Bold> to release energy for metabolism.</Def>
+          <Def term="Sensitivity">The ability to <Bold>detect and respond to stimuli</Bold> in the internal or external environment.</Def>
+          <Def term="Growth">A <Bold>permanent increase in size and dry mass</Bold>, by an increase in cell number, cell size, or both.</Def>
+          <Def term="Reproduction">The processes that produce <Bold>more of the same kind</Bold> of organism.</Def>
+          <Def term="Excretion">The removal of <Bold>toxic waste products of metabolism</Bold> and substances in excess of requirements.</Def>
+          <Def term="Nutrition">Taking in materials for energy, growth and development. Plants need light, CO₂, water, ions; animals need organic compounds, ions, and usually water.</Def>
+        </div>
+        <Tip>
+          A common mistake: confusing <em>respiration</em> (chemical energy release in cells) with <em>breathing</em> (gas exchange ventilation). They are different processes.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 2: Classification & Binomial System ───── */}
+      <Sec id="t2" title="2 · Classification & The Binomial System" page="3">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          Earth has millions of species. <KW>Classification</KW> sorts them into nested groups based on shared features, with each level becoming more specific as you go down.
+        </p>
+
+        <div style={{ marginTop: 10 }}>
+          <Def term="Species">A group of organisms that can <Bold>reproduce to produce fertile offspring</Bold>.</Def>
+        </div>
+
+        <div style={{ marginTop: 14, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>The binomial system (Linnaeus, 18th century)</strong>
+          Each organism has a <KW>two-part Latin name</KW>:
+          <ul style={{ marginTop: 6, paddingLeft: 20 }}>
+            <li><Bold>Genus</Bold> — capital letter, e.g. <em>Homo</em></li>
+            <li><Bold>Species</Bold> — lowercase, e.g. <em>sapiens</em></li>
+            <li>Always written in <em>italics</em> (or underlined when handwritten)</li>
+          </ul>
+          <Bold>Why Latin?</Bold> A single, universal name avoids language confusion (a "robin" in the UK and India are different birds — but <em>Erithacus rubecula</em> is unambiguous).
+        </div>
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 6 }}>Hierarchy of classification — 7 levels</strong>
+          <LinnaeusHierarchy />
+        </div>
+
+        <Tip>
+          The mnemonic <Bold>"King Philip Came Over For Gran's Spaghetti"</Bold> = Kingdom, Phylum, Class, Order, Family, Genus, Species. The further down the list, the more features the members share.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 3: Dichotomous Keys ───── */}
+      <Sec id="t3" title="3 · Dichotomous Keys" page="5">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          A <KW>dichotomous key</KW> identifies an unknown organism through a series of paired statements. "Dichotomous" means <em>branching into two</em>: at each step you pick the option that matches your specimen, which leads to the next pair — eventually arriving at a name.
+        </p>
+
+        <div style={{ marginTop: 10, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>How to use a key correctly</strong>
+          <ol style={{ paddingLeft: 20, margin: "4px 0" }}>
+            <li>Start with one organism at a time.</li>
+            <li><Bold>Always begin at step 1</Bold> — never skip ahead.</li>
+            <li>At each step, pick the description that fits, then follow its instruction (e.g. "go to step 3" or a species name).</li>
+            <li>Repeat for the next organism, again from step 1.</li>
+          </ol>
+        </div>
+
+        <DichotomousKeyVisual />
+
+        <Tip>
+          IGCSE almost always asks you to <Bold>use</Bold> a key, not construct one. Practise reading keys carefully and tracing the path step by step. Multiple-choice paper favourite.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 4: Evolutionary Relationships & DNA (EXT) ───── */}
+      <Sec id="t4" title="4 · Evolutionary Relationships & DNA Classification" page="7" ext>
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          Modern classification aims to reflect <KW c={PU}>evolutionary relationships</KW> — grouping organisms by how recently they shared a common ancestor.
+        </p>
+
+        <div style={{ marginTop: 12, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Old method — morphology &amp; anatomy</strong>
+          Originally, organisms were grouped by visible features (shape, body plan, limb structure) and dissection of internal anatomy. Useful, but limited: superficially similar organisms may not actually be closely related.
+        </div>
+
+        <div style={{ marginTop: 12, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Modern method — DNA base sequences</strong>
+          Every species has its own DNA sequence. The principle:
+          <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 6, padding: "8px 12px", margin: "8px 0", fontSize: 12.5, color: "#3a2a6a" }}>
+            <Bold>More similar DNA base sequences</Bold> → more recent common ancestor → more closely related.
+          </div>
+          Because DNA codes for proteins, comparing <Bold>amino acid sequences</Bold> gives the same information.
+        </div>
+
+        <DNAComparison />
+
+        <div style={{ marginTop: 10, fontSize: 12.5, color: GR, lineHeight: 1.7 }}>
+          In the example above, the two <em>Brachinus</em> species share an identical sequence — their DNA places them in the same genus. The other species differ at one or more positions, indicating a more distant common ancestor.
+        </div>
+
+        <Tip>
+          Mammals share more DNA base sequences with other mammals than with any other vertebrate group — DNA evidence confirms morphological grouping for vertebrates, but has overturned mistakes in other parts of the tree of life.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 5: The Five Kingdoms ───── */}
+      <Sec id="t5" title="5 · The Five Kingdoms" page="10">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          The first split in classification places every living organism into one of <KW>five kingdoms</KW>: <Bold>Animals</Bold>, <Bold>Plants</Bold>, <Bold>Fungi</Bold>, <Bold>Protoctists</Bold>, <Bold>Prokaryotes</Bold>. (Viruses are not included — see Section 9.)
+        </p>
+
+        <FiveKingdomsCells />
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Animals</strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li><Bold>Multicellular</Bold></li>
+            <li>Cells have a <KW>nucleus</KW>, but <Bold>no cell wall</Bold> and <Bold>no chloroplasts</Bold></li>
+            <li>Feed on organic substances made by other organisms (<KW>heterotrophic</KW>)</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Plants</strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li><Bold>Multicellular</Bold></li>
+            <li>Cells have a <KW>nucleus</KW>, <KW>cellulose cell wall</KW>, and <KW>chloroplasts</KW></li>
+            <li>Make their own organic molecules by <KW>photosynthesis</KW> (<KW>autotrophic</KW>)</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Fungi <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700 }}>EXT</span></strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li>Usually multicellular (yeasts are unicellular)</li>
+            <li>Body made of thread-like <KW>hyphae</KW> forming a network called <Bold>mycelium</Bold></li>
+            <li>Cells have <KW>nuclei</KW> and cell walls — <Bold>not made of cellulose</Bold> (chitin instead)</li>
+            <li>Do not photosynthesise — feed by <KW>saprophytic</KW> nutrition (on dead/decaying matter) or <KW>parasitic</KW> nutrition (on a living host)</li>
+            <li>Examples: mushrooms, moulds, yeasts</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Protoctists <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700 }}>EXT</span></strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li>Mostly unicellular, some multicellular</li>
+            <li>All have a <KW>nucleus</KW>; some have cell walls and chloroplasts</li>
+            <li>Some photosynthesise (e.g. <em>Chlamydomonas</em>, <em>Euglena</em>); others ingest food (e.g. <em>Amoeba</em>, <em>Paramecium</em>, <em>Plasmodium</em>)</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Prokaryotes <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700 }}>EXT</span></strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li>Usually <KW>unicellular</KW></li>
+            <li>Cell wall present (<Bold>not cellulose</Bold>) — bacteria use peptidoglycan</li>
+            <li>Cytoplasm and ribosomes, but <KW c={RD}>no nucleus</KW> and no other membrane-bound organelles</li>
+            <li>DNA is a single circular loop, often with smaller <KW>plasmids</KW></li>
+            <li>Examples: bacteria, blue-green algae</li>
+          </ul>
+        </div>
+
+        <Tip>
+          Distinguish <Bold>main features</Bold> (shared by all members of a group) from <Bold>defining features</Bold> (unique to that group). Example: all vertebrates have a backbone (main feature shared with all classes), but only mammals have fur (defining feature of mammals).
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 6: Animal Kingdom — Vertebrates & Arthropods ───── */}
+      <Sec id="t6" title="6 · The Animal Kingdom — Vertebrates & Arthropods" page="11">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          Animals split into two major groups by the presence or absence of a backbone:
+          <Bold> Vertebrates</Bold> (with vertebral column) and <Bold>Invertebrates</Bold> (without).
+          <KW>Arthropods</KW> are the largest invertebrate group — invertebrates with <Bold>jointed legs</Bold> and an exoskeleton.
+        </p>
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 6, fontSize: 13 }}>Vertebrates — five classes</strong>
+          <VertebrateTable />
+          <div style={{ fontSize: 12, color: GR, lineHeight: 1.6, marginTop: 8 }}>
+            <KW c={AM}>Endothermic</KW> (warm-blooded) = body temperature regulated internally — Mammals, Birds.<br/>
+            <KW c={AM}>Ectothermic</KW> (cold-blooded) = body temperature varies with surroundings — Reptiles, Amphibians, Fish.
+          </div>
+        </div>
+
+        <div style={{ marginTop: 16 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 6, fontSize: 13 }}>Arthropods — four groups</strong>
+          <ArthropodDiagram />
+          <div style={{ fontSize: 12, color: GR, lineHeight: 1.6, marginTop: 8 }}>
+            All arthropods share: <KW>jointed legs</KW> · <KW>hard exoskeleton</KW> · <KW>segmented body</KW>.
+          </div>
+
+          {/* Arthropod features table */}
+          <div style={{ marginTop: 10, overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+              <thead>
+                <tr style={{ background: G, color: "#fff" }}>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Group</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Body</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Legs</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Antennae</th>
+                  <th style={{ padding: "6px 8px", textAlign: "left" }}>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Myriapods",  "Many segments",            "1 pair per segment",      "1 pair", "Centipede"],
+                  ["Insects",    "3 parts (head/thorax/abdomen)", "3 pairs (+ usually wings)", "1 pair", "Butterfly"],
+                  ["Arachnids",  "2 parts (cephalothorax + abdomen)", "4 pairs",     "None",   "Spider"],
+                  ["Crustaceans","Segmented (calcium exoskeleton)",  ">4 pairs (gills)", "2 pairs", "Crab"],
+                ].map((row, i) => (
+                  <tr key={i} style={{ background: i % 2 ? GL : "#fff" }}>
+                    {row.map((c, j) => (
+                      <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? G : GR }}>{c}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <Tip>
+          Defining features to remember: <Bold>insects</Bold> = 3 body parts &amp; 3 leg pairs, <Bold>arachnids</Bold> = 4 leg pairs &amp; no antennae, <Bold>crustaceans</Bold> = 2 antennae pairs &amp; gills, <Bold>myriapods</Bold> = many segments each with legs.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 7: Plant Kingdom — Ferns vs Flowering Plants (EXT) ───── */}
+      <Sec id="t7" title="7 · The Plant Kingdom — Ferns & Flowering Plants" page="18" ext>
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          All plants contain <KW>chlorophyll</KW> for photosynthesis. The Cambridge syllabus requires two plant groups: <Bold>ferns</Bold> and <Bold>flowering plants</Bold>.
+        </p>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Ferns</strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li>Leaves called <KW>fronds</KW></li>
+            <li>Reproduce by <KW>spores</KW> (not seeds) — produced on the underside of fronds</li>
+            <li>Do not produce flowers</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4, fontSize: 13 }}>Flowering plants</strong>
+          <ul style={{ paddingLeft: 20, fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            <li>Reproduce sexually using <KW>flowers and seeds</KW></li>
+            <li>Seeds form inside the <KW>ovary</KW> at the base of the flower</li>
+            <li>Two sub-groups: <Bold>monocotyledons</Bold> (1 seed leaf) and <Bold>dicotyledons</Bold> (2 seed leaves)</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 6, fontSize: 13 }}>Monocots vs dicots — the key differences</strong>
+          <MonocotDicotCompare />
+        </div>
+
+        <Tip>
+          This appears regularly in the multiple-choice paper. Memorise the four differences: <Bold>cotyledons (1 vs 2)</Bold>, <Bold>leaf shape (narrow vs broad)</Bold>, <Bold>veins (parallel vs net)</Bold>, <Bold>flower parts (×3 vs ×4 or 5)</Bold>.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 8: Viruses (EXT) ───── */}
+      <Sec id="t8" title="8 · Viruses" page="21" ext>
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          Viruses are <KW c={RD}>not classified within the five kingdoms</KW> — they are <Bold>not considered living organisms</Bold>. They cannot perform the seven life processes on their own; instead they hijack a host cell's machinery to make copies of themselves.
+        </p>
+
+        <VirusStructure />
+
+        <div style={{ marginTop: 8, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Basic structure</strong>
+          A virus is essentially a parcel of <KW>genetic material</KW> (DNA <em>or</em> RNA) wrapped in a <KW>protein coat</KW> called the <Bold>capsid</Bold>. Some viruses also have an outer lipid <Bold>envelope</Bold>.
+        </div>
+
+        <div style={{ marginTop: 10, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Why viruses are not "alive"</strong>
+          They cannot <Bold>respire</Bold>, <Bold>excrete</Bold>, <Bold>grow</Bold>, or <Bold>reproduce</Bold> independently. Outside a host they are inert chemical particles. Examples: influenza virus, HIV, tobacco mosaic virus.
+        </div>
+      </Sec>
+
+      {/* ───── Section 9: Exam-style Questions (kept from original) ───── */}
+      <Sec id="t9" title="9 · Exam-style Questions" page="23">
+        <div style={{ fontSize: 12, color: GR, lineHeight: 1.7 }}>
+          The seven exam-style questions from Hodder p.23 — full mark-scheme answers in <Bold>② Exam Practice</Bold> tab.
+          {[
+            "[3] State three other characteristics Amoeba would show",
+            "[2+3] Define species; explain binomial system with Panthera tigris",
+            "[3+3] Main characteristics of arthropods; table of differences insects vs myriapods",
+            "[3+3] Main characteristics of a fungus and a bacterium",
+            "[7] Design dichotomous key for vertebrate classes",
+            "[data] Proportions of known species — calculations and comparisons",
+            "[4+4+3] Monocots vs dicots; amphibians vs reptiles; binomial system",
+          ].map((q, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, padding: "6px 0", borderBottom: `1px solid ${BD}`, fontSize: 12 }}>
+              <span style={{ color: G, fontWeight: 700, flexShrink: 0 }}>Q{i + 1}</span>
+              <span>{q}</span>
+            </div>
+          ))}
+        </div>
+      </Sec>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ⑤ SME FLASHCARD TAB
+// ════════════════════════════════════════════════════════════════════════════
+function FlashcardTab() {
+  const [flipped, setFlipped] = useState({});
+  const [activeCat, setActiveCat] = useState("all");
+
+  const toggle = (id) => setFlipped(p => ({ ...p, [id]: !p[id] }));
+  const flipAll = (state) => {
+    const next = {};
+    cards.forEach(c => { if (activeCat === "all" || c.cat === activeCat) next[c.id] = state; });
+    setFlipped(state ? next : {});
+  };
+
+  const categories = [
+    { id: "all",    label: "All 32",         color: TL,        count: 32 },
+    { id: "mrs",    label: "MRS GREN",       color: "#1e6091", count: 4  },
+    { id: "class",  label: "Classification", color: "#6a0dad", count: 8  },
+    { id: "king",   label: "Kingdoms",       color: "#1a7a3a", count: 9  },
+    { id: "vert",   label: "Vert. & Arth.",  color: "#b5540a", count: 5  },
+    { id: "plant",  label: "Plants & Virus", color: "#c0392b", count: 6  },
+  ];
+
+  // 32 cards — paraphrased from Save My Exams flashcards
+  const cards = [
+    // ── MRS GREN (4) ──
+    { id: 1,  cat: "mrs",   q: "What does the G in MRS GREN stand for?",
+      a: <>The <strong>G</strong> stands for <KW c={G}>Growth</KW> — a permanent increase in size and dry mass.</> },
+    { id: 2,  cat: "mrs",   q: "What do the two Rs in MRS GREN stand for?",
+      a: <>The two Rs stand for <KW c={G}>Respiration</KW> and <KW c={G}>Reproduction</KW>.</> },
+    { id: 3,  cat: "mrs",   q: "Define sensitivity in the context of MRS GREN.",
+      a: <><KW c={G}>Sensitivity</KW> is an organism's ability to <Bold>detect and respond to stimuli</Bold> in its internal or external environment.</> },
+    { id: 4,  cat: "mrs",   q: "What is movement in living organisms?",
+      a: <><KW c={G}>Movement</KW> is any action by an organism (or part of it) that causes a <Bold>change in position or place</Bold>.</> },
+
+    // ── Classification (8) ──
+    { id: 5,  cat: "class", q: "How were living organisms traditionally classified?",
+      a: <>By their <KW c={PU}>structural (morphological) characteristics</KW> — body shape, internal anatomy, and other observable features.</> },
+    { id: 6,  cat: "class", q: "True or False? The binomial system uses family and genus levels.",
+      a: <><KW c={RD}>False.</KW> The binomial system uses <Bold>genus and species</Bold> — e.g. <em>Homo sapiens</em>.</> },
+    { id: 7,  cat: "class", q: "Canis lupus is the scientific name for wolves. What does this tell us?",
+      a: <>Wolves belong to the genus <KW c={PU}>Canis</KW> and the species <KW c={PU}>lupus</KW>. Genus is capitalised, species lowercase, both italicised.</> },
+    { id: 8,  cat: "class", q: "Define the term species.",
+      a: <>A <KW c={PU}>species</KW> is a group of organisms that can <Bold>reproduce to produce fertile offspring</Bold>.</> },
+    { id: 9,  cat: "class", q: "What is a dichotomous key?",
+      a: <>An identification tool that gives a <Bold>series of paired statements</Bold>; at each step you choose the one matching the organism, leading you to its name.</> },
+    { id: 10, cat: "class", q: "True or False? You can start a dichotomous key from any point.",
+      a: <><KW c={RD}>False.</KW> You must <Bold>follow the statements from the very beginning</Bold> in order; skipping steps misidentifies the organism.</> },
+    { id: 11, cat: "class", q: "What does it mean to classify by evolutionary relationship? (Ext.)",
+      a: <>Grouping organisms by <KW c={PU}>shared common ancestry</KW>. Those with more recent common ancestors are grouped more closely than those with distant ancestors.</> },
+    { id: 12, cat: "class", q: "How does DNA sequencing contribute to classification? (Ext.)",
+      a: <>Organisms can now be classified by their <KW c={PU}>DNA base sequences</KW> rather than only observable features — providing a more accurate evolutionary picture.</> },
+
+    // ── Kingdoms (Animal/Plant + Five) (9) ──
+    { id: 13, cat: "king",  q: "T/F? Organisms with a more recent common ancestor have more similar DNA sequences. (Ext.)",
+      a: <><KW c={G}>True.</KW> The more recent the common ancestor, the more <Bold>DNA bases the organisms share</Bold>.</> },
+    { id: 14, cat: "king",  q: "T/F? Mammals' DNA is more similar to other mammals than to other vertebrates. (Ext.)",
+      a: <><KW c={G}>True.</KW> Closer evolutionary relationship → more similar DNA base sequences.</> },
+    { id: 15, cat: "king",  q: "Main features of the Animal Kingdom?",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><Bold>Multicellular</Bold></li>
+            <li>Cells have a <KW c={G}>nucleus</KW> but <Bold>no cell wall, no chloroplasts</Bold></li>
+            <li>Feed on <KW c={G}>organic molecules</KW> from other organisms (heterotrophic)</li>
+          </ul> },
+    { id: 16, cat: "king",  q: "T/F? All animals are multicellular.",
+      a: <><KW c={G}>True.</KW> All members of the animal kingdom are multicellular organisms.</> },
+    { id: 17, cat: "king",  q: "T/F? Animal cells contain chloroplasts.",
+      a: <><KW c={RD}>False.</KW> Animal cells do <Bold>not</Bold> contain chloroplasts — they cannot photosynthesise.</> },
+    { id: 18, cat: "king",  q: "Main features of the Plant Kingdom?",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><Bold>Multicellular</Bold></li>
+            <li>Cells have a <KW c={G}>nucleus, cell wall, and chloroplasts</KW></li>
+            <li>Make their own organic molecules by <KW c={G}>photosynthesis</KW> (autotrophic)</li>
+          </ul> },
+    { id: 19, cat: "king",  q: "What are the five kingdoms? (Ext.)",
+      a: <>The five kingdoms: <KW c={PU}>Animals</KW>, <KW c={PU}>Plants</KW>, <KW c={PU}>Fungi</KW>, <KW c={PU}>Protoctists</KW>, <KW c={PU}>Prokaryotes</KW>.</> },
+    { id: 20, cat: "king",  q: "Main features of fungi? (Ext.)",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Usually multicellular (yeasts are unicellular)</li>
+            <li>Cells contain <KW c={G}>nuclei</KW></li>
+            <li>Cell walls are <Bold>not</Bold> made of cellulose (chitin instead)</li>
+            <li>Feed by <KW c={G}>saprophytic or parasitic nutrition</KW></li>
+          </ul> },
+    { id: 21, cat: "king",  q: "What are protoctists? (Ext.)",
+      a: <>Unicellular or multicellular organisms with a <KW c={PU}>nucleus</KW>. Some have cell walls and chloroplasts, some don't; some photosynthesise, others feed on organic substances.</> },
+
+    // ── Vertebrates & Arthropods (5) ──
+    { id: 22, cat: "vert",  q: "Define vertebrate.",
+      a: <>A <KW c={AM}>vertebrate</KW> is an animal that has a <Bold>backbone (vertebral column)</Bold>.</> },
+    { id: 23, cat: "vert",  q: "What are the main groups of vertebrates?",
+      a: <>The five vertebrate groups: <KW c={AM}>Mammals · Birds · Reptiles · Amphibians · Fish</KW>.</> },
+    { id: 24, cat: "vert",  q: "Main features of mammals?",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW c={AM}>Fur or hair</KW> on body</li>
+            <li><KW c={AM}>Mammary glands</KW> to feed young with milk</li>
+            <li><Bold>Regulate internal body temperature</Bold> (endothermic)</li>
+            <li><KW c={AM}>Diaphragm</KW> for breathing</li>
+            <li><Bold>Four-chambered heart</Bold></li>
+          </ul> },
+    { id: 25, cat: "vert",  q: "Define arthropod.",
+      a: <><KW c={AM}>Arthropods</KW> are <Bold>invertebrates with jointed legs</Bold> and an exoskeleton.</> },
+    { id: 26, cat: "vert",  q: "Main features of crustaceans?",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW c={AM}>Two pairs of antennae</KW></li>
+            <li>Hard <Bold>exoskeleton</Bold></li>
+            <li>Separate body segments</li>
+            <li><KW c={AM}>More than four pairs</KW> of jointed legs</li>
+            <li><Bold>Gills</Bold> for gas exchange</li>
+          </ul> },
+
+    // ── Plants & Virus (6) ──
+    { id: 27, cat: "plant", q: "What are the main groups of arthropods?",
+      a: <>The four arthropod groups: <KW c={RD}>Myriapods · Insects · Arachnids · Crustaceans</KW>.</> },
+    { id: 28, cat: "plant", q: "T/F? All plants reproduce using flowers and seeds. (Ext.)",
+      a: <><KW c={RD}>False.</KW> Some plants — like <Bold>ferns</Bold> — reproduce by <KW c={RD}>spores</KW> instead of flowers and seeds.</> },
+    { id: 29, cat: "plant", q: "Two differences between monocot and dicot leaves? (Ext.)",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Monocots: <KW c={RD}>parallel veins</KW> · Dicots: <KW c={RD}>network of veins</KW></li>
+            <li>Monocots: <Bold>narrow</Bold> leaves · Dicots: <Bold>broader</Bold> leaves</li>
+          </ul> },
+    { id: 30, cat: "plant", q: "Key flower difference: monocots vs dicots? (Ext.)",
+      a: <>Monocot flowers have petals in <KW c={RD}>multiples of 3</KW>; dicot flowers have petals in <KW c={RD}>multiples of 4 or 5</KW>.</> },
+    { id: 31, cat: "plant", q: "Main characteristics of prokaryotes? (Ext.)",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW c={RD}>Unicellular</KW></li>
+            <li>Cell walls <Bold>not</Bold> made of cellulose</li>
+            <li>Contain cytoplasm but <KW c={RD}>no nucleus</KW> and no other membrane-bound organelles</li>
+          </ul> },
+    { id: 32, cat: "plant", q: "Describe the basic structure of a virus. (Ext.)",
+      a: <>A virus consists of <KW c={RD}>genetic material (DNA or RNA)</KW> enclosed in a <Bold>protein coat (capsid)</Bold>. Viruses are not classified within the five kingdoms.</> },
+  ];
+
+  const visibleCards = activeCat === "all" ? cards : cards.filter(c => c.cat === activeCat);
+  const flippedCount = visibleCards.filter(c => flipped[c.id]).length;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Header banner */}
+      <div style={{ background: TL, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13, lineHeight: 1.55 }}>
+        <div style={{ fontWeight: 700, marginBottom: 3 }}>📇 Save My Exams · 32 Flashcards</div>
+        <div style={{ fontSize: 12, opacity: 0.95 }}>Click any card to flip · Filter by category · Track your progress</div>
+      </div>
+
+      {/* Category filter */}
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        {categories.map(c => (
+          <button key={c.id} onClick={() => setActiveCat(c.id)}
+            style={{
+              padding: "6px 11px", borderRadius: 16,
+              border: activeCat === c.id ? `2px solid ${c.color}` : `1.5px solid ${BD}`,
+              background: activeCat === c.id ? c.color : "#fff",
+              color: activeCat === c.id ? "#fff" : c.color,
+              fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+            }}>
+            {c.label} <span style={{ opacity: 0.75, fontWeight: 500 }}>({c.count})</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Progress + control bar */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: TLL, borderRadius: 8, padding: "8px 14px", fontSize: 12, color: TL }}>
+        <div>
+          <Bold>Progress:</Bold> {flippedCount} / {visibleCards.length} revealed
+          <div style={{ width: 140, height: 5, background: "#fff", borderRadius: 3, marginTop: 4, overflow: "hidden" }}>
+            <div style={{ width: `${visibleCards.length ? (flippedCount / visibleCards.length) * 100 : 0}%`,
+              height: "100%", background: TL, transition: "width .3s" }} />
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => flipAll(true)}  style={btnSm(TL,  true)}>Flip all</button>
+          <button onClick={() => flipAll(false)} style={btnSm(TL, false)}>Reset</button>
+        </div>
+      </div>
+
+      {/* Card grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+        {visibleCards.map(c => {
+          const isFlip = !!flipped[c.id];
+          const catColor = categories.find(x => x.id === c.cat)?.color || TL;
+          return (
+            <div key={c.id} onClick={() => toggle(c.id)}
+              style={{
+                position: "relative", minHeight: 180, cursor: "pointer",
+                border: `1.5px solid ${isFlip ? catColor : BD}`,
+                borderRadius: 10,
+                background: isFlip ? "#fffdf6" : "#fff",
+                padding: "12px 14px", transition: "all .2s",
+                boxShadow: isFlip ? `0 2px 8px ${catColor}22` : "0 1px 3px #00000010",
+                display: "flex", flexDirection: "column",
+              }}>
+              {/* Card header */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+                fontSize: 10, color: catColor, fontWeight: 700, letterSpacing: 0.5, marginBottom: 6 }}>
+                <span>#{c.id} · {categories.find(x => x.id === c.cat).label.toUpperCase()}</span>
+                <span style={{ fontSize: 10, color: "#999" }}>{isFlip ? "ANSWER ↺" : "Q · click ↻"}</span>
+              </div>
+              {/* Card body */}
+              <div style={{ fontSize: 12.5, lineHeight: 1.55, color: GR, flex: 1 }}>
+                {isFlip ? c.a : <span style={{ fontWeight: 600 }}>{c.q}</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer note */}
+      <div style={{ marginTop: 6, padding: "9px 14px", background: GL, borderRadius: 8,
+        fontSize: 11, color: G, textAlign: "center", lineHeight: 1.5 }}>
+        💡 <Bold>Study tip:</Bold> Read the question, attempt your answer aloud, then flip to check.
+        Use category filters to drill weak areas. Cards marked <em>(Ext.)</em> are Extended-tier only.
+      </div>
+    </div>
+  );
+}
+
+const btnSm = (color, filled) => ({
+  padding: "5px 10px", borderRadius: 5, fontSize: 11, fontWeight: 600, cursor: "pointer",
+  border: `1.5px solid ${color}`,
+  background: filled ? color : "#fff",
+  color: filled ? "#fff" : color,
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// MAIN APP — STANDARD TEMPLATE (do not modify; only CHAPTER_META above is chapter-specific)
+// ════════════════════════════════════════════════════════════════════════════
+function App() {
+  const [active, setActive] = useState("essence");
+  const tab = TABS.find(t => t.id === active);
+
+  return (
+    <div style={{ fontFamily: "'Segoe UI', Arial, sans-serif", maxWidth: 800, margin: "0 auto", padding: "20px 16px", color: GR }}>
+      {/* Top nav: Index button on the left */}
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 12 }}>
+        <a href="contents.html" style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          fontSize: 12, fontWeight: 600, color: G, textDecoration: "none",
+          padding: "5px 10px 5px 6px", borderRadius: 6,
+          border: `1px solid ${BD}`, background: "#fff", transition: "all .15s",
+        }}>
+          <span style={{ fontSize: 14, lineHeight: 1 }}>‹</span>
+          <span>Index</span>
+        </a>
+      </div>
+
+      {/* Header */}
+      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 12 }}>
+        <div style={{ fontSize: 11, color: "#999", letterSpacing: 1, marginBottom: 3 }}>IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
+        <div style={{ fontSize: 22, fontWeight: 800, color: G, lineHeight: 1.2 }}>
+          {CHAPTER_META.title}
+        </div>
+        <div style={{ fontSize: 13, color: "#666", marginTop: 4 }}>
+          {CHAPTER_META.subtitle}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 4, flexWrap: "wrap" }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setActive(t.id)} style={{
+            padding: "9px 16px", borderRadius: 8,
+            border: active === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+            background: active === t.id ? t.color : "#fff",
+            color: active === t.id ? "#fff" : t.color,
+            fontSize: 12, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+          }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, color: tab.color, marginBottom: 16, paddingLeft: 4 }}>{tab.sub}</div>
+
+      {active === "essence"   && <EssenceTab />}
+      {active === "exam"      && <ExamTab />}
+      {active === "summary"   && <SummaryTab />}
+      {active === "textbook"  && <TextbookTab />}
+      {active === "flashcard" && <FlashcardTab />}
+
+      <div style={{ marginTop: 24, padding: "10px 16px", background: "#f5f5f3", borderRadius: 8, fontSize: 11, color: "#999", textAlign: "center" }}>
+        Hodder Cambridge IGCSE Biology Ch.{CHAPTER_META.number} · All English · NLCS Jeju — Extended (Paper 1, 4, 6)
+      </div>
+    </div>
+  );
+}
+
+
+const __rootEl = document.getElementById('root');
+const __root = ReactDOM.createRoot(__rootEl);
+__root.render(<App />);
+const __loader = document.getElementById('loader');
+if (__loader) {
+  setTimeout(() => {
+    __loader.classList.add('hidden');
+    setTimeout(() => __loader.remove(), 350);
+  }, 100);
+}
+</script>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('nlcs-bio-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

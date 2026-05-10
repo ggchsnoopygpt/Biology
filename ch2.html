@@ -1,0 +1,2374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Ch.2 — Organisation of the Organism</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjE4IiBmaWxsPSIjMmQ2YTRmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmb250LXNpemU9IjU1IiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QjwvdGV4dD48L3N2Zz4=" />
+
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('nlcs-bio-theme');
+      if (saved === null || saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch(e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #fafaf7;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  .loader { position: fixed; inset: 0; background: #fafaf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 100; transition: opacity 0.3s; }
+  .loader.hidden { opacity: 0; pointer-events: none; }
+  .loader-spinner { width: 36px; height: 36px; border: 3px solid #d8f3dc; border-top-color: #2d6a4f; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .loader-text { font-size: 13px; color: #888; letter-spacing: 0.5px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    top: max(env(safe-area-inset-top), 14px);
+    right: 14px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e4e4e0;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .theme-toggle:hover { transform: scale(1.08); }
+  .theme-toggle svg { width: 18px; height: 18px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: #2d6a4f; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     DARK MODE
+     ═══════════════════════════════════════════════════════════════════════ */
+  html.dark { background: #1a1a1a; }
+  html.dark body { background: #1a1a1a; color: #e8e8e8; }
+  html.dark .loader { background: #1a1a1a; }
+  html.dark .loader-text { color: #999; }
+  html.dark .theme-toggle { background: rgba(40, 40, 40, 0.92); border-color: #3a3a3a; }
+  html.dark .theme-toggle svg { stroke: #f3d488; }
+  html.dark .theme-toggle .icon-sun { display: block; }
+  html.dark .theme-toggle .icon-moon { display: none; }
+
+  /* ─── Pure white & off-white backgrounds → dark ─── */
+  html.dark #root [style*="background: rgb(255, 255, 255)"],
+  html.dark #root [style*="background:#fff"],
+  html.dark #root [style*="background: #fff"] {
+    background: #2a2a2a !important;
+  }
+  html.dark #root [style*="rgb(245, 245, 243)"],
+  html.dark #root [style*="#f5f5f3"] { background: #232323 !important; }
+  html.dark #root [style*="rgb(248, 248, 246)"],
+  html.dark #root [style*="#f8f8f6"] { background: #252525 !important; }
+  html.dark #root [style*="rgb(250, 250, 247)"],
+  html.dark #root [style*="#fafaf7"] { background: #1a1a1a !important; }
+
+  /* ─── Pastel backgrounds (exam cards, flashcard backs) → dark ─── */
+  /* RL #fdf0f0 - light red/pink (exam card hard) */
+  html.dark #root [style*="rgb(253, 240, 240)"],
+  html.dark #root [style*="#fdf0f0"] { background: #2a1a1a !important; color: #e8e8e8 !important; }
+  /* AL #fff3e0 - light amber */
+  html.dark #root [style*="rgb(255, 243, 224)"],
+  html.dark #root [style*="#fff3e0"] { background: #2a200f !important; color: #e8e8e8 !important; }
+  /* PL #ede9fe - light purple */
+  html.dark #root [style*="rgb(237, 233, 254)"],
+  html.dark #root [style*="#ede9fe"] { background: #1f1c2e !important; color: #e8e8e8 !important; }
+  /* GL #d8f3dc - light green */
+  html.dark #root [style*="rgb(216, 243, 220)"],
+  html.dark #root [style*="#d8f3dc"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  /* TLL #e6f4f2 - light teal */
+  html.dark #root [style*="rgb(230, 244, 242)"],
+  html.dark #root [style*="#e6f4f2"] { background: #1a2a28 !important; color: #e8e8e8 !important; }
+  /* Flashcard back: #fffdf6 - cream */
+  html.dark #root [style*="rgb(255, 253, 246)"],
+  html.dark #root [style*="#fffdf6"] { background: #2a2820 !important; color: #e8e8e8 !important; }
+  /* Exam card backgrounds (e8f7ec, fff4e6, fdf0f0 used in diffMeta.bg) */
+  html.dark #root [style*="rgb(232, 247, 236)"],
+  html.dark #root [style*="#e8f7ec"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  html.dark #root [style*="rgb(255, 244, 230)"],
+  html.dark #root [style*="#fff4e6"] { background: #2a200f !important; color: #e8e8e8 !important; }
+
+  /* Default text */
+  html.dark #root > div { color: #e8e8e8 !important; }
+
+  /* Grey text → light */
+  html.dark #root [style*="color: rgb(61, 61, 61)"],
+  html.dark #root [style*="color:#3d3d3d"],
+  html.dark #root [style*="color: #3d3d3d"] { color: #e8e8e8 !important; }
+  html.dark #root [style*="color: rgb(102, 102, 102)"],
+  html.dark #root [style*="color:#666"],
+  html.dark #root [style*="color: #666"] { color: #b8b8b8 !important; }
+  html.dark #root [style*="color: rgb(136, 136, 136)"],
+  html.dark #root [style*="color:#888"],
+  html.dark #root [style*="color: #888"] { color: #999 !important; }
+  html.dark #root [style*="color: rgb(153, 153, 153)"],
+  html.dark #root [style*="color:#999"],
+  html.dark #root [style*="color: #999"] { color: #888 !important; }
+
+  /* Border default */
+  html.dark #root [style*="rgb(228, 228, 224)"],
+  html.dark #root [style*="#e4e4e0"] { border-color: #3a3a3a !important; }
+
+  /* Dark text on colored backgrounds (exam card question text "#2a0000") → light */
+  html.dark #root [style*="rgb(42, 0, 0)"],
+  html.dark #root [style*="#2a0000"] { color: #f0d4d4 !important; }
+  /* Dark amber text on AL background */
+  html.dark #root [style*="rgb(42, 16, 0)"],
+  html.dark #root [style*="#2a1000"] { color: #f0d8b5 !important; }
+  /* Highlighted dark red */
+  html.dark #root [style*="rgb(58, 0, 0)"],
+  html.dark #root [style*="#3a0000"] { color: #f0c8c8 !important; }
+
+  /* SVG diagrams: keep white card */
+  html.dark #root svg[viewBox] {
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb { background: #444; }
+
+  html.dark #root strong[style*="color: rgb(61, 61, 61)"],
+  html.dark #root strong[style*="#3d3d3d"] { color: #f0f0f0 !important; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     TAB COLORS — vibrant neon for the 5 main tab buttons
+     ═══════════════════════════════════════════════════════════════════════ */
+  /* Tab text color (when not active) */
+  html.dark #root button[style*="color: rgb(181, 84, 10)"],
+  html.dark #root button[style*="color:#b5540a"],
+  html.dark #root button[style*="color: #b5540a"] { color: #ffa726 !important; }
+  html.dark #root button[style*="color: rgb(176, 32, 32)"],
+  html.dark #root button[style*="color:#b02020"],
+  html.dark #root button[style*="color: #b02020"] { color: #ff6b6b !important; }
+  html.dark #root button[style*="color: rgb(91, 63, 166)"],
+  html.dark #root button[style*="color:#5b3fa6"],
+  html.dark #root button[style*="color: #5b3fa6"] { color: #a78bfa !important; }
+  html.dark #root button[style*="color: rgb(45, 106, 79)"],
+  html.dark #root button[style*="color:#2d6a4f"],
+  html.dark #root button[style*="color: #2d6a4f"] { color: #5dcaa5 !important; }
+  html.dark #root button[style*="color: rgb(26, 122, 110)"],
+  html.dark #root button[style*="color:#1a7a6e"],
+  html.dark #root button[style*="color: #1a7a6e"] { color: #5eead4 !important; }
+
+  /* Tab active background */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"] { background-color: #ffa726 !important; border-color: #ffa726 !important; }
+  html.dark #root button[style*="background: rgb(176, 32, 32)"] { background-color: #ff6b6b !important; border-color: #ff6b6b !important; }
+  html.dark #root button[style*="background: rgb(91, 63, 166)"] { background-color: #a78bfa !important; border-color: #a78bfa !important; }
+  html.dark #root button[style*="background: rgb(45, 106, 79)"] { background-color: #5dcaa5 !important; border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="background: rgb(26, 122, 110)"] { background-color: #5eead4 !important; border-color: #5eead4 !important; }
+
+  /* Active tab: white text → dark text on neon bg */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(176, 32, 32)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(91, 63, 166)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(45, 106, 79)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(26, 122, 110)"][style*="color: rgb(255, 255, 255)"] {
+    color: #1a1a1a !important;
+  }
+
+  /* Tab borders */
+  html.dark #root button[style*="2px solid rgb(181, 84, 10)"] { border-color: #ffa726 !important; }
+  html.dark #root button[style*="2px solid rgb(176, 32, 32)"] { border-color: #ff6b6b !important; }
+  html.dark #root button[style*="2px solid rgb(91, 63, 166)"] { border-color: #a78bfa !important; }
+  html.dark #root button[style*="2px solid rgb(45, 106, 79)"] { border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="2px solid rgb(26, 122, 110)"] { border-color: #5eead4 !important; }
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<div class="loader" id="loader"><div class="loader-spinner"></div><div class="loader-text">Loading Ch.2…</div></div>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+// ── Colour palette ──────────────────────────────────────────────────────────
+const G = "#2d6a4f";   // forest green (chapter colour)
+const GL = "#d8f3dc";  // light green
+const GM = "#52b788";  // mid green
+const AM = "#b5540a";  // amber
+const AL = "#fff3e0";  // light amber
+const PU = "#5b3fa6";  // purple
+const PL = "#ede9fe";  // light purple
+const RD = "#b02020";  // red
+const RL = "#fdf0f0";  // light red
+const GR = "#3d3d3d";  // dark grey text
+const BD = "#e4e4e0";  // border
+
+// ── Highlight / keyword helper ───────────────────────────────────────────────
+const KW = ({ c = G, children }) => (
+  <span style={{ background: c === G ? GL : c === AM ? AL : c === PU ? PL : RL,
+    color: c, fontWeight: 700, borderRadius: 3, padding: "1px 5px", fontSize: "0.95em" }}>
+    {children}
+  </span>
+);
+const Bold = ({ children }) => <strong style={{ color: GR }}>{children}</strong>;
+const Ext = () => (
+  <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700, marginLeft: 4 }}>EXT</span>
+);
+
+// ── Tab config ───────────────────────────────────────────────────────────────
+const TL = "#1a7a6e";   // teal (flashcard tab)
+const TLL = "#e6f4f2";  // light teal
+
+// ════════════════════════════════════════════════════════════════════════════
+// CHAPTER METADATA — only edit this block when creating a new chapter
+// ════════════════════════════════════════════════════════════════════════════
+const CHAPTER_META = {
+  number: 2,
+  title: "Organisation of the Organism",
+  subtitle: "Cells · Specialised Cells · Tissues, Organs, Systems · Microscope & Magnification",
+  flashcardCount: 50,
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// TABS — standard 5-tab structure, identical across all chapters
+// Do NOT modify this array; only CHAPTER_META above is chapter-specific.
+// ════════════════════════════════════════════════════════════════════════════
+const TABS = [
+  { id: "essence",   label: "① Quick Essence",  color: AM, bg: AL,  sub: "Last-minute 5-min review" },
+  { id: "exam",      label: "② Exam Practice",  color: RD, bg: RL,  sub: "Past & predicted questions" },
+  { id: "summary",   label: "③ Summary",        color: PU, bg: PL,  sub: "Concept flow & key tables" },
+  { id: "textbook",  label: "④ Textbook",       color: G,  bg: GL,  sub: "Hodder complete notes" },
+  { id: "flashcard", label: "⑤ SME Flashcard",  color: TL, bg: TLL, sub: "Save My Exams · click to flip" },
+];
+// ════════════════════════════════════════════════════════════════════════════
+// SVG DIAGRAMS — freshly redesigned for Ch.2
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Animal cell vs Plant cell side-by-side ─────────────────────────────────
+function AnimalVsPlantCell() {
+  return (
+    <svg viewBox="0 0 700 360" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="360" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="350" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Generalised Animal Cell vs Plant Cell
+      </text>
+
+      {/* ── ANIMAL CELL ── */}
+      <text x="160" y="48" textAnchor="middle" fontFamily="sans-serif" fontSize="13" fontWeight="700" fill={RD}>Animal cell</text>
+      {/* membrane (irregular round) */}
+      <ellipse cx="160" cy="200" rx="120" ry="100" fill="#fff7f0" stroke={RD} strokeWidth="2"/>
+      {/* nucleus */}
+      <circle cx="170" cy="180" r="32" fill="#f9e1d5" stroke={RD} strokeWidth="1.5"/>
+      <circle cx="170" cy="180" r="8" fill={RD} opacity="0.6"/>
+      {/* mitochondria */}
+      <ellipse cx="100" cy="240" rx="14" ry="6" fill="#ffd9c2" stroke={RD} strokeWidth="1"/>
+      <ellipse cx="220" cy="245" rx="14" ry="6" fill="#ffd9c2" stroke={RD} strokeWidth="1"/>
+      <ellipse cx="200" cy="135" rx="12" ry="5" fill="#ffd9c2" stroke={RD} strokeWidth="1"/>
+      {/* ribosomes (dots) */}
+      {[[120,150],[140,260],[195,265],[230,170],[110,200],[180,250]].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="2.2" fill={RD}/>
+      ))}
+      {/* Labels */}
+      <line x1="50" y1="125" x2="115" y2="170" stroke={RD} strokeWidth="0.8"/>
+      <text x="48" y="122" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>cell membrane</text>
+      <line x1="270" y1="180" x2="200" y2="180" stroke={RD} strokeWidth="0.8"/>
+      <text x="275" y="184" fontFamily="sans-serif" fontSize="10" fill={GR}>nucleus</text>
+      <line x1="50" y1="240" x2="86" y2="240" stroke={RD} strokeWidth="0.8"/>
+      <text x="48" y="244" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>mitochondrion</text>
+      <line x1="270" y1="245" x2="234" y2="245" stroke={RD} strokeWidth="0.8"/>
+      <text x="275" y="249" fontFamily="sans-serif" fontSize="10" fill={GR}>cytoplasm</text>
+      <line x1="270" y1="280" x2="220" y2="270" stroke={RD} strokeWidth="0.8"/>
+      <text x="275" y="284" fontFamily="sans-serif" fontSize="10" fill={GR}>ribosome</text>
+
+      {/* ── PLANT CELL ── */}
+      <text x="540" y="48" textAnchor="middle" fontFamily="sans-serif" fontSize="13" fontWeight="700" fill={G}>Plant cell (palisade)</text>
+      {/* cell wall (outer rectangle, square corners) */}
+      <rect x="470" y="80" width="140" height="240" rx="6" fill="#e8f5e8" stroke={G} strokeWidth="2.5"/>
+      {/* membrane (just inside wall) */}
+      <rect x="476" y="86" width="128" height="228" rx="4" fill="none" stroke={G} strokeWidth="1" strokeDasharray="3,2"/>
+      {/* large central vacuole */}
+      <rect x="490" y="125" width="100" height="170" rx="14" fill="#f0fbf0" stroke={G} strokeWidth="1.5" opacity="0.6"/>
+      {/* chloroplasts (around edge) */}
+      {[[490,110],[540,110],[585,110],[490,300],[540,310],[585,300],[480,180],[480,240],[600,180],[600,240]].map(([x,y],i) => (
+        <ellipse key={i} cx={x} cy={y} rx="9" ry="5" fill={GM} stroke={G} strokeWidth="1"/>
+      ))}
+      {/* nucleus pressed to side */}
+      <circle cx="595" cy="160" r="14" fill="#f9e1d5" stroke={G} strokeWidth="1.5"/>
+      <circle cx="595" cy="160" r="4" fill={G} opacity="0.5"/>
+      {/* Labels */}
+      <line x1="425" y1="100" x2="468" y2="92" stroke={G} strokeWidth="0.8"/>
+      <text x="423" y="103" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>cell wall</text>
+      <line x1="425" y1="140" x2="476" y2="120" stroke={G} strokeWidth="0.8"/>
+      <text x="423" y="143" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>cell membrane</text>
+      <line x1="425" y1="180" x2="490" y2="180" stroke={G} strokeWidth="0.8"/>
+      <text x="423" y="184" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>chloroplast</text>
+      <line x1="425" y1="220" x2="500" y2="220" stroke={G} strokeWidth="0.8"/>
+      <text x="423" y="224" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>vacuole (sap)</text>
+      <line x1="630" y1="160" x2="610" y2="160" stroke={G} strokeWidth="0.8"/>
+      <text x="635" y="164" fontFamily="sans-serif" fontSize="10" fill={GR}>nucleus</text>
+      <line x1="630" y1="220" x2="600" y2="240" stroke={G} strokeWidth="0.8"/>
+      <text x="635" y="224" fontFamily="sans-serif" fontSize="10" fill={GR}>cytoplasm</text>
+
+      {/* central note */}
+      <rect x="305" y="155" width="80" height="90" rx="8" fill="#fff" stroke={GR} strokeDasharray="4,3" strokeWidth="1"/>
+      <text x="345" y="178" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>Plant only:</text>
+      <text x="345" y="196" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={G}>+ cell wall</text>
+      <text x="345" y="210" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={G}>+ chloroplast</text>
+      <text x="345" y="224" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={G}>+ permanent</text>
+      <text x="345" y="236" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={G}>vacuole</text>
+    </svg>
+  );
+}
+
+// ── Bacterial cell diagram ─────────────────────────────────────────────────
+function BacterialCell() {
+  return (
+    <svg viewBox="0 0 680 280" style={{ width: "100%", maxWidth: 680, display: "block", margin: "10px auto" }}>
+      <rect width="680" height="280" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="340" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Generalised Bacterial Cell (Prokaryote)
+      </text>
+
+      {/* outer cell wall */}
+      <ellipse cx="340" cy="155" rx="190" ry="75" fill="#fff5e6" stroke={AM} strokeWidth="2.5"/>
+      {/* cell membrane (inner) */}
+      <ellipse cx="340" cy="155" rx="184" ry="69" fill="#fffaf0" stroke={AM} strokeWidth="1" strokeDasharray="3,2"/>
+      {/* circular DNA (coiled) */}
+      <path d="M280 130 Q300 110, 320 130 T360 130 T400 130 Q420 145, 400 160 T360 160 T320 160 T280 160 Q260 145, 280 130 Z"
+        fill="none" stroke="#7b3fbf" strokeWidth="2.5"/>
+      {/* plasmids (small loops) */}
+      <circle cx="240" cy="180" r="9" fill="none" stroke="#c54f8e" strokeWidth="2"/>
+      <circle cx="430" cy="180" r="9" fill="none" stroke="#c54f8e" strokeWidth="2"/>
+      <circle cx="280" cy="195" r="7" fill="none" stroke="#c54f8e" strokeWidth="2"/>
+      {/* ribosomes (dots) */}
+      {Array.from({length:18}).map((_,i) => {
+        const cx = 200 + (i % 6) * 50; const cy = 110 + Math.floor(i / 6) * 40 + (i % 2) * 8;
+        return <circle key={i} cx={cx} cy={cy} r="2.2" fill={AM}/>;
+      })}
+      {/* glycogen granule */}
+      <circle cx="450" cy="135" r="11" fill="#f0d090" stroke={AM} strokeWidth="1.2"/>
+      <circle cx="455" cy="138" r="3" fill={AM}/>
+      <circle cx="446" cy="132" r="3" fill={AM}/>
+      {/* flagellum */}
+      <path d="M530 155 Q560 140, 590 165 Q620 190, 650 155" fill="none" stroke={AM} strokeWidth="2"/>
+      {/* small filaments */}
+      {[[160,150],[155,170],[170,135],[150,200]].map(([x,y],i) => (
+        <line key={i} x1={x} y1={y} x2={x-15} y2={y-5} stroke={AM} strokeWidth="1"/>
+      ))}
+
+      {/* Labels */}
+      <line x1="340" y1="60" x2="340" y2="80" stroke={GR} strokeWidth="0.8"/>
+      <text x="340" y="55" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={GR}>cell wall (not cellulose)</text>
+      <line x1="120" y1="100" x2="170" y2="115" stroke={GR} strokeWidth="0.8"/>
+      <text x="118" y="103" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>cell membrane</text>
+      <line x1="120" y1="135" x2="280" y2="135" stroke={GR} strokeWidth="0.8"/>
+      <text x="118" y="138" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill="#7b3fbf">circular DNA (chromosome)</text>
+      <line x1="120" y1="180" x2="231" y2="180" stroke={GR} strokeWidth="0.8"/>
+      <text x="118" y="183" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill="#c54f8e">plasmid</text>
+      <line x1="120" y1="215" x2="220" y2="215" stroke={GR} strokeWidth="0.8"/>
+      <text x="118" y="218" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={AM}>ribosome</text>
+      <line x1="560" y1="100" x2="450" y2="125" stroke={GR} strokeWidth="0.8"/>
+      <text x="565" y="103" fontFamily="sans-serif" fontSize="10" fill={GR}>glycogen granule</text>
+      <line x1="660" y1="200" x2="630" y2="170" stroke={GR} strokeWidth="0.8"/>
+      <text x="660" y="218" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={GR}>flagellum</text>
+
+      {/* scale bar */}
+      <line x1="540" y1="245" x2="610" y2="245" stroke={GR} strokeWidth="1.5"/>
+      <line x1="540" y1="240" x2="540" y2="250" stroke={GR} strokeWidth="1.5"/>
+      <line x1="610" y1="240" x2="610" y2="250" stroke={GR} strokeWidth="1.5"/>
+      <text x="575" y="262" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill={GR}>0.001 mm = 1 μm</text>
+
+      {/* note: NO membrane-bound organelles */}
+      <rect x="20" y="240" width="200" height="32" rx="6" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="120" y="257" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={PU}>No nucleus · No mitochondria</text>
+      <text x="120" y="269" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={PU}>No membrane-bound organelles</text>
+    </svg>
+  );
+}
+
+// ── Specialised cells diagram (6 cells) ────────────────────────────────────
+function SpecialisedCells() {
+  return (
+    <svg viewBox="0 0 700 480" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="480" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="350" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Specialised Cells — Structure Adapted to Function
+      </text>
+
+      {/* === Ciliated cell === */}
+      <g transform="translate(20,50)">
+        <rect width="200" height="180" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="100" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Ciliated cell</text>
+        {/* column-like cell */}
+        <rect x="40" y="55" width="120" height="105" fill="#f0f9f0" stroke={G} strokeWidth="1.2"/>
+        {/* cilia (top) */}
+        {Array.from({length:14}).map((_,i) => (
+          <line key={i} x1={42 + i*9} y1="55" x2={42 + i*9 + (i%2?-2:2)} y2="35" stroke={G} strokeWidth="1.2"/>
+        ))}
+        {/* nuclei */}
+        <circle cx="80" cy="120" r="8" fill={RD} opacity="0.5"/>
+        <circle cx="130" cy="120" r="8" fill={RD} opacity="0.5"/>
+        <text x="100" y="178" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>Cilia waft mucus + dust away from lungs</text>
+      </g>
+
+      {/* === Root hair cell === */}
+      <g transform="translate(240,50)">
+        <rect width="220" height="180" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="110" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Root hair cell</text>
+        {/* main cell body */}
+        <rect x="20" y="60" width="80" height="100" fill="#f0f9f0" stroke={G} strokeWidth="1.2"/>
+        {/* hair extension (long thin) */}
+        <path d="M100 95 Q140 80, 175 100 Q200 120, 210 130" fill="none" stroke={G} strokeWidth="1.5"/>
+        <path d="M100 125 Q140 130, 175 110 Q200 100, 210 100" fill="none" stroke={G} strokeWidth="1.5"/>
+        <path d="M100 110 Q150 105, 200 115" fill="none" stroke={G} strokeWidth="1.2"/>
+        {/* nucleus */}
+        <circle cx="55" cy="105" r="8" fill={RD} opacity="0.5"/>
+        <text x="110" y="178" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>Long projection = large surface area for water</text>
+      </g>
+
+      {/* === Palisade mesophyll === */}
+      <g transform="translate(480,50)">
+        <rect width="200" height="180" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="100" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Palisade mesophyll</text>
+        {/* two columnar cells */}
+        <rect x="55" y="40" width="40" height="125" rx="4" fill="#e8f5e8" stroke={G} strokeWidth="1.2"/>
+        <rect x="105" y="40" width="40" height="125" rx="4" fill="#e8f5e8" stroke={G} strokeWidth="1.2"/>
+        {/* chloroplasts */}
+        {[[65,60],[85,65],[65,90],[85,95],[65,120],[85,125],[65,150],[85,150],
+          [115,55],[135,60],[115,90],[135,95],[115,120],[135,125],[115,150],[135,150]].map(([x,y],i) => (
+          <ellipse key={i} cx={x} cy={y} rx="6" ry="3.5" fill={GM} stroke={G} strokeWidth="0.8"/>
+        ))}
+        <text x="100" y="178" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>Many chloroplasts → photosynthesis</text>
+      </g>
+
+      {/* === Neurone === */}
+      <g transform="translate(20,250)">
+        <rect width="200" height="210" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="100" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Neurone (nerve cell)</text>
+        {/* cell body (dendrites at top) */}
+        <circle cx="60" cy="55" r="14" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+        <circle cx="60" cy="55" r="5" fill={RD} opacity="0.5"/>
+        {/* dendrites */}
+        <line x1="60" y1="42" x2="50" y2="32" stroke={AM} strokeWidth="1"/>
+        <line x1="60" y1="42" x2="65" y2="32" stroke={AM} strokeWidth="1"/>
+        <line x1="50" y1="50" x2="40" y2="40" stroke={AM} strokeWidth="1"/>
+        <line x1="70" y1="50" x2="80" y2="40" stroke={AM} strokeWidth="1"/>
+        {/* long axon */}
+        <line x1="60" y1="69" x2="60" y2="180" stroke={AM} strokeWidth="2"/>
+        {/* myelin segments */}
+        {[80,100,120,140,160].map((y,i)=>(
+          <ellipse key={i} cx="60" cy={y+5} rx="6" ry="9" fill="#fff5e0" stroke={AM} strokeWidth="1"/>
+        ))}
+        {/* axon terminals */}
+        <line x1="60" y1="180" x2="50" y2="195" stroke={AM} strokeWidth="1.2"/>
+        <line x1="60" y1="180" x2="60" y2="200" stroke={AM} strokeWidth="1.2"/>
+        <line x1="60" y1="180" x2="70" y2="195" stroke={AM} strokeWidth="1.2"/>
+        <text x="140" y="80" fontFamily="sans-serif" fontSize="9" fill={GR}>cell body</text>
+        <text x="140" y="130" fontFamily="sans-serif" fontSize="9" fill={GR}>nerve fibre</text>
+        <text x="100" y="200" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>Long fibre → carries impulses</text>
+      </g>
+
+      {/* === Red blood cell === */}
+      <g transform="translate(240,250)">
+        <rect width="220" height="210" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="110" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Red blood cell</text>
+        {/* biconcave disc */}
+        <ellipse cx="80" cy="90" rx="38" ry="28" fill="#ffd0d0" stroke={RD} strokeWidth="1.5"/>
+        <ellipse cx="80" cy="90" rx="14" ry="6" fill="#ffe5e5"/>
+        <ellipse cx="150" cy="130" rx="32" ry="22" fill="#ffd0d0" stroke={RD} strokeWidth="1.5"/>
+        <ellipse cx="150" cy="130" rx="11" ry="5" fill="#ffe5e5"/>
+        <ellipse cx="100" cy="170" rx="30" ry="20" fill="#ffd0d0" stroke={RD} strokeWidth="1.5"/>
+        <ellipse cx="100" cy="170" rx="10" ry="5" fill="#ffe5e5"/>
+        <text x="110" y="200" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>NO nucleus · haemoglobin · transports O₂</text>
+      </g>
+
+      {/* === Sperm + Egg === */}
+      <g transform="translate(480,250)">
+        <rect width="200" height="210" rx="6" fill="#fff" stroke={GR} strokeWidth="1"/>
+        <text x="100" y="20" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={G}>Gametes (sperm + egg)</text>
+
+        {/* sperm */}
+        <ellipse cx="35" cy="60" rx="12" ry="8" fill="#fff5e0" stroke={AM} strokeWidth="1.2"/>
+        <circle cx="35" cy="60" r="4" fill={RD} opacity="0.6"/>
+        <ellipse cx="22" cy="60" rx="3" ry="4" fill={AM} opacity="0.7"/>
+        <rect x="47" y="56" width="18" height="8" fill="#fff5e0" stroke={AM} strokeWidth="1"/>
+        <path d="M65 60 Q90 40, 110 70 Q130 90, 155 50" fill="none" stroke={AM} strokeWidth="1.5"/>
+        <text x="22" y="78" fontFamily="sans-serif" fontSize="8" fill={AM}>acrosome</text>
+        <text x="50" y="78" fontFamily="sans-serif" fontSize="8" fill={AM}>mid-piece</text>
+        <text x="115" y="55" fontFamily="sans-serif" fontSize="8" fill={AM}>tail</text>
+
+        {/* egg */}
+        <circle cx="100" cy="150" r="35" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+        <circle cx="100" cy="150" r="8" fill={RD} opacity="0.5"/>
+        {/* follicle cells round edge */}
+        {Array.from({length:18}).map((_,i)=>{
+          const angle = (i / 18) * Math.PI * 2;
+          const x1 = 100 + Math.cos(angle) * 35; const y1 = 150 + Math.sin(angle) * 35;
+          const x2 = 100 + Math.cos(angle) * 44; const y2 = 150 + Math.sin(angle) * 44;
+          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={AM} strokeWidth="1.2"/>;
+        })}
+        <text x="100" y="200" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>Sperm: tail+mitochondria · Egg: yolk</text>
+      </g>
+    </svg>
+  );
+}
+
+// ── Light microscope diagram ───────────────────────────────────────────────
+function MicroscopeDiagram() {
+  return (
+    <svg viewBox="0 0 480 320" style={{ width: "100%", maxWidth: 480, display: "block", margin: "10px auto" }}>
+      <rect width="480" height="320" rx="10" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="240" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>The Light Microscope</text>
+
+      {/* eyepiece */}
+      <rect x="200" y="40" width="60" height="22" rx="4" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="230" y="56" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>eyepiece</text>
+      {/* barrel */}
+      <rect x="210" y="62" width="40" height="80" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="265" y="100" fontFamily="sans-serif" fontSize="10" fill={GR}>barrel</text>
+      <line x1="263" y1="98" x2="252" y2="100" stroke={GR} strokeWidth="0.8"/>
+      {/* nosepiece + objective */}
+      <ellipse cx="230" cy="150" rx="35" ry="10" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <rect x="218" y="155" width="24" height="34" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="265" y="170" fontFamily="sans-serif" fontSize="10" fill={GR}>objective lens</text>
+      <line x1="263" y1="168" x2="245" y2="172" stroke={GR} strokeWidth="0.8"/>
+      {/* stage */}
+      <rect x="160" y="200" width="140" height="14" fill="#e8e8e0" stroke={G} strokeWidth="1.5"/>
+      <text x="320" y="210" fontFamily="sans-serif" fontSize="10" fill={GR}>stage (slide here)</text>
+      <line x1="318" y1="208" x2="305" y2="208" stroke={GR} strokeWidth="0.8"/>
+      {/* clip */}
+      <rect x="170" y="195" width="14" height="6" fill={G}/>
+      {/* focusing dial */}
+      <circle cx="120" cy="180" r="14" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="120" y="184" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={G}>focus</text>
+      {/* light source (mirror/lamp) */}
+      <rect x="210" y="240" width="40" height="14" fill="#fff5b0" stroke={G} strokeWidth="1.5"/>
+      <text x="265" y="250" fontFamily="sans-serif" fontSize="10" fill={GR}>light source</text>
+      <line x1="263" y1="248" x2="252" y2="248" stroke={GR} strokeWidth="0.8"/>
+      {/* base / stand */}
+      <rect x="140" y="262" width="180" height="22" rx="4" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="230" y="278" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>stand / base</text>
+
+      {/* light path (dotted) */}
+      <line x1="230" y1="240" x2="230" y2="62" stroke={AM} strokeDasharray="3,3" strokeWidth="1"/>
+      <text x="120" y="50" fontFamily="sans-serif" fontSize="10" fill={AM}>← light path</text>
+
+      {/* magnification formula */}
+      <rect x="20" y="100" width="120" height="60" rx="6" fill={AL} stroke={AM} strokeWidth="1.2"/>
+      <text x="80" y="118" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={AM}>Total mag =</text>
+      <text x="80" y="135" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill={AM}>eyepiece ×</text>
+      <text x="80" y="150" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill={AM}>objective</text>
+    </svg>
+  );
+}
+
+// ── Magnification triangle ─────────────────────────────────────────────────
+function MagnificationTriangle() {
+  return (
+    <svg viewBox="0 0 480 240" style={{ width: "100%", maxWidth: 480, display: "block", margin: "10px auto" }}>
+      <rect width="480" height="240" rx="10" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="240" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={PU}>Magnification Formula Triangle</text>
+
+      {/* triangle */}
+      <polygon points="240,50 130,200 350,200" fill="#fff" stroke={PU} strokeWidth="2"/>
+      {/* divider line */}
+      <line x1="155" y1="135" x2="325" y2="135" stroke={PU} strokeWidth="1.5"/>
+      {/* divider line vertical */}
+      <line x1="240" y1="135" x2="240" y2="200" stroke={PU} strokeWidth="1.5"/>
+
+      {/* top: I (image) */}
+      <text x="240" y="105" textAnchor="middle" fontFamily="Georgia,serif" fontSize="22" fontWeight="700" fill={PU}>I</text>
+      <text x="240" y="125" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fill={GR}>image size</text>
+
+      {/* bottom-left: M (magnification) */}
+      <text x="190" y="175" textAnchor="middle" fontFamily="Georgia,serif" fontSize="22" fontWeight="700" fill={PU}>M</text>
+      <text x="190" y="190" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>magnif.</text>
+
+      {/* bottom-right: A (actual) */}
+      <text x="290" y="175" textAnchor="middle" fontFamily="Georgia,serif" fontSize="22" fontWeight="700" fill={PU}>A</text>
+      <text x="290" y="190" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>actual size</text>
+
+      {/* formulas to the right */}
+      <rect x="370" y="60" width="100" height="50" rx="6" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="420" y="80" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={PU}>M = I ÷ A</text>
+      <text x="420" y="98" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>find magnification</text>
+
+      <rect x="370" y="120" width="100" height="50" rx="6" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="420" y="140" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={PU}>A = I ÷ M</text>
+      <text x="420" y="158" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>find actual size</text>
+
+      <rect x="370" y="180" width="100" height="50" rx="6" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="420" y="200" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={PU}>I = M × A</text>
+      <text x="420" y="218" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>find image size</text>
+
+      {/* units note */}
+      <rect x="20" y="60" width="100" height="170" rx="6" fill={AL} stroke={AM} strokeWidth="1"/>
+      <text x="70" y="80" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={AM}>Units</text>
+      <text x="70" y="100" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>1 cm = 10 mm</text>
+      <text x="70" y="116" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>1 mm = 1000 μm</text>
+      <text x="70" y="132" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>1 m = 10⁶ μm</text>
+      <text x="70" y="156" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={AM}>Match units</text>
+      <text x="70" y="172" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>before</text>
+      <text x="70" y="186" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>calculating!</text>
+      <text x="70" y="210" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={AM}>Mag has</text>
+      <text x="70" y="222" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={AM}>NO units</text>
+    </svg>
+  );
+}
+
+// ── Levels of organisation hierarchy ───────────────────────────────────────
+function OrganisationLevels() {
+  const levels = [
+    { name: "Cell",         desc: "Smallest unit of life",                        ex: "Muscle cell · Palisade cell",      color: "#1a7a6e" },
+    { name: "Tissue",       desc: "Group of similar cells with shared function",  ex: "Muscle · Epidermis · Xylem",        color: "#2d6a4f" },
+    { name: "Organ",        desc: "Group of tissues working for one job",         ex: "Stomach · Heart · Leaf · Root",     color: "#5b3fa6" },
+    { name: "Organ system", desc: "Group of organs with related functions",        ex: "Digestive · Circulatory · Shoot",   color: "#b5540a" },
+    { name: "Organism",     desc: "Independent living thing — all systems",       ex: "A human · A flowering plant",        color: "#b02020" },
+  ];
+  return (
+    <svg viewBox="0 0 700 360" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="360" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="350" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Levels of Organisation — Cell → Organism
+      </text>
+
+      {levels.map((lv, i) => {
+        const y = 50 + i * 58;
+        return (
+          <g key={i}>
+            {/* arrow chain */}
+            {i < levels.length - 1 && (
+              <path d={`M120 ${y + 36} L120 ${y + 56}`} stroke={GR} strokeWidth="1.5" markerEnd="url(#arrow)"/>
+            )}
+            {/* circle marker */}
+            <circle cx="120" cy={y + 18} r="22" fill={lv.color}/>
+            <text x="120" y={y + 23} textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill="#fff">{i + 1}</text>
+            {/* level box */}
+            <rect x="155" y={y} width="525" height="46" rx="8" fill="#fff" stroke={lv.color} strokeWidth="1.5"/>
+            <text x="170" y={y + 18} fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fill={lv.color}>{lv.name}</text>
+            <text x="170" y={y + 35} fontFamily="sans-serif" fontSize="10" fill={GR}>{lv.desc}</text>
+            <text x="500" y={y + 18} fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={lv.color}>Examples:</text>
+            <text x="500" y={y + 35} fontFamily="sans-serif" fontSize="10" fill={GR}>{lv.ex}</text>
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <polygon points="0 0, 8 4, 0 8" fill={GR}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Size scale: water molecule → orange ────────────────────────────────────
+function SizeScale() {
+  const items = [
+    { name: "Water molecule", size: "0.0001 μm",  pos: 30,  color: "#3b82f6" },
+    { name: "Antibody",       size: "0.01 μm",    pos: 145, color: "#8b5cf6" },
+    { name: "Virus",          size: "0.1 μm",     pos: 245, color: "#ec4899" },
+    { name: "Bacterium",      size: "1 μm",       pos: 355, color: "#ef4444" },
+    { name: "Amoeba",         size: "100 μm",     pos: 465, color: "#f59e0b" },
+    { name: "Full stop",      size: "500 μm",     pos: 545, color: "#3d3d3d" },
+    { name: "Orange",         size: "100 000 μm", pos: 640, color: "#f97316" },
+  ];
+  return (
+    <svg viewBox="0 0 700 220" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="220" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="350" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Size Scale (μm) — From Water Molecule to Orange
+      </text>
+
+      {/* tools labels at top */}
+      <text x="120" y="44" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>Electron microscope</text>
+      <text x="350" y="44" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>Light microscope</text>
+      <text x="600" y="44" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>Unaided eye</text>
+      <line x1="20" y1="50" x2="240" y2="50" stroke={GR} strokeWidth="0.8"/>
+      <line x1="245" y1="50" x2="495" y2="50" stroke={GR} strokeWidth="0.8"/>
+      <line x1="500" y1="50" x2="685" y2="50" stroke={GR} strokeWidth="0.8"/>
+
+      {/* main scale line */}
+      <line x1="20" y1="160" x2="685" y2="160" stroke={PU} strokeWidth="2"/>
+      {/* tick marks at 10^x positions */}
+      {[-4,-3,-2,-1,0,1,2,3,4,5].map((exp, i) => {
+        const x = 20 + i * 73;
+        return (
+          <g key={i}>
+            <line x1={x} y1="155" x2={x} y2="170" stroke={PU} strokeWidth="1"/>
+            <text x={x} y="185" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={PU}>10^{exp}</text>
+          </g>
+        );
+      })}
+      <text x="690" y="200" textAnchor="end" fontFamily="sans-serif" fontSize="10" fill={PU}>size (μm) →</text>
+
+      {/* items */}
+      {items.map((it, i) => (
+        <g key={i}>
+          <circle cx={it.pos} cy="100" r="14" fill={it.color}/>
+          <text x={it.pos} y="80" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fontWeight="700" fill={GR}>{it.name}</text>
+          <text x={it.pos} y="130" textAnchor="middle" fontFamily="sans-serif" fontSize="8" fill={GR}>{it.size}</text>
+          <line x1={it.pos} y1="116" x2={it.pos} y2="155" stroke={GR} strokeDasharray="2,2" strokeWidth="0.8"/>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+// ── Cell division diagram (mitosis-like simple) ────────────────────────────
+function CellDivisionDiagram() {
+  return (
+    <svg viewBox="0 0 700 180" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="180" rx="10" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="350" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Cell Division — Nucleus First, Then Cytoplasm
+      </text>
+
+      {/* Stage A */}
+      <circle cx="80" cy="100" r="38" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="80" cy="100" r="14" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <text x="80" y="160" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>(a) About to divide</text>
+
+      {/* arrow */}
+      <line x1="125" y1="100" x2="170" y2="100" stroke={GR} strokeWidth="1.5" markerEnd="url(#a2)"/>
+
+      {/* Stage B — nucleus splits */}
+      <ellipse cx="225" cy="100" rx="48" ry="36" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="208" cy="100" r="11" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <circle cx="242" cy="100" r="11" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <text x="225" y="160" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>(b) Nucleus divides</text>
+
+      {/* arrow */}
+      <line x1="280" y1="100" x2="325" y2="100" stroke={GR} strokeWidth="1.5" markerEnd="url(#a2)"/>
+
+      {/* Stage C — cytoplasm pinching */}
+      <path d="M340 75 Q350 85 360 75 L380 75 Q390 85 400 75 Q420 100 400 125 Q390 115 380 125 L360 125 Q350 115 340 125 Q325 100 340 75 Z"
+        fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="350" cy="100" r="10" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <circle cx="395" cy="100" r="10" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <text x="372" y="160" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>(c) Cytoplasm pinches</text>
+
+      {/* arrow */}
+      <line x1="430" y1="100" x2="475" y2="100" stroke={GR} strokeWidth="1.5" markerEnd="url(#a2)"/>
+
+      {/* Stage D — two cells */}
+      <circle cx="510" cy="100" r="32" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="510" cy="100" r="11" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <circle cx="585" cy="100" r="32" fill="#fff5e0" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="585" cy="100" r="11" fill="#f9c79b" stroke={AM} strokeWidth="1.2"/>
+      <text x="547" y="160" textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={GR}>(d) Two daughter cells</text>
+
+      <defs>
+        <marker id="a2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <polygon points="0 0, 8 4, 0 8" fill={GR}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Magnification worked-example (step by step) ────────────────────────────
+function MagnificationWorkedExample() {
+  return (
+    <svg viewBox="0 0 700 360" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="360" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="350" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Magnification — Step-by-Step Calculation
+      </text>
+
+      {/* Problem box */}
+      <rect x="20" y="40" width="660" height="44" rx="6" fill="#fff" stroke={PU} strokeWidth="1.2"/>
+      <text x="35" y="60" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={PU}>Problem:</text>
+      <text x="35" y="78" fontFamily="sans-serif" fontSize="11" fill={GR}>A drawing of a cell is 4.5 cm wide. The actual cell is 30 μm wide. Find the magnification.</text>
+
+      {/* Step 1: identify */}
+      <rect x="20" y="100" width="210" height="100" rx="8" fill={AL} stroke={AM} strokeWidth="1.5"/>
+      <text x="35" y="120" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={AM}>STEP 1 — Identify</text>
+      <text x="35" y="140" fontFamily="sans-serif" fontSize="10" fill={GR}>Image (I) = 4.5 cm</text>
+      <text x="35" y="156" fontFamily="sans-serif" fontSize="10" fill={GR}>Actual (A) = 30 μm</text>
+      <text x="35" y="178" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={AM}>⚠ Different units!</text>
+      <text x="35" y="192" fontFamily="sans-serif" fontSize="9" fill={GR}>Must convert before dividing.</text>
+
+      {/* Arrow */}
+      <line x1="232" y1="150" x2="248" y2="150" stroke={GR} strokeWidth="1.5" markerEnd="url(#mw1)"/>
+
+      {/* Step 2: convert */}
+      <rect x="252" y="100" width="210" height="100" rx="8" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="267" y="120" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={G}>STEP 2 — Convert units</text>
+      <text x="267" y="140" fontFamily="sans-serif" fontSize="10" fill={GR}>4.5 cm → mm × 10</text>
+      <text x="267" y="155" fontFamily="sans-serif" fontSize="10" fill={GR}>= 45 mm</text>
+      <text x="267" y="173" fontFamily="sans-serif" fontSize="10" fill={GR}>45 mm → μm × 1000</text>
+      <text x="267" y="188" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>= 45 000 μm</text>
+
+      {/* Arrow */}
+      <line x1="464" y1="150" x2="480" y2="150" stroke={GR} strokeWidth="1.5" markerEnd="url(#mw1)"/>
+
+      {/* Step 3: apply formula */}
+      <rect x="484" y="100" width="196" height="100" rx="8" fill={PL} stroke={PU} strokeWidth="1.5"/>
+      <text x="499" y="120" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={PU}>STEP 3 — Apply M = I÷A</text>
+      <text x="499" y="140" fontFamily="sans-serif" fontSize="10" fill={GR}>M = 45 000 ÷ 30</text>
+      <text x="499" y="160" fontFamily="sans-serif" fontSize="13" fontWeight="700" fill={PU}>M = ×1500</text>
+      <text x="499" y="182" fontFamily="sans-serif" fontSize="9" fill={GR}>(no units — magnification</text>
+      <text x="499" y="194" fontFamily="sans-serif" fontSize="9" fill={GR}>is a pure number)</text>
+
+      {/* Common errors box */}
+      <rect x="20" y="220" width="660" height="120" rx="8" fill={RL} stroke={RD} strokeWidth="1.5"/>
+      <text x="35" y="240" fontFamily="sans-serif" fontSize="12" fontWeight="700" fill={RD}>⚠ Common Errors to Avoid</text>
+      <text x="35" y="260" fontFamily="sans-serif" fontSize="10" fill={GR}>• Forgetting to convert: 4.5 ÷ 30 = 0.15 — NOT a magnification (less than 1!)</text>
+      <text x="35" y="278" fontFamily="sans-serif" fontSize="10" fill={GR}>• Writing units on the answer: "×1500 μm" is wrong — should be "×1500"</text>
+      <text x="35" y="296" fontFamily="sans-serif" fontSize="10" fill={GR}>• Mixing up I and A: M is always image (large) ÷ actual (small) → answer ≥ 1</text>
+      <text x="35" y="314" fontFamily="sans-serif" fontSize="10" fill={GR}>• Sense check: most school cell drawings give magnifications between ×100 and ×2000</text>
+      <text x="35" y="332" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={RD}>If your answer is &lt; 1 or &gt; 50 000 — recheck the units!</text>
+
+      <defs>
+        <marker id="mw1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <polygon points="0 0, 8 4, 0 8" fill={GR}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Leaf cross-section: tissue → organ relationship ────────────────────────
+function LeafTissueOrgan() {
+  return (
+    <svg viewBox="0 0 700 320" style={{ width: "100%", maxWidth: 700, display: "block", margin: "10px auto" }}>
+      <rect width="700" height="320" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="350" y="22" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Leaf Cross-Section — Many Tissues, One Organ
+      </text>
+      <text x="350" y="40" textAnchor="middle" fontFamily="sans-serif" fontSize="11" fill={GR}>
+        The leaf is one organ; its tissues each do a specific job.
+      </text>
+
+      {/* Cuticle */}
+      <rect x="80" y="60" width="540" height="6" fill="#888" opacity="0.4"/>
+      <text x="630" y="66" fontFamily="sans-serif" fontSize="9" fill={GR}>cuticle (waxy)</text>
+      {/* Upper epidermis */}
+      <rect x="80" y="66" width="540" height="20" fill="#fff8e0" stroke={G} strokeWidth="1"/>
+      {Array.from({length: 15}).map((_,i) => (
+        <rect key={i} x={82 + i*36} y="68" width="34" height="16" fill="none" stroke={G} strokeWidth="0.6"/>
+      ))}
+      <text x="630" y="80" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>upper epidermis</text>
+
+      {/* Palisade mesophyll */}
+      <rect x="80" y="86" width="540" height="60" fill="#e8f5e8" stroke={G} strokeWidth="1"/>
+      {Array.from({length: 18}).map((_,i) => {
+        const x = 84 + i * 30;
+        return (
+          <g key={i}>
+            <rect x={x} y="88" width="26" height="56" rx="3" fill="#fff" stroke={G} strokeWidth="0.8"/>
+            {[[x+6,98],[x+18,100],[x+8,118],[x+18,120],[x+8,134],[x+18,136]].map(([cx,cy],j) => (
+              <ellipse key={j} cx={cx} cy={cy} rx="3" ry="2" fill={GM} stroke={G} strokeWidth="0.5"/>
+            ))}
+          </g>
+        );
+      })}
+      <text x="630" y="120" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>palisade mesophyll</text>
+      <text x="630" y="132" fontFamily="sans-serif" fontSize="9" fill={GR}>(photosynthesis)</text>
+
+      {/* Spongy mesophyll */}
+      <rect x="80" y="146" width="540" height="60" fill="#f0f9f0" stroke={G} strokeWidth="1"/>
+      {Array.from({length: 22}).map((_,i) => {
+        const cx = 95 + (i % 11) * 50; const cy = 158 + Math.floor(i / 11) * 28;
+        return (
+          <g key={i}>
+            <circle cx={cx} cy={cy} r="9" fill="#fff" stroke={G} strokeWidth="0.8"/>
+            <ellipse cx={cx-2} cy={cy-2} rx="2" ry="1.5" fill={GM}/>
+            <ellipse cx={cx+2} cy={cy+2} rx="2" ry="1.5" fill={GM}/>
+          </g>
+        );
+      })}
+      <text x="630" y="178" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>spongy mesophyll</text>
+      <text x="630" y="190" fontFamily="sans-serif" fontSize="9" fill={GR}>(gas exchange)</text>
+
+      {/* Vascular bundles (xylem + phloem) */}
+      <ellipse cx="220" cy="176" rx="22" ry="14" fill="#fff" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="212" cy="172" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <circle cx="220" cy="178" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <circle cx="228" cy="173" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <line x1="200" y1="180" x2="240" y2="180" stroke="#c54f8e" strokeWidth="1"/>
+      <line x1="220" y1="226" x2="220" y2="206" stroke={AM} strokeWidth="1"/>
+      <text x="220" y="244" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fontWeight="700" fill={AM}>xylem + phloem</text>
+      <text x="220" y="256" textAnchor="middle" fontFamily="sans-serif" fontSize="9" fill={GR}>(transport)</text>
+
+      <ellipse cx="450" cy="176" rx="22" ry="14" fill="#fff" stroke={AM} strokeWidth="1.5"/>
+      <circle cx="442" cy="172" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <circle cx="450" cy="178" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <circle cx="458" cy="173" r="3" fill="none" stroke={AM} strokeWidth="1"/>
+      <line x1="430" y1="180" x2="470" y2="180" stroke="#c54f8e" strokeWidth="1"/>
+
+      {/* Lower epidermis */}
+      <rect x="80" y="206" width="540" height="20" fill="#fff8e0" stroke={G} strokeWidth="1"/>
+      {Array.from({length: 15}).map((_,i) => (
+        <rect key={i} x={82 + i*36} y="208" width="34" height="16" fill="none" stroke={G} strokeWidth="0.6"/>
+      ))}
+      {/* Stomata gaps */}
+      <ellipse cx="180" cy="216" rx="6" ry="3" fill="#fff" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="380" cy="216" rx="6" ry="3" fill="#fff" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="540" cy="216" rx="6" ry="3" fill="#fff" stroke={G} strokeWidth="1.2"/>
+      <text x="630" y="220" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill={G}>lower epidermis</text>
+      <text x="630" y="232" fontFamily="sans-serif" fontSize="9" fill={GR}>(+ stomata)</text>
+
+      {/* Hierarchy summary at bottom */}
+      <rect x="20" y="265" width="660" height="44" rx="8" fill={PL} stroke={PU} strokeWidth="1.2"/>
+      <text x="35" y="282" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill={PU}>Hierarchy seen here:</text>
+      <text x="35" y="298" fontFamily="sans-serif" fontSize="10" fill={GR}>palisade cell (cell) → palisade mesophyll (tissue) → leaf (organ) → shoot system (organ system) → plant (organism)</text>
+    </svg>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ① QUICK ESSENCE TAB
+// ════════════════════════════════════════════════════════════════════════════
+function EssenceTab() {
+  const cards = [
+    {
+      title: "🧠 Mnemonic Catalogue — Ch.2",
+      items: [
+        "Cell parts (animal): \"My CRaNky CYTopLAsm\" — Membrane, Cytoplasm, Ribosome, Nucleus, Mitochondria",
+        "Plant only: \"Walls Carry Vacuoles\" — cell Wall · Chloroplasts · Vacuole",
+        "Bacteria 3-extras: \"PCR\" — Plasmid · Circular DNA · (no nucleus, but has) Ribosomes",
+        "Levels: Cell → Tissue → Organ → System → Organism (think \"CT-OSO\" zoom-out)",
+        "Magnification triangle: I on top, M & A bottom → I = M × A · M = I÷A · A = I÷M",
+      ]
+    },
+    {
+      title: "Animal · Plant · Bacterial Cell — at a glance",
+      items: [
+        "Animal cell: cell membrane · cytoplasm · nucleus · mitochondria · ribosomes",
+        "Plant cell adds: cell WALL (cellulose) · CHLOROPLASTS · large permanent VACUOLE (sap)",
+        "Bacteria: cell wall (NOT cellulose) · cytoplasm · ribosomes · circular DNA · plasmids · NO nucleus, NO mitochondria",
+        "All three have: cell membrane · cytoplasm · ribosomes",
+        "Cell wall in bacteria ≠ cellulose. Cell wall in plants = cellulose.",
+      ]
+    },
+    {
+      title: "Function of Each Part — Master Table",
+      items: [
+        "Cytoplasm — jelly-like, site of chemical reactions, holds organelles",
+        "Cell membrane — partially permeable; controls entry/exit of substances",
+        "Nucleus — controls cell activities, division, contains DNA on chromosomes",
+        "Mitochondria — site of AEROBIC RESPIRATION (releases energy)",
+        "Ribosomes — PROTEIN SYNTHESIS",
+        "Cell wall (plant) — cellulose, prevents bursting, fully permeable",
+        "Vacuole — holds cell sap, keeps plant cell turgid",
+        "Chloroplast — contains chlorophyll, traps light for PHOTOSYNTHESIS",
+        "Plasmid (bacteria) — small circular DNA, used in genetic engineering",
+      ]
+    },
+    {
+      title: "Specialised Cells — Structure → Function",
+      items: [
+        "Ciliated cell: cilia (hair-like) waft mucus + dust in airways",
+        "Root hair cell: long thin projection → huge surface area for water/ion uptake",
+        "Palisade mesophyll: column-shaped, packed with CHLOROPLASTS → photosynthesis",
+        "Neurone (nerve cell): very LONG fibre, conducts electrical impulses",
+        "Red blood cell: NO nucleus · biconcave disc · contains haemoglobin (carries O₂)",
+        "Sperm: tail (swim) · mid-piece packed with mitochondria (energy) · acrosome (enzymes to penetrate egg)",
+        "Egg: large · contains yolk (nutrients) · jelly coat after fertilisation",
+      ]
+    },
+    {
+      title: "Tissue · Organ · System · Organism — Definitions",
+      items: [
+        "Tissue: group of cells with similar structure performing a shared function (e.g. muscle, xylem)",
+        "Organ: structure of several tissues working together for a specific function (e.g. stomach, leaf)",
+        "Organ system: group of organs with related functions (e.g. digestive, circulatory)",
+        "Organism: a living thing — independent, all systems working together",
+        "Plant examples: tissue=epidermis/xylem · organ=root, stem, leaf · system=shoot",
+        "Animal examples: tissue=muscle/epithelium · organ=heart, stomach · system=circulatory, digestive",
+      ]
+    },
+    {
+      title: "Microscope & Magnification",
+      items: [
+        "Total magnification = eyepiece × objective (e.g. ×10 × ×40 = ×400)",
+        "Magnification = image size ÷ actual size (NO units)",
+        "Triangle: I = M × A  /  M = I÷A  /  A = I÷M",
+        "Units: 1 cm = 10 mm · 1 mm = 1000 μm · 1 m = 1 000 000 μm",
+        "ALWAYS convert both to same unit before calculating!",
+        "Hand lens ≈ ×20 · school light microscope ≤ ×400 · electron microscope sees viruses + organelles",
+      ]
+    },
+    {
+      title: "Practical Work — Slide Preparation",
+      items: [
+        "Onion epidermis: peel layer · place on slide · add IODINE (stains starch blue, nuclei pale yellow)",
+        "Moss leaf: small leaf + drop of water → see chloroplasts pressed to wall + large vacuole",
+        "Cheek cells: cotton bud + saliva on slide · add METHYLENE BLUE → see nuclei",
+        "Cover-slip lowered at 45° to avoid air bubbles (bubbles reflect light, hide cells)",
+        "Stains needed because cell parts are mostly TRANSPARENT under light microscope",
+      ]
+    },
+    {
+      title: "🧮 Magnification — Calculation Recipe",
+      items: [
+        "Step 1: Identify I (image) and A (actual). Note their units.",
+        "Step 2: Convert BOTH to the same unit (μm is usually safest for cell-sized things).",
+        "Step 3: Apply M = I ÷ A. Result has NO units.",
+        "Sense check: M is normally between ×10 (hand lens) and ×500 000 (electron microscope).",
+        "If M < 1: you forgot to convert OR swapped I and A.",
+        "If M > 50 000 for a normal cell drawing: unit conversion is off by a factor of 1000.",
+        "Sample shortcut: cm → μm × 10 000 · mm → μm × 1000 · m → μm × 1 000 000",
+      ]
+    },
+    {
+      title: "💡 Top exam pitfalls",
+      highlight: true,
+      items: [
+        "Cell membrane = PARTIALLY permeable / cell wall = FREELY (fully) permeable — different!",
+        "Bacteria have a cell wall but it is NOT cellulose (it's peptidoglycan)",
+        "Bacteria have NO nucleus, but DO have ribosomes and DNA (circular, free in cytoplasm)",
+        "Magnification has NO units — just \"×400\". Don't write \"×400 mm\".",
+        "Convert UNITS first: if image is in cm and actual is in mm, convert before dividing",
+        "Red blood cell has NO nucleus when mature — common identification clue",
+        "Mature plant cells appear to have no nucleus because vacuole pushes it to one side, not because it's absent",
+        "Cell ≠ tissue — a single cell is not a tissue. Tissue = MANY similar cells together.",
+      ]
+    },
+  ];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ background: AM, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13 }}>
+        <strong>5-minute final review.</strong> 2nd-stage condensed essence — every exam-likely point in Chapter 2.
+      </div>
+      <AnimalVsPlantCell />
+      {cards.map((c, i) => (
+        <div key={i} style={{ border: `1.5px solid ${c.highlight ? RD : AM}`, borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ background: c.highlight ? RD : AM, color: "#fff", padding: "8px 14px", fontSize: 13, fontWeight: 700 }}>{c.title}</div>
+          <div style={{ padding: "10px 14px", background: c.highlight ? RL : AL }}>
+            {c.items.map((item, j) => (
+              <div key={j} style={{ display: "flex", gap: 8, marginBottom: 5, fontSize: 13, color: c.highlight ? "#3a0000" : "#2a1000", lineHeight: 1.55 }}>
+                <span style={{ color: c.highlight ? RD : AM, fontWeight: 800, flexShrink: 0 }}>▶</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ② EXAM TAB
+// ════════════════════════════════════════════════════════════════════════════
+function ExamTab() {
+  const [rev, setRev] = useState({});
+  const [diff, setDiff] = useState("all");
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setRev(p => ({ ...p, [id]: !p[id] }));
+
+  // ── Question bank — append new questions to this array ──────────────
+  const qs = [
+    // ═══ EASY ═══
+    {
+      id: "e1", diff: "easy", topic: "cell-parts", marks: 4, star: "★★★",
+      type: "labelling",
+      q: "An animal cell diagram has four labels: A = the boundary, B = jelly-like region, C = small dark structure controlling cell activities, D = oval organelle releasing energy. Identify A, B, C and D.",
+      hint: "Remember the master table: each part has one main job.",
+      a: "A = cell membrane [1]\nB = cytoplasm [1]\nC = nucleus [1]\nD = mitochondrion [1]"
+    },
+    {
+      id: "e2", diff: "easy", topic: "cell-parts", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Name THREE structures present in plant cells but absent from animal cells.",
+      hint: "Plant-only mnemonic: \"Walls Carry Vacuoles\".",
+      a: "Cell wall [1]\nChloroplasts [1]\nLarge permanent (sap) vacuole [1]"
+    },
+    {
+      id: "e3", diff: "easy", topic: "cell-parts", marks: 2, star: "★★★",
+      type: "standard",
+      q: "State the function of (i) ribosomes, (ii) mitochondria.",
+      hint: "Both are present in animal AND plant cells.",
+      a: "(i) Site of protein synthesis [1]\n(ii) Site of aerobic respiration / release of energy from food [1]"
+    },
+    {
+      id: "e4", diff: "easy", topic: "specialised", marks: 4, star: "★★★",
+      type: "matching",
+      q: "Match each specialised cell to its main function: (1) ciliated cell, (2) root hair cell, (3) red blood cell, (4) palisade mesophyll cell.",
+      hint: "Think about where each cell is found.",
+      a: "(1) Ciliated cell → wafts mucus and dust along airways (e.g. trachea) [1]\n(2) Root hair cell → absorbs water and mineral ions from soil [1]\n(3) Red blood cell → transports oxygen around the body [1]\n(4) Palisade mesophyll → carries out photosynthesis (in leaves) [1]"
+    },
+    {
+      id: "e5", diff: "easy", topic: "organisation", marks: 4, star: "★★★",
+      type: "matching",
+      q: "Match each level of organisation to its definition: cell · tissue · organ · organ system.",
+      hint: "Move from smallest to largest.",
+      a: "Cell — the smallest unit of life [1]\nTissue — a group of cells with similar structure performing a shared function [1]\nOrgan — a structure made of several tissues working together for a specific function [1]\nOrgan system — a group of organs with related functions working together [1]"
+    },
+    {
+      id: "e6", diff: "easy", topic: "microscope", marks: 1, star: "★★",
+      type: "calc",
+      q: "A microscope has an eyepiece lens marked ×10 and an objective lens marked ×40. Calculate the total magnification.",
+      hint: "Total magnification = eyepiece × objective.",
+      a: "10 × 40 = ×400 [1]"
+    },
+    {
+      id: "e7", diff: "easy", topic: "microscope", marks: 1, star: "★★",
+      type: "calc",
+      q: "Convert 0.05 mm into micrometres (μm).",
+      hint: "1 mm = 1000 μm.",
+      a: "0.05 × 1000 = 50 μm [1]"
+    },
+    {
+      id: "e8", diff: "easy", topic: "bacteria", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Name THREE structures found in a bacterial cell that are NOT enclosed by a membrane.",
+      hint: "Bacteria have no membrane-bound organelles.",
+      a: "Any three of: circular DNA / chromosome [1] · plasmids [1] · ribosomes [1] · cytoplasmic granules (e.g. glycogen) [1]"
+    },
+
+    // ═══ MEDIUM ═══
+    {
+      id: "m1", diff: "medium", topic: "cell-parts", marks: 5, star: "★★★",
+      type: "table",
+      q: "Complete a comparison table for the following parts in (a) palisade cell and (b) liver cell — tick (✓) if present: cell wall, chloroplast, cytoplasm, membrane, sap vacuole.",
+      hint: "Liver cell is a typical animal cell.",
+      a: "Cell wall — palisade ✓, liver ✗ [1]\nChloroplast — palisade ✓, liver ✗ [1]\nCytoplasm — palisade ✓, liver ✓ [1]\nMembrane — palisade ✓, liver ✓ [1]\nSap vacuole — palisade ✓, liver ✗ [1]"
+    },
+    {
+      id: "m2", diff: "medium", topic: "cell-parts", marks: 3, star: "★★",
+      type: "standard",
+      q: "Choose three parts from the comparison and state their function in the cell.",
+      hint: "Pick parts that can earn marks for clear, distinct functions.",
+      a: "Any three (1 mark each):\n– Cell wall: prevents bursting; provides support; freely permeable.\n– Chloroplast: contains chlorophyll; absorbs light; site of photosynthesis.\n– Cytoplasm: jelly-like medium; site of chemical reactions; contains organelles.\n– Cell membrane: partially permeable; controls entry and exit of substances.\n– Sap vacuole: stores cell sap (sugars, salts); keeps cell turgid by exerting outward pressure. [3]"
+    },
+    {
+      id: "m3", diff: "medium", topic: "specialised", marks: 4, star: "★★★",
+      type: "labelling",
+      q: "A diagram of a sperm cell shows three labels: A = oval region at the front, B = small region behind A containing many oval organelles, C = long whip-like region. (i) State A, B and C. (ii) Suggest which organelle is most abundant in B and explain why.",
+      hint: "Sperm structure connects directly to its functions: penetrate, energise, swim.",
+      a: "(i) A = nucleus / acrosome region (accept either if labelled tip) — most precisely A = acrosome (very tip), then nucleus underneath [1]\nB = mid-piece [1]\nC = tail (flagellum) [1]\n(ii) Mitochondria — release energy from respiration to power swimming/tail movement [1]"
+    },
+    {
+      id: "m4", diff: "medium", topic: "organisation", marks: 6, star: "★★★",
+      type: "table",
+      q: "Define tissue, organ and organ system, and give one example from a plant and one from an animal for each.",
+      hint: "Definitions must be precise — use the IGCSE wording.",
+      a: "Tissue — a group of cells with similar structure working together to perform a shared function [1]; plant example: xylem / phloem / epidermis [0.5]; animal example: muscle / epithelium / nerve [0.5]\nOrgan — a structure made of several tissues working together for a specific function [1]; plant example: leaf / root / stem [0.5]; animal example: heart / stomach / kidney [0.5]\nOrgan system — a group of organs with related functions working together [1]; plant example: shoot system / root system [0.5]; animal example: digestive / circulatory / nervous [0.5]"
+    },
+    {
+      id: "m5", diff: "medium", topic: "microscope", marks: 3, star: "★★★",
+      type: "calc",
+      q: "A drawing of a cheek cell measures 30 mm wide. The actual diameter of the cell is 60 μm. Calculate the magnification of the drawing.",
+      hint: "Convert both measurements to the same unit before dividing. Magnification has no units.",
+      a: "Convert 30 mm to μm: 30 × 1000 = 30 000 μm [1]\nMagnification = image ÷ actual = 30 000 ÷ 60 [1]\n= ×500 [1]"
+    },
+    {
+      id: "m6", diff: "medium", topic: "microscope", marks: 3, star: "★★",
+      type: "calc",
+      q: "An image of a moss leaf cell is 2.5 cm wide on a photomicrograph with magnification ×500. Calculate the actual width of the cell, giving your answer in micrometres.",
+      hint: "Use A = I ÷ M, then convert if needed.",
+      a: "Convert 2.5 cm to mm: 25 mm; or to μm: 25 000 μm [1]\nActual size = image ÷ magnification = 25 000 ÷ 500 [1]\n= 50 μm [1]"
+    },
+    {
+      id: "m7", diff: "medium", topic: "bacteria", marks: 4, star: "★★★",
+      type: "standard",
+      q: "Compare a bacterial cell with a plant cell. State TWO similarities and TWO differences.",
+      hint: "Both are cells with walls, but bacteria are very different inside.",
+      a: "Similarities (any two): both have a cell wall · both have a cell membrane · both have cytoplasm · both have ribosomes [2]\nDifferences (any two): plant cell has nucleus / bacterial cell has circular DNA (no nucleus) [1] · plant cell wall is cellulose / bacterial cell wall is not cellulose [1] · plant cell has mitochondria + chloroplasts / bacterial cell has neither [1] · bacteria have plasmids / plant cells do not [1]"
+    },
+    {
+      id: "m8", diff: "medium", topic: "practical", marks: 2, star: "★★",
+      type: "standard",
+      q: "When preparing a slide of cheek cells, methylene blue stain is added before the cover-slip. (i) Why is a stain necessary? (ii) Why is the cover-slip lowered at an angle (about 45°)?",
+      hint: "Most cell parts are nearly transparent; air bubbles cause problems under a microscope.",
+      a: "(i) Cell components are mostly transparent / colourless under a light microscope [1]; staining makes parts (e.g. nuclei) visible / contrast clearer [accept]\n(ii) To avoid trapping air bubbles [1]; air bubbles reflect light and obscure the specimen [accept]"
+    },
+
+    // ═══ HARD ═══
+    {
+      id: "h1", diff: "hard", topic: "cell-parts", marks: 5, star: "★★★", ext: true,
+      type: "standard",
+      q: "Describe how the structure of a palisade mesophyll cell is adapted to its function.",
+      hint: "Link each structural feature to a clear photosynthesis advantage.",
+      a: "Long / column-shaped — packs many cells side by side near upper leaf surface to absorb maximum light [1]\nMany chloroplasts — contain chlorophyll which absorbs light energy for photosynthesis [1]\nChloroplasts can move within the cell to maximise light absorption [1]\nLarge vacuole — pushes chloroplasts towards cell edge / cytoplasm, close to light [1]\nThin cell wall and cell membrane — short diffusion distance for CO₂ in / O₂ out [1]"
+    },
+    {
+      id: "h2", diff: "hard", topic: "specialised", marks: 4, star: "★★★",
+      type: "standard",
+      q: "Explain TWO ways in which a red blood cell is adapted for its function.",
+      hint: "Function = transport of oxygen. Each adaptation should give a clear advantage.",
+      a: "Any two of (2 marks each — feature + advantage):\n– Biconcave disc shape: large surface area to volume ratio, so faster oxygen diffusion in/out [2]\n– Contains haemoglobin: combines reversibly with oxygen to form oxyhaemoglobin for transport [2]\n– No nucleus when mature: more space for haemoglobin / more oxygen carried per cell [2]\n– Small and flexible: can squeeze through narrow capillaries [2]"
+    },
+    {
+      id: "h3", diff: "hard", topic: "microscope", marks: 4, star: "★★",
+      type: "calc",
+      q: "The diameter of a drawing of a red blood cell is 14 mm. The actual size of the cell is 7 μm. (i) Calculate the magnification of the drawing. (ii) The student then made a second drawing using ×800 magnification. Calculate the diameter of the new drawing in mm.",
+      hint: "Always match units. Use the magnification triangle.",
+      a: "(i) Convert 14 mm to μm: 14 × 1000 = 14 000 μm [1]\nMagnification = 14 000 ÷ 7 = ×2000 [1]\n(ii) Image size = magnification × actual size = 800 × 7 = 5600 μm [1]\nConvert to mm: 5600 ÷ 1000 = 5.6 mm [1]"
+    },
+    {
+      id: "h4", diff: "hard", topic: "organisation", marks: 5, star: "★★★",
+      type: "standard",
+      q: "Use the example of the human stomach to explain how cells, tissues, organs and organ systems are related.",
+      hint: "Build up from cell → system, naming a tissue at each step.",
+      a: "Cells — e.g. muscle cells, gland cells and epithelial cells, each with their own structure [1]\nTissue — many similar muscle cells form muscle tissue; gland cells form glandular tissue; epithelial cells form epithelium [1]\nOrgan — these tissues group together to form the stomach (the organ); the muscle layer churns food, glands secrete digestive juice, epithelium lines the cavity [1]\nOrgan system — the stomach is part of the digestive system, working with the oesophagus, small intestine, large intestine, liver and pancreas [1]\nOrganism — the digestive system works with other systems (circulatory, nervous, etc.) to make a complete human organism [1]"
+    },
+    {
+      id: "h5", diff: "hard", topic: "bacteria", marks: 4, star: "★★", ext: true,
+      type: "labelling",
+      q: "A diagram of a bacterial cell has four unlabelled features: A = outer rigid layer, B = small circular DNA loops, C = single coiled DNA strand inside the cytoplasm, D = small dots scattered throughout. (i) Identify A–D. (ii) State why scientists use B in genetic engineering.",
+      hint: "Bacteria's circular DNA is famous for one biotech use.",
+      a: "(i) A = cell wall (not made of cellulose) [1]\nB = plasmids [1]\nC = circular DNA / chromosome [1]\nD = ribosomes [1]\n(ii) Plasmids are small and easy to extract; foreign genes can be inserted into them and then transferred back into bacteria, which copy the gene [1 mark, any one of these points — bonus, not in the 4]"
+    },
+
+    // ═══ EXTRA EASY ═══
+    {
+      id: "e9", diff: "easy", topic: "cell-parts", marks: 2, star: "★★",
+      type: "standard",
+      q: "State which TWO cell components are common to ALL cells (animal, plant, bacterial).",
+      hint: "Think about the absolute minimum a cell needs to be alive.",
+      a: "Cell membrane [1]\nCytoplasm [1]\n(Ribosomes also accepted as a third)"
+    },
+    {
+      id: "e10", diff: "easy", topic: "organisation", marks: 3, star: "★★★",
+      type: "standard",
+      q: "A leaf is described as a plant organ. Name THREE different tissues found inside a leaf.",
+      hint: "Think layers in a leaf cross-section.",
+      a: "Any three of: epidermis (upper or lower) [1] · palisade mesophyll [1] · spongy mesophyll [1] · xylem [1] · phloem [1]"
+    },
+    {
+      id: "e11", diff: "easy", topic: "microscope", marks: 1, star: "★★",
+      type: "calc",
+      q: "Express 4 mm in micrometres (μm).",
+      hint: "1 mm = 1000 μm.",
+      a: "4 × 1000 = 4000 μm [1]"
+    },
+    {
+      id: "e12", diff: "easy", topic: "specialised", marks: 2, star: "★★",
+      type: "standard",
+      q: "Explain why a sperm cell contains a large number of mitochondria.",
+      hint: "Mitochondria release energy. What does a sperm cell need energy for?",
+      a: "Mitochondria release energy by aerobic respiration [1]\nThis energy powers the tail/flagellum to swim towards the egg [1]"
+    },
+
+    // ═══ EXTRA MEDIUM ═══
+    {
+      id: "m9", diff: "medium", topic: "specialised", marks: 4, star: "★★★",
+      type: "standard",
+      q: "A xylem vessel is a specialised plant cell. State TWO structural features of xylem and explain how each helps it perform its function.",
+      hint: "Xylem transports water and provides support — link each feature to one of these.",
+      a: "Any two (2 marks each — feature + reason):\n– No top/bottom cell walls between vessels: gives a continuous unbroken column of water from root to leaf [2]\n– Cells are dead with no cytoplasm or organelles: provides an empty hollow tube allowing free flow of water [2]\n– Walls thickened with lignin: provides strength so xylem supports the plant and resists collapse under tension [2]"
+    },
+    {
+      id: "m10", diff: "medium", topic: "specialised", marks: 3, star: "★★★",
+      type: "standard",
+      q: "Explain how the structure of a ciliated epithelial cell helps it carry out its role in the airways.",
+      hint: "What is moved, where to, and what makes the movement happen?",
+      a: "The cell has many hair-like cilia projecting from its surface [1]\nThe cilia beat in a wave-like motion [1]\nThis pushes mucus (with trapped dust and pathogens) up and away from the lungs to the throat, where it is swallowed [1]"
+    },
+    {
+      id: "m11", diff: "medium", topic: "organisation", marks: 4, star: "★★★",
+      type: "standard",
+      q: "Plants have organ systems just like animals. (i) Name TWO plant organ systems. (ii) For ONE of them, name an organ it contains and one tissue inside that organ.",
+      hint: "Above ground vs below ground.",
+      a: "(i) Shoot system [1]; root system [1]\n(ii) Shoot system → leaf (organ) → palisade mesophyll / xylem / phloem / epidermis (tissue, any one) [1+1]\nOR Root system → root (organ) → xylem / phloem / epidermis (tissue, any one) [1+1]"
+    },
+    {
+      id: "m12", diff: "medium", topic: "microscope", marks: 4, star: "★★★",
+      type: "calc",
+      q: "An onion epidermal cell appears 75 mm long under the microscope. The actual cell is 0.15 mm long. (i) Calculate the magnification. (ii) Express the actual size in micrometres.",
+      hint: "Both are in mm — no conversion needed for (i). For (ii), 1 mm = 1000 μm.",
+      a: "(i) Magnification = image ÷ actual = 75 ÷ 0.15 [1] = ×500 [1]\n(ii) 0.15 mm × 1000 = 150 μm [2]"
+    },
+    {
+      id: "m13", diff: "medium", topic: "practical", marks: 4, star: "★★★",
+      type: "standard",
+      q: "Describe how you would prepare a temporary slide of onion epidermis to observe under a microscope. Give FOUR steps in order.",
+      hint: "Slide → specimen → stain → cover-slip.",
+      a: "1. Peel a thin transparent layer of epidermis from the inside of an onion scale leaf [1]\n2. Place the layer flat on a clean glass slide and add a drop of iodine solution to stain [1]\n3. Lower a cover-slip at an angle (about 45°) to avoid trapping air bubbles [1]\n4. Blot any excess fluid and view under low power first, then high power [1]"
+    },
+
+    // ═══ EXTRA HARD ═══
+    {
+      id: "h6", diff: "hard", topic: "microscope", marks: 5, star: "★★★", ext: true,
+      type: "calc",
+      q: "An electron micrograph of a mitochondrion has a labelled scale bar showing 1 μm. The scale bar measures 8 mm long on the printed page. The mitochondrion in the image measures 32 mm long. (i) Calculate the magnification of the image. (ii) Calculate the actual length of the mitochondrion in μm.",
+      hint: "Use the scale bar to find magnification first, then back-calculate the cell size.",
+      a: "(i) Scale bar represents 1 μm but appears 8 mm = 8000 μm long [1]\nMagnification = image of scale bar ÷ what it represents = 8000 ÷ 1 = ×8000 [1]\n(ii) Image length of mitochondrion = 32 mm = 32 000 μm [1]\nActual = image ÷ magnification = 32 000 ÷ 8000 [1] = 4 μm [1]"
+    },
+    {
+      id: "h7", diff: "hard", topic: "cell-parts", marks: 6, star: "★★★", ext: true,
+      type: "table",
+      q: "Compare a generalised animal cell, plant cell and bacterial cell by completing a table for these features: nucleus, mitochondria, cell wall, chloroplast, ribosomes, plasmids.",
+      hint: "Plant has the most structures; bacteria the fewest organelles but two unique features.",
+      a: "Nucleus — animal ✓, plant ✓, bacterium ✗ [1]\nMitochondria — animal ✓, plant ✓, bacterium ✗ [1]\nCell wall — animal ✗, plant ✓ (cellulose), bacterium ✓ (NOT cellulose) [1]\nChloroplast — animal ✗, plant ✓ (in green parts), bacterium ✗ [1]\nRibosomes — animal ✓, plant ✓, bacterium ✓ (smaller) [1]\nPlasmids — animal ✗, plant ✗, bacterium ✓ [1]"
+    },
+  ];
+
+  // ── Filtering & topic/diff metadata ──
+  const topics = [
+    { id: "all",         label: "All topics",        color: RD },
+    { id: "cell-parts",  label: "Cell parts",        color: "#5b3fa6" },
+    { id: "specialised", label: "Specialised cells", color: "#1e6091" },
+    { id: "organisation",label: "Tissues/Organs",    color: "#1a7a3a" },
+    { id: "microscope",  label: "Microscope/Calc",   color: "#b85c00" },
+    { id: "bacteria",    label: "Bacteria",          color: "#c0392b" },
+    { id: "practical",   label: "Practical (ATP)",   color: "#0d5e8a" },
+  ];
+
+  const diffs = [
+    { id: "all",    label: "All",    color: RD,        bg: RL },
+    { id: "easy",   label: "Easy",   color: "#1a7a3a", bg: "#e8f7ec" },
+    { id: "medium", label: "Medium", color: "#b85c00", bg: "#fff4e6" },
+    { id: "hard",   label: "Hard",   color: "#b02020", bg: "#fdf0f0" },
+  ];
+
+  const filtered = qs.filter(q =>
+    (diff === "all" || q.diff === diff) &&
+    (topic === "all" || q.topic === topic)
+  );
+
+  const totalMarks = filtered.reduce((s, q) => s + q.marks, 0);
+  const revealedCount = filtered.filter(q => rev[q.id]).length;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* Header */}
+      <div style={{ background: RD, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13, lineHeight: 1.55 }}>
+        <div style={{ fontWeight: 700, marginBottom: 3 }}>📝 Exam Practice — Infinite Test Bank</div>
+        <div style={{ fontSize: 12, opacity: 0.95 }}>
+          Filter by difficulty &amp; topic · Try first, then reveal · ★★★ = frequently examined
+        </div>
+      </div>
+
+      {/* Difficulty filter */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#666", marginBottom: 5, letterSpacing: 0.5 }}>DIFFICULTY</div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {diffs.map(d => {
+            const count = qs.filter(q => d.id === "all" || q.diff === d.id).length;
+            return (
+              <button key={d.id} onClick={() => setDiff(d.id)}
+                style={{
+                  padding: "6px 12px", borderRadius: 6,
+                  border: diff === d.id ? `2px solid ${d.color}` : `1.5px solid ${BD}`,
+                  background: diff === d.id ? d.color : "#fff",
+                  color: diff === d.id ? "#fff" : d.color,
+                  fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+                }}>
+                {d.label} <span style={{ opacity: 0.8, fontWeight: 500 }}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Topic filter */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#666", marginBottom: 5, letterSpacing: 0.5 }}>TOPIC</div>
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+          {topics.map(t => {
+            const count = qs.filter(q => t.id === "all" || q.topic === t.id).length;
+            return (
+              <button key={t.id} onClick={() => setTopic(t.id)}
+                style={{
+                  padding: "5px 10px", borderRadius: 14,
+                  border: topic === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+                  background: topic === t.id ? t.color : "#fff",
+                  color: topic === t.id ? "#fff" : t.color,
+                  fontSize: 10.5, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+                }}>
+                {t.label} <span style={{ opacity: 0.75, fontWeight: 500 }}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Stats bar */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        background: RL, borderRadius: 8, padding: "8px 14px", fontSize: 12, color: RD, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <Bold>{filtered.length}</Bold> question{filtered.length !== 1 ? "s" : ""} ·
+          <Bold> /{totalMarks} marks total</Bold> ·
+          <span style={{ color: "#666" }}> {revealedCount} revealed</span>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => setRev({})} style={{
+            padding: "5px 10px", borderRadius: 5, fontSize: 11, fontWeight: 600, cursor: "pointer",
+            border: `1.5px solid ${RD}`, background: "#fff", color: RD,
+          }}>Hide all</button>
+        </div>
+      </div>
+
+      {filtered.length === 0 && (
+        <div style={{ textAlign: "center", padding: "30px 20px", color: "#999", fontSize: 13, background: "#f8f8f6", borderRadius: 10 }}>
+          No questions match the selected filters. Try a different combination.
+        </div>
+      )}
+
+      {/* Question cards */}
+      {filtered.map(q => {
+        const diffMeta = diffs.find(d => d.id === q.diff);
+        const topicMeta = topics.find(t => t.id === q.topic);
+        return (
+          <div key={q.id} style={{ border: `1.5px solid ${BD}`, borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ background: diffMeta.bg, padding: "10px 16px", borderBottom: `1px solid ${BD}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, flexWrap: "wrap", gap: 6 }}>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+                  <span style={{ background: diffMeta.color, color: "#fff", borderRadius: 3, padding: "2px 7px", fontSize: 9.5, fontWeight: 700, letterSpacing: 0.5 }}>{q.diff.toUpperCase()}</span>
+                  <span style={{ color: topicMeta.color, fontWeight: 700, fontSize: 10.5, padding: "2px 7px", border: `1px solid ${topicMeta.color}`, borderRadius: 3 }}>{topicMeta.label}</span>
+                  {q.ext && <span style={{ background: PU, color: "#fff", borderRadius: 3, padding: "2px 6px", fontSize: 9.5, fontWeight: 700 }}>EXT</span>}
+                  <span style={{ color: diffMeta.color, fontSize: 12 }}>{q.star}</span>
+                </div>
+                <span style={{ background: diffMeta.color, color: "#fff", borderRadius: 14, padding: "2px 10px", fontSize: 11, fontWeight: 700 }}>[{q.marks} mark{q.marks !== 1 ? "s" : ""}]</span>
+              </div>
+              <div style={{ fontSize: 13, color: "#2a0000", lineHeight: 1.6, fontWeight: 500 }}>{q.q}</div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 5, fontStyle: "italic" }}>💭 Hint: {q.hint}</div>
+            </div>
+            <div style={{ padding: "10px 16px", background: "#fff" }}>
+              {rev[q.id] ? (
+                <>
+                  <div style={{ fontSize: 12, whiteSpace: "pre-line", background: "#f8f8f6", borderRadius: 8, padding: "10px 14px", borderLeft: `3px solid ${diffMeta.color}`, lineHeight: 1.7, color: GR }}>
+                    {q.a}
+                  </div>
+                  <button onClick={() => toggle(q.id)} style={{ marginTop: 8, background: "none", border: `1px solid ${diffMeta.color}`, color: diffMeta.color, borderRadius: 6, padding: "5px 14px", fontSize: 11, cursor: "pointer", fontWeight: 600 }}>
+                    Hide answer
+                  </button>
+                </>
+              ) : (
+                <button onClick={() => toggle(q.id)} style={{ background: diffMeta.color, color: "#fff", border: "none", borderRadius: 6, padding: "7px 18px", fontSize: 12, cursor: "pointer", fontWeight: 600 }}>
+                  Show answer
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Footer note for adding more */}
+      <div style={{ marginTop: 8, padding: "10px 14px", background: RL, borderRadius: 8, fontSize: 11, color: RD, textAlign: "center", lineHeight: 1.55 }}>
+        💡 <Bold>Infinite test mode:</Bold> {qs.length} questions loaded. Add more by appending to the <code style={{ background: "#fff", padding: "1px 5px", borderRadius: 3 }}>qs</code> array — the filters &amp; stats update automatically.
+      </div>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ③ SUMMARY TAB
+// ════════════════════════════════════════════════════════════════════════════
+function SummaryTab() {
+  const [open, setOpen] = useState({ s1: true, s2: false, s3: false, s4: false, s5: false });
+  const tog = k => setOpen(p => ({ ...p, [k]: !p[k] }));
+
+  const Sec = ({ id, title, children }) => (
+    <div style={{ border: `1.5px solid ${PU}`, borderRadius: 10, overflow: "hidden", marginBottom: 12 }}>
+      <button onClick={() => tog(id)} style={{ width: "100%", background: open[id] ? PU : PL, color: open[id] ? "#fff" : PU, border: "none", padding: "11px 16px", textAlign: "left", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", justifyContent: "space-between" }}>
+        {title}<span>{open[id] ? "▲" : "▼"}</span>
+      </button>
+      {open[id] && <div style={{ padding: "14px 16px", background: "#fff" }}>{children}</div>}
+    </div>
+  );
+
+  return (
+    <div>
+      <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 8, padding: "10px 16px", marginBottom: 12, fontSize: 12, color: "#3a2a6a" }}>
+        <strong>1st-stage summary</strong> — Chapter 2 condensed into key concepts, diagrams, and comparison tables. Use after reading <Bold>④ Textbook</Bold> in detail.
+      </div>
+
+      <Sec id="s1" title="① Animal vs Plant vs Bacterial Cell">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          All cells share a few essentials: <KW>cell membrane</KW>, <KW>cytoplasm</KW>, and <KW>ribosomes</KW>. Beyond that, the three main cell types differ in important ways.
+        </p>
+        <AnimalVsPlantCell />
+        <BacterialCell />
+
+        <div style={{ marginTop: 14, overflowX: "auto" }}>
+          <strong style={{ color: PU, fontSize: 13, display: "block", marginBottom: 6 }}>Cell-type comparison — quick reference</strong>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+            <thead>
+              <tr style={{ background: PU, color: "#fff" }}>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Feature</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Animal</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Plant</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Bacterium</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Cell membrane",       "✓",          "✓",                  "✓"],
+                ["Cytoplasm",           "✓",          "✓",                  "✓"],
+                ["Ribosomes",           "✓",          "✓",                  "✓ (smaller)"],
+                ["Nucleus",             "✓",          "✓",                  "✗ (free circular DNA)"],
+                ["Mitochondria",        "✓",          "✓",                  "✗"],
+                ["Cell wall",           "✗",          "✓ (cellulose)",     "✓ (NOT cellulose)"],
+                ["Chloroplasts",        "✗",          "✓ (in some)",       "✗"],
+                ["Permanent vacuole",   "✗",          "✓ (large, sap)",    "✗"],
+                ["Plasmids",            "✗",          "✗",                  "✓"],
+              ].map((row, i) => (
+                <tr key={i} style={{ background: i % 2 ? PL : "#fff" }}>
+                  {row.map((c, j) => (
+                    <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? PU : GR }}>{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Sec>
+
+      <Sec id="s2" title="② Function of Each Cell Part">
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+            <thead>
+              <tr style={{ background: PU, color: "#fff" }}>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Part</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Description</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Cytoplasm",     "Jelly-like; contains organelles",                 "Site of chemical reactions"],
+                ["Cell membrane", "Thin, partially permeable layer",                 "Controls entry/exit of substances"],
+                ["Nucleus",       "Round, contains DNA on chromosomes",              "Controls cell activities, division, development"],
+                ["Mitochondrion", "Oval/rod-shaped organelle with inner folds",      "Site of aerobic respiration (releases energy)"],
+                ["Ribosome",      "Tiny dot, on membranes or free in cytoplasm",     "Site of protein synthesis"],
+                ["Cell wall",     "Tough cellulose layer (plants)",                  "Stops cell bursting; freely permeable; supports plant"],
+                ["Vacuole",       "Large fluid-filled space (plants)",               "Holds cell sap; keeps cell turgid"],
+                ["Chloroplast",   "Green organelle with chlorophyll",                "Traps light energy for photosynthesis"],
+                ["Plasmid",       "Small circular DNA loop (bacteria)",              "Carries genes; used in genetic engineering"],
+                ["Circular DNA",  "Single coiled chromosome (bacteria)",             "Controls cell activities and division"],
+              ].map((row, i) => (
+                <tr key={i} style={{ background: i % 2 ? PL : "#fff" }}>
+                  {row.map((c, j) => (
+                    <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? PU : GR }}>{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ background: AL, border: `1px solid ${AM}`, borderRadius: 6, padding: "8px 12px", marginTop: 10, fontSize: 12, color: "#5a3a00", lineHeight: 1.6 }}>
+          <Bold>Membrane vs wall:</Bold> the cell membrane is <KW>partially permeable</KW> (selective) — only some substances pass. The cell wall is <KW>freely permeable</KW> — water and dissolved salts pass through easily. Don't mix these up.
+        </div>
+      </Sec>
+
+      <Sec id="s3" title="③ Specialised Cells — Structure → Function">
+        <SpecialisedCells />
+        <div style={{ marginTop: 12, overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, color: GR }}>
+            <thead>
+              <tr style={{ background: PU, color: "#fff" }}>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Cell</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Adaptation</th>
+                <th style={{ padding: "6px 8px", textAlign: "left" }}>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Ciliated cell",        "Hair-like cilia on top",                                   "Wafts mucus + dust away from lungs (airways)"],
+                ["Root hair cell",       "Long thin extension; large surface area",                  "Absorbs water + mineral ions from soil"],
+                ["Palisade mesophyll",   "Column-shaped; many chloroplasts",                         "Photosynthesis in leaf"],
+                ["Neurone (nerve)",      "Very long thin fibre",                                     "Conducts electrical impulses"],
+                ["Red blood cell",       "Biconcave disc; NO nucleus; haemoglobin",                  "Transports oxygen"],
+                ["Sperm cell",           "Tail; mid-piece with mitochondria; acrosome at tip",       "Reaches and fertilises egg"],
+                ["Egg cell (ovum)",      "Large; cytoplasm with yolk droplets; jelly coat",          "Reproduction; supplies nutrients to embryo"],
+              ].map((row, i) => (
+                <tr key={i} style={{ background: i % 2 ? PL : "#fff" }}>
+                  {row.map((c, j) => (
+                    <td key={j} style={{ padding: "6px 8px", borderBottom: `1px solid ${BD}`, fontWeight: j === 0 ? 700 : 400, color: j === 0 ? PU : GR }}>{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Sec>
+
+      <Sec id="s4" title="④ Levels of Organisation — Cell to Organism">
+        <OrganisationLevels />
+        <LeafTissueOrgan />
+        <div style={{ background: PL, borderRadius: 8, padding: "10px 14px", marginTop: 12, fontSize: 12.5, lineHeight: 1.7, color: "#3a2a6a" }}>
+          <strong style={{ color: PU, display: "block", marginBottom: 4 }}>Definitions to memorise:</strong>
+          <Bold>Tissue</Bold> — a group of cells with similar structures working together to perform a shared function.<br/>
+          <Bold>Organ</Bold> — a structure made up of a group of tissues working together to perform a specific function.<br/>
+          <Bold>Organ system</Bold> — a group of organs with related functions working together to perform a body function.<br/>
+          <Bold>Organism</Bold> — a living thing that has an organised structure, can react to stimuli, reproduce, grow, adapt, and maintain homeostasis.
+        </div>
+      </Sec>
+
+      <Sec id="s5" title="⑤ Microscope, Magnification & Size">
+        <MicroscopeDiagram />
+        <MagnificationTriangle />
+        <MagnificationWorkedExample />
+        <SizeScale />
+
+        <div style={{ marginTop: 12, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: PU, display: "block", marginBottom: 4 }}>Worked example</strong>
+          A drawing of a cell is 60 mm wide. The actual cell is 0.1 mm wide. What is the magnification?<br/>
+          → Both already in mm — no conversion needed.<br/>
+          → M = I ÷ A = 60 ÷ 0.1 = <KW c={PU}>×600</KW>.
+        </div>
+
+        <div style={{ marginTop: 14, background: AL, border: `1px solid ${AM}`, borderRadius: 6, padding: "10px 14px", fontSize: 12, color: "#5a3a00", lineHeight: 1.7 }}>
+          <Bold>Revision checklist:</Bold>
+          <ul style={{ margin: "6px 0", paddingLeft: 18 }}>
+            <li>I can name the parts of an animal, plant and bacterial cell and state their functions.</li>
+            <li>I can list 7 specialised cells and explain how each is adapted to its function.</li>
+            <li>I can define cell, tissue, organ, organ system, organism — with examples.</li>
+            <li>I can calculate magnification, image size, or actual size using the formula.</li>
+            <li>I can convert between mm and μm correctly.</li>
+            <li>I can describe how to prepare an onion epidermis or cheek-cell slide.</li>
+          </ul>
+        </div>
+      </Sec>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ④ TEXTBOOK TAB
+// ════════════════════════════════════════════════════════════════════════════
+function TextbookTab() {
+  const [open, setOpen] = useState({ t1: true, t2: false, t3: false, t4: false, t5: false, t6: false, t7: false, t8: false });
+  const [showAll, setShowAll] = useState(false);
+  const tog = k => setOpen(p => ({ ...p, [k]: !p[k] }));
+  const expandAll = () => {
+    const next = {};
+    ["t1","t2","t3","t4","t5","t6","t7","t8"].forEach(k => next[k] = !showAll);
+    setOpen(next); setShowAll(!showAll);
+  };
+
+  const Sec = ({ id, title, page, ext, children }) => (
+    <div style={{ border: `1.5px solid ${G}`, borderRadius: 10, overflow: "hidden", marginBottom: 12 }}>
+      <button onClick={() => tog(id)} style={{ width: "100%", background: open[id] ? G : GL, color: open[id] ? "#fff" : G, border: "none", padding: "11px 16px", textAlign: "left", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 8, flex: 1 }}>
+          <span>{title}</span>
+          {ext && <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 3, background: open[id] ? "rgba(255,255,255,0.25)" : PL, color: open[id] ? "#fff" : PU, fontWeight: 700 }}>EXT</span>}
+        </span>
+        <span style={{ fontSize: 11, opacity: 0.8, flexShrink: 0 }}>{page && `p.${page} `}{open[id] ? "▲" : "▼"}</span>
+      </button>
+      {open[id] && <div style={{ padding: "14px 16px", background: "#fff" }}>{children}</div>}
+    </div>
+  );
+
+  const Tip = ({ children }) => (
+    <div style={{ background: "#fff8e7", borderLeft: `4px solid ${AM}`, borderRadius: "0 6px 6px 0", padding: "8px 12px", margin: "10px 0", fontSize: 12, lineHeight: 1.6, color: "#5a3a00" }}>
+      <strong style={{ color: AM }}>💡 Examiner Tip — </strong>{children}
+    </div>
+  );
+
+  const Def = ({ term, children }) => (
+    <div style={{ display: "flex", gap: 10, marginBottom: 8, fontSize: 13, lineHeight: 1.65 }}>
+      <span style={{ flexShrink: 0, minWidth: 130, color: G, fontWeight: 700 }}>{term}</span>
+      <span style={{ color: GR }}>{children}</span>
+    </div>
+  );
+
+  return (
+    <div>
+      {/* Header banner */}
+      <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 8, padding: "10px 16px", marginBottom: 10, fontSize: 12, color: "#1a3a26" }}>
+        <strong>Complete reference for Chapter 2</strong> — every concept, every diagram, every definition.<br/>
+        Use this as a lookup when something is unclear. Sections marked <span style={{ background: PL, color: PU, padding: "1px 5px", borderRadius: 3, fontWeight: 700, fontSize: 10 }}>EXT</span> are Extended-tier only.
+      </div>
+
+      {/* Expand-all toggle */}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10 }}>
+        <button onClick={expandAll} style={{ padding: "5px 12px", borderRadius: 6, border: `1.5px solid ${G}`, background: showAll ? G : "#fff", color: showAll ? "#fff" : G, fontSize: 11, fontWeight: 600, cursor: "pointer" }}>
+          {showAll ? "Collapse all" : "Expand all"}
+        </button>
+      </div>
+
+      {/* ───── Section 1: Introduction & Cell Concept ───── */}
+      <Sec id="t1" title="1 · The Cell — The Basic Unit of Life" page="24">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          When a thin slice of plant or animal tissue is examined under a microscope, it appears to be made of thousands of small box-like or rounded units. These tiny units are called <KW>cells</KW> — the building blocks of every living organism.
+        </p>
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          Plant tissue is firm enough to slice with a razor blade. Animal tissue is soft, so it must first be soaked in melted wax; once the wax solidifies, thin sections can be cut. After cutting, the wax is dissolved away. Specimens are usually <KW>stained</KW> (e.g. methylene blue, iodine) to show the structures inside the cell.
+        </p>
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          Cells vary widely in size and shape depending on their function, but most share certain features: a <KW>cell membrane</KW>, <KW>cytoplasm</KW>, and (usually) a <KW>nucleus</KW>.
+        </p>
+        <Tip>
+          When the textbook says a slice is "60 times larger than life", it tells you the magnification of the image — that's how big the picture is compared with the real specimen. You'll do these calculations later.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 2: Animal Cell Parts ───── */}
+      <Sec id="t2" title="2 · Animal Cell Structure" page="26">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          A typical animal cell has the following structures:
+        </p>
+        <Def term="Cell membrane">A thin <Bold>partially permeable</Bold> layer surrounding the cytoplasm. It controls which substances enter or leave the cell — oxygen, food and water are allowed in; waste products leave; harmful substances are kept out.</Def>
+        <Def term="Cytoplasm">A jelly-like substance (mostly water with dissolved salts and sugars). It contains organelles and is the <Bold>site of most chemical reactions</Bold>. Some enzymes float freely; others are attached to membrane systems.</Def>
+        <Def term="Nucleus">A round structure inside the cytoplasm. It contains <KW>chromosomes</KW> made of <KW>DNA</KW>. The nucleus controls which enzymes the cell makes — and therefore <Bold>controls cell activities, development and division</Bold>. A cell without a nucleus cannot reproduce.</Def>
+        <Def term="Mitochondria">Tiny oval/rod-shaped organelles. They have an outer membrane and an inner folded membrane. Mitochondria carry out <KW>aerobic respiration</KW> — they release energy from food. Most numerous in cells with high energy demands (muscle, sperm). <Bold>Prokaryotes do not have mitochondria.</Bold></Def>
+        <Def term="Ribosomes">Small dot-like structures attached to membranes or free in cytoplasm. They are the site of <KW>protein synthesis</KW>.</Def>
+
+        <CellDivisionDiagram />
+        <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, marginTop: 8 }}>
+          When a cell divides, the <Bold>nucleus divides first</Bold>, followed by the cytoplasm pinching in two. This produces two daughter cells, one or both of which may divide again, while the other may become a specialised cell.
+        </p>
+        <Tip>
+          Examiners love asking why the nucleus is essential. The answer: it controls the cell's chemistry (via enzymes) and is required for cell division. Without it, the cell cannot reproduce.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 3: Plant Cell Parts ───── */}
+      <Sec id="t3" title="3 · Plant Cell Structure" page="27">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          A plant cell has all the features of an animal cell <Bold>plus three extras</Bold> — a cell wall, chloroplasts, and a large permanent vacuole.
+        </p>
+        <Def term="Cell wall">A tough non-living layer made of <KW>cellulose</KW>, located outside the membrane. It is <Bold>fully (freely) permeable</Bold> — water and dissolved substances pass through it. It prevents the cell from bursting and gives the plant support.</Def>
+        <Def term="Vacuole">A large fluid-filled space surrounded by a membrane (the <em>tonoplast</em>). It contains <KW>cell sap</KW> — a watery solution of sugars, salts and sometimes pigments. The vacuole pushes the cytoplasm against the cell wall, making the cell <Bold>turgid</Bold>. Animal cells may sometimes have small temporary vacuoles, but never a large permanent one.</Def>
+        <Def term="Chloroplasts">Disc-shaped organelles found in <Bold>some</Bold> plant cells (especially leaf cells), but not in roots or other parts away from light. They contain the green pigment <KW>chlorophyll</KW> which absorbs light energy for <KW>photosynthesis</KW>.</Def>
+        <AnimalVsPlantCell />
+        <Tip>
+          Two common student errors: (1) saying animal cells have no cell membrane — they do, but it's the only outer boundary. (2) saying plant cells don't have a cell membrane — they do, pressed tightly against the inside of the wall.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 4: Bacterial Cell ───── */}
+      <Sec id="t4" title="4 · Bacterial Cell Structure" page="29">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          Bacteria are very small — usually less than <KW>0.01 mm</KW> long — and visible only under high magnification. They are single-celled <KW>prokaryotes</KW>: cells without a true nucleus or any membrane-bound organelles.
+        </p>
+        <BacterialCell />
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginTop: 8 }}>
+          A bacterial cell has:
+        </p>
+        <Def term="Cell wall">A tough layer surrounding the cell membrane. <Bold>NOT made of cellulose</Bold> — it is made of a complex mixture of proteins, sugars and fats (peptidoglycan).</Def>
+        <Def term="Cell membrane">Partially permeable, just below the cell wall. Controls movement of substances.</Def>
+        <Def term="Cytoplasm">May contain food reserves such as <KW>glycogen</KW>, fats and sugars stored as granules.</Def>
+        <Def term="Ribosomes">Small ribosomes (smaller than those in plant/animal cells), free in the cytoplasm. Site of <KW>protein synthesis</KW>.</Def>
+        <Def term="Circular DNA">A single chromosome of <Bold>circular DNA</Bold>, coiled into a small region of the cell. <Bold>Not surrounded by a nuclear membrane</Bold> — this is a defining feature of prokaryotes.</Def>
+        <Def term="Plasmids">Small extra rings of DNA. They carry useful genes (e.g. antibiotic resistance) and are widely used by scientists in <KW c={PU}>genetic engineering</KW> to insert foreign genes into bacteria.</Def>
+        <Def term="Flagella (some)">Whip-like extensions that flick to move the bacterium through liquid.</Def>
+        <Tip>
+          The most common exam mistake: writing that bacteria "have a nucleus." They don't. They have circular DNA <em>without</em> a nuclear membrane. Also: bacterial cell walls are <em>not</em> made of cellulose (only plants are).
+        </Tip>
+
+        <div style={{ marginTop: 14, padding: "10px 14px", background: "#f7f9fc", borderRadius: 8, border: `1px solid ${BD}` }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 6 }}>Examples of bacteria</strong>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, color: GR, lineHeight: 1.7 }}>
+            <li><KW>Lactobacillus</KW> — a rod-shaped bacterium used to make <Bold>yoghurt from milk</Bold>.</li>
+            <li><KW>Pneumococcus</KW> — a spherical bacterium that acts as the pathogen causing <Bold>pneumonia</Bold>.</li>
+          </ul>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Other organelles seen at high magnification</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Under an <KW>electron microscope</KW>, plant and animal cells reveal additional structures (not seen in prokaryotes):
+          </p>
+          <ul style={{ margin: "6px 0 0 0", paddingLeft: 18, fontSize: 12.5, color: GR, lineHeight: 1.7 }}>
+            <li><KW>Rough Endoplasmic Reticulum (RER)</KW> — a system of membranes studded with <Bold>ribosomes</Bold>; looks rough under the microscope. Site of protein assembly and transport.</li>
+            <li><KW>Vesicles</KW> — small circular structures that move through the cytoplasm carrying substances between organelles.</li>
+          </ul>
+        </div>
+      </Sec>
+
+      {/* ───── Section 5: Specialised Cells ───── */}
+      <Sec id="t5" title="5 · Specialised Cells" page="33">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          When cells stop dividing they become <KW>specialised</KW> for one job — they develop a distinct shape and special chemical reactions. This is sometimes called the <em>division of labour</em>: each type of cell does one thing very well, and depends on others for the rest.
+        </p>
+        <SpecialisedCells />
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Ciliated cells</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Found in the <KW>lining of the trachea, bronchi and nose</KW>. The cytoplasmic projections, <KW>cilia</KW>, beat continuously to push a stream of <Bold>mucus + trapped dust + bacteria</Bold> away from the lungs and up to the throat, where it is swallowed.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Root hair cells</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Found in the <KW>root tip epidermis</KW>. Each cell has a long, thin extension that pushes between soil particles, providing a <Bold>large surface area</Bold> for absorbing water and mineral ions. The very thin cell wall offers a <Bold>short diffusion path</Bold>.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Palisade mesophyll cells</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Found just beneath the upper epidermis of leaves. They are <KW>columnar (long)</KW> and <KW>packed with chloroplasts</KW> — the highest concentration of chlorophyll in the leaf. Their job is to <Bold>photosynthesise</Bold>, using CO₂, water and light to make glucose.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Neurones (nerve cells)</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Specialised to <Bold>conduct electrical impulses</Bold> along their <KW>fibre</KW>. They are often very long, connecting distant parts of the body to the central nervous system (e.g. foot to spinal cord).
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Red blood cells</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Tiny disc-like cells with <KW>NO nucleus when mature</KW> — leaving extra space for the red pigment <KW>haemoglobin</KW>. Haemoglobin combines reversibly with oxygen, so red blood cells <Bold>transport oxygen</Bold> around the body.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Sperm cells (male gametes)</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Three regions: an oval <KW>head</KW> with a nucleus and an <KW>acrosome</KW> tip (which secretes enzymes to digest cells around an egg and the egg membrane); a <KW>mid-piece</KW> packed with mitochondria for energy; and a <KW>tail</KW> for swimming. Function: <Bold>fertilise the egg</Bold>.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Egg cells (female gametes / ova)</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Larger than sperm, spherical, with a large amount of cytoplasm containing <KW>yolk droplets</KW> (protein and fat) to feed the early embryo. Surrounded by a jelly-like coat called the <KW>zona pellucida</KW>, with <KW>follicle cells</KW> on the outside. After fertilisation by a single sperm, the cell membrane <Bold>changes so that no further sperm can enter</Bold>. Function: <Bold>reproduction</Bold>.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Xylem vessels (plant)</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            Long hollow tubes that <Bold>conduct water through the plant</Bold> and provide <KW>support</KW>. Adaptations:
+          </p>
+          <ul style={{ margin: "6px 0 0 0", paddingLeft: 18, fontSize: 12.5, color: GR, lineHeight: 1.7 }}>
+            <li><KW>No top and bottom walls</KW> between vessels — gives a <Bold>continuous column of water</Bold> from root to leaf</li>
+            <li>Cells are <KW>dead</KW> with <Bold>no organelles or cytoplasm</Bold> — allows free passage of water</li>
+            <li>Walls thickened with <KW>lignin</KW> — gives strength to support the plant</li>
+          </ul>
+        </div>
+
+        <Tip>
+          For exam questions on adaptation, always link <em>structure</em> directly to <em>function</em>: "the cell has X, which lets it do Y because Z." Vague answers ("it is well-adapted") earn no marks.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 6: Tissues, Organs, Systems, Organisms ───── */}
+      <Sec id="t6" title="6 · Tissues, Organs, Organ Systems & Organisms" page="35">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 10 }}>
+          Multicellular organisms are too large for individual cells to survive alone. Cells are organised into ever-larger functional units:
+        </p>
+        <OrganisationLevels />
+        <LeafTissueOrgan />
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Tissues</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: "0 0 6px 0" }}>
+            A <KW>tissue</KW> is a group of cells with similar structures working together to perform a shared function. Common types include <Bold>epithelium</Bold> (sheets and linings, e.g. mouth lining, trachea), <Bold>tubes</Bold> (e.g. kidney tubules), <Bold>muscle</Bold>, and <Bold>glands</Bold> (e.g. salivary). In plants, examples include <Bold>epidermis</Bold>, <Bold>xylem</Bold>, <Bold>phloem</Bold> and <Bold>palisade tissue</Bold>.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Organs</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            An <KW>organ</KW> is a structure made of several tissues working together for a specific function. The <Bold>stomach</Bold> contains epithelial tissue (lining), gland tissue (digestive juices), and muscle tissue (churning). It is supplied by blood vessels and nerves. Other examples: heart, lungs, intestines, brain, eyes. In plants: root, stem, leaves.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Organ systems</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            An <KW>organ system</KW> is a group of organs with related functions. Examples: <Bold>circulatory</Bold> (heart + blood vessels), <Bold>nervous</Bold> (brain + spinal cord + nerves), <Bold>digestive</Bold> (mouth + stomach + intestines + liver + pancreas). In plants, the <Bold>shoot system</Bold> = stem + leaves + buds.
+          </p>
+        </div>
+
+        <div style={{ marginTop: 12 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 4 }}>Organisms</strong>
+          <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, margin: 0 }}>
+            An <KW>organism</KW> is a living thing with an organised structure that can react to stimuli, reproduce, grow, adapt, and maintain homeostasis. The full hierarchy in a human body: <em>cell → tissue (e.g. muscle) → organ (e.g. stomach) → organ system (digestive) → organism (human).</em>
+          </p>
+        </div>
+
+        <div style={{ marginTop: 14 }}>
+          <strong style={{ color: G, fontSize: 13, display: "block", marginBottom: 6 }}>Reference table — major organ systems</strong>
+          <div style={{ overflow: "auto", border: `1px solid ${BD}`, borderRadius: 8 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11.5, minWidth: 480 }}>
+              <thead>
+                <tr style={{ background: GL }}>
+                  <th style={{ textAlign: "left", padding: "7px 10px", color: G, fontWeight: 700, borderBottom: `1.5px solid ${G}`, width: "30%" }}>Organ system</th>
+                  <th style={{ textAlign: "left", padding: "7px 10px", color: G, fontWeight: 700, borderBottom: `1.5px solid ${G}`, width: "40%" }}>Example organs</th>
+                  <th style={{ textAlign: "left", padding: "7px 10px", color: G, fontWeight: 700, borderBottom: `1.5px solid ${G}`, width: "30%" }}>Tissue examples</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Shoot system (plant)",   "Leaf, stem, flower, fruit",                       "Epidermis, mesophyll, xylem, phloem"],
+                  ["Root system (plant)",    "Root, tuber",                                     "Xylem, phloem, ground tissue"],
+                  ["Digestive",              "Oesophagus, stomach, small + large intestine",    "Muscle, connective, nerve, epithelial"],
+                  ["Circulatory",            "Heart, veins, arteries",                          "Muscle, connective, nerve, epithelial"],
+                  ["Immune",                 "Thymus, spleen",                                   "Bone marrow"],
+                  ["Respiratory",            "Trachea, bronchi, lungs",                          "Connective, muscle, epithelial"],
+                  ["Excretory",              "Liver, kidney, skin, lungs",                       "Muscle, connective, epithelial, nerve"],
+                  ["Nervous",                "Brain, spinal cord",                               "Nerve"],
+                  ["Reproductive",           "Ovary, uterus, vagina, testes, penis",             "Muscle, connective, nerve"],
+                ].map((r, i) => (
+                  <tr key={i} style={{ background: i % 2 ? "#fafaf7" : "#fff" }}>
+                    <td style={{ padding: "6px 10px", borderBottom: `1px solid ${BD}`, color: G, fontWeight: 600 }}>{r[0]}</td>
+                    <td style={{ padding: "6px 10px", borderBottom: `1px solid ${BD}`, color: GR }}>{r[1]}</td>
+                    <td style={{ padding: "6px 10px", borderBottom: `1px solid ${BD}`, color: GR }}>{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <Tip>
+          Exam definitions must be precise. "A tissue is many cells" earns 0 marks. The key phrases: "<em>similar structure</em>", "<em>shared function</em>", "<em>working together</em>". Memorise the wording exactly.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 7: Microscope & Magnification ───── */}
+      <Sec id="t7" title="7 · The Microscope & Magnification" page="37">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          Most cells are too small for the naked eye. A hand lens has a magnification of about ×20. A school <KW>light microscope</KW> usually magnifies up to ×400, but the best can go to ×1500. <KW>Electron microscopes</KW> can magnify hundreds of thousands of times and reveal the structure of organelles.
+        </p>
+        <MicroscopeDiagram />
+        <p style={{ fontSize: 12.5, color: GR, lineHeight: 1.7, marginTop: 8 }}>
+          The light microscope has two convex lenses: an <KW>eyepiece</KW> (usually ×10) and a choice of <KW>objective lenses</KW> (commonly ×4, ×10, ×40) on a rotating nosepiece. Light passes from a mirror or lamp, through the specimen on the <Bold>stage</Bold>, then through the lenses. The <Bold>focusing dial</Bold> moves the stage up/down for a sharp image.
+        </p>
+
+        <div style={{ marginTop: 12, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Calculating magnification</strong>
+          Total magnification = <KW>eyepiece × objective</KW>. Example: ×10 eyepiece + ×40 objective → total = ×400.
+        </div>
+
+        <div style={{ marginTop: 10, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          When you draw what you see, your drawing is usually larger than the microscope image, so the total magnification of the drawing is even bigger.
+        </div>
+
+        <Def term="Magnification">The observed (image) size divided by the actual size of the specimen. <Bold>It has no units</Bold> — write it as "×400", not "×400 mm".</Def>
+
+        <MagnificationTriangle />
+        <MagnificationWorkedExample />
+
+        <div style={{ marginTop: 10, background: GL, borderRadius: 6, padding: "10px 14px", fontSize: 12.5, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Worked example</strong>
+          A drawing of a cell is 6 cm wide. Its actual size is 0.1 mm.<br/>
+          → Convert: 6 cm = 60 mm.<br/>
+          → Magnification = image ÷ actual = 60 ÷ 0.1 = <KW>×600</KW>.
+        </div>
+
+        <Tip>
+          Always check both measurements are in the <em>same unit</em> before dividing. The most common error is dividing 6 cm by 0.1 mm directly — wrong by a factor of 10. Also: magnification has <em>no units</em>.
+        </Tip>
+      </Sec>
+
+      {/* ───── Section 8: Size Units ───── */}
+      <Sec id="t8" title="8 · Size of Specimens — Converting mm and μm" page="39">
+        <p style={{ fontSize: 13, color: GR, lineHeight: 1.7, marginBottom: 8 }}>
+          Cell organelles are often too small to measure in millimetres, so a smaller unit — the <KW>micrometre (μm)</KW> — is used.
+        </p>
+        <SizeScale />
+
+        <div style={{ marginTop: 12, background: AL, border: `1px solid ${AM}`, borderRadius: 6, padding: "10px 14px", fontSize: 12.5, color: "#5a3a00", lineHeight: 1.8 }}>
+          <strong style={{ color: AM, display: "block", marginBottom: 4 }}>Conversions to memorise:</strong>
+          1 metre = 1 000 000 μm<br/>
+          1 centimetre = 10 000 μm<br/>
+          <Bold>1 millimetre = 1 000 μm</Bold> (most useful)<br/>
+          So 0.05 mm = 50 μm; 750 μm = 0.75 mm = 0.075 cm.
+        </div>
+
+        <div style={{ marginTop: 12, fontSize: 13, color: GR, lineHeight: 1.7 }}>
+          <strong style={{ color: G, display: "block", marginBottom: 4 }}>Worked examples</strong>
+          1) The tail of a sperm cell is 0.05 mm long. Length in μm? → 0.05 × 1000 = <KW>50 μm</KW>.<br/>
+          2) An amoeba is 750 μm long. Length in cm? → 750 ÷ 10 000 = <KW>0.075 cm</KW>.<br/>
+          3) Drawing of a red blood cell is 14 mm wide. Actual cell is 7 μm. Magnification?<br/>
+          → Convert 14 mm = 14 000 μm. → 14 000 ÷ 7 = <KW>×2000</KW>.
+        </div>
+
+        <Tip>
+          Quick check: if you're calculating magnification and the answer comes out less than ×1, you've forgotten to convert. The magnification of a drawing of a cell is almost always at least several hundred.
+        </Tip>
+      </Sec>
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ⑤ FLASHCARD TAB
+// ════════════════════════════════════════════════════════════════════════════
+function FlashcardTab() {
+  const [flipped, setFlipped] = useState({});
+  const [activeCat, setActiveCat] = useState("all");
+  const toggle = id => setFlipped(p => ({ ...p, [id]: !p[id] }));
+  const flipAll = (val) => {
+    const next = {};
+    cards.forEach(c => { next[c.id] = val; });
+    setFlipped(next);
+  };
+
+  const categories = [
+    { id: "all",          label: "All",            color: TL,   count: 0 },
+    { id: "parts",        label: "Cell Parts",     color: G,    count: 0 },
+    { id: "compare",      label: "Compare Cells",  color: PU,   count: 0 },
+    { id: "specialised",  label: "Specialised",    color: RD,   count: 0 },
+    { id: "organisation", label: "Organisation",   color: AM,   count: 0 },
+    { id: "microscope",   label: "Microscope",     color: "#1a7a6e", count: 0 },
+  ];
+
+  const cards = [
+    // ── Cell Parts (17) — membrane, nucleus, mitochondria, ribosomes, cytoplasm, cell wall, vacuole, chloroplasts ──
+    { id: 1, cat: "parts", q: "What separates a cell from its surrounding environment?",
+      a: <>The <KW>cell membrane</KW> separates the cell from its surroundings.</> },
+    { id: 2, cat: "parts", q: "Name the largest organelle in animal cells.",
+      a: <>The <KW>nucleus</KW> is the largest organelle in animal cells.</> },
+    { id: 3, cat: "parts", q: "True or False? Ribosomes are present in both plant and animal cells.",
+      a: <><Bold>True.</Bold> Ribosomes are found in both — they are the site of <KW>protein synthesis</KW>.</> },
+    { id: 4, cat: "parts", q: "Name three organelles found in animal cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW>Nucleus</KW></li>
+            <li><KW>Mitochondria</KW></li>
+            <li><KW>Ribosomes</KW></li>
+            <li style={{ listStyle: "none", color: AM, fontSize: 11, marginTop: 4 }}>Note: cell membrane and cytoplasm are <Bold>not</Bold> organelles.</li>
+          </ul> },
+    { id: 5, cat: "parts", q: "What is the smallest organelle present in both plant and animal cells?",
+      a: <>The <KW>ribosome</KW> is the smallest organelle in both plant and animal cells.</> },
+    { id: 6, cat: "parts", q: "True or False? The gel-like fluid inside plant and animal cells is the chloroplast.",
+      a: <><Bold>False.</Bold> The gel-like fluid is the <KW>cytoplasm</KW>. Chloroplasts are organelles found only in plant cells.</> },
+    { id: 7, cat: "parts", q: "True or False? The role of the nucleus is to release energy for the cell.",
+      a: <><Bold>False.</Bold> The nucleus stores genetic information as <KW>DNA</KW>. Energy is released by <Bold>mitochondria</Bold>.</> },
+    { id: 8, cat: "parts", q: "What is the function of the cell membrane?",
+      a: <>The cell membrane <Bold>controls the passage of substances</Bold> in and out of the cell.</> },
+    { id: 9, cat: "parts", q: "True or False? Muscle cells likely contain more mitochondria than skin cells.",
+      a: <><Bold>True.</Bold> Muscle cells are more <KW>metabolically active</KW>, so they need more energy from <Bold>aerobic respiration</Bold>, which occurs in mitochondria.</> },
+    { id: 10, cat: "parts", q: "True or False? Mitochondria are the site of aerobic respiration.",
+      a: <><Bold>True.</Bold> Mitochondria release energy through <KW>aerobic respiration</KW>.</> },
+    { id: 11, cat: "parts", q: "True or False? Ribosomes are the site of protein synthesis.",
+      a: <><Bold>True.</Bold> Ribosomes are responsible for making <KW>proteins</KW>.</> },
+    { id: 12, cat: "parts", q: "What is the role of cytoplasm?",
+      a: <>The cytoplasm is the <KW>site of chemical reactions</KW> inside the cell.</> },
+    { id: 13, cat: "parts", q: "What is the function of chloroplasts in plant cells?",
+      a: <>Chloroplasts <Bold>absorb light energy</Bold> for the process of <KW>photosynthesis</KW>.</> },
+    { id: 14, cat: "parts", q: "True or False? Plant cell walls control the passage of substances in and out of the cell.",
+      a: <><Bold>False.</Bold> The cell wall provides <Bold>strength and support</Bold>. It is the <KW>cell membrane</KW> that regulates passage of substances.</> },
+    { id: 15, cat: "parts", q: "What is the function of the permanent vacuole in plant cells?",
+      a: <>It <Bold>stores cell sap</Bold> and provides <KW>structural support</KW> for the plant cell.</> },
+    { id: 16, cat: "parts", q: "Describe the permanent vacuole.",
+      a: <>It is a <KW>membrane-bound</KW> structure in plant cells that <Bold>stores cell sap</Bold> and helps <Bold>maintain cell shape</Bold>.</> },
+    { id: 17, cat: "parts", q: "True or False? Cell membranes provide structural support to plant and animal cells.",
+      a: <><Bold>False.</Bold> The cell membrane is not rigid, so it does not provide structural support. Its role is to <KW>control what enters and leaves the cell</KW>.</> },
+
+    // ── Compare Cells (5) — plant vs animal differences/shared ──
+    { id: 18, cat: "compare", q: "Name the structures present in plant cells but NOT in animal cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW>Cell wall</KW></li>
+            <li><KW>Chloroplasts</KW></li>
+            <li>Permanent <KW>vacuole</KW></li>
+          </ul> },
+    { id: 19, cat: "compare", q: "True or False? Animal cells have mitochondria, ribosomes and a cell wall.",
+      a: <><Bold>False.</Bold> Animal cells have mitochondria and ribosomes, but <Bold>no cell wall</Bold>. Cell walls are a feature of <KW>plant cells</KW>.</> },
+    { id: 20, cat: "compare", q: "Give three differences between plant and animal cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Plants have <KW>chloroplasts</KW>; animals do not</li>
+            <li>Plants have a <KW>cell wall</KW>; animals do not</li>
+            <li>Plants have a <KW>permanent vacuole</KW>; animals do not</li>
+          </ul> },
+    { id: 21, cat: "compare", q: "True or False? Mitochondria are the site of photosynthesis in plant cells.",
+      a: <><Bold>False.</Bold> Mitochondria are the site of <KW>aerobic respiration</KW>. <Bold>Chloroplasts</Bold> are the site of photosynthesis.</> },
+    { id: 22, cat: "compare", q: "Which cellular structure contains the genetic material in both plant and animal cells?",
+      a: <>The <KW>nucleus</KW> contains <Bold>DNA</Bold> in both plant and animal cells.</> },
+    { id: 23, cat: "compare", q: "List the structural features found in BOTH plant and animal cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Cell membrane</li>
+            <li>Cytoplasm</li>
+            <li>Nucleus</li>
+            <li>Mitochondria</li>
+            <li>Ribosomes</li>
+          </ul> },
+    { id: 24, cat: "compare", q: "True or False? Plant cells do not contain mitochondria.",
+      a: <><Bold>False.</Bold> Plant cells <Bold>do</Bold> contain mitochondria — <KW>aerobic respiration</KW> is essential for both plant and animal cells.</> },
+
+    // ── Specialised (6) — cell production, RBC, root hair, plant/animal examples ──
+    { id: 25, cat: "specialised", q: "How are new cells produced?",
+      a: <>New cells are produced by <KW>division of existing cells</KW>, e.g. by <Bold>mitosis</Bold> or <Bold>meiosis</Bold>.</> },
+    { id: 26, cat: "specialised", q: "Define the term 'specialised cell'.",
+      a: <>A specialised cell has <Bold>developed specific characteristics</Bold> that allow it to <KW>perform a particular function</KW>.</> },
+    { id: 27, cat: "specialised", q: "How are red blood cells specialised to carry out their function?",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Large <KW>surface area</KW> (biconcave) for diffusion of oxygen</li>
+            <li>Contain <KW>haemoglobin</KW> to bind and transport oxygen</li>
+            <li><KW>No nucleus</KW> → more space for haemoglobin</li>
+          </ul> },
+    { id: 28, cat: "specialised", q: "Give three examples of specialised plant cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li><KW>Root hair cell</KW></li>
+            <li><KW>Palisade mesophyll cell</KW></li>
+            <li><KW>Xylem vessel</KW></li>
+          </ul> },
+    { id: 29, cat: "specialised", q: "True or False? Root hair cells have an increased surface area.",
+      a: <><Bold>True.</Bold> The increased surface area allows greater <KW>absorption of water and mineral ions</KW> from the soil.</> },
+    { id: 30, cat: "specialised", q: "Give examples of specialised animal cells.",
+      a: <ul style={{ margin: "4px 0", paddingLeft: 18 }}>
+            <li>Red blood cells</li>
+            <li>Nerve cells</li>
+            <li>Ciliated epithelial cells</li>
+            <li>Sperm / egg cells</li>
+            <li>Muscle cells</li>
+          </ul> },
+
+    // ── Organisation (8) — cells, tissues, organs, organ systems, levels ──
+    { id: 31, cat: "organisation", q: "True or False? Plants do not have organ systems.",
+      a: <><Bold>False.</Bold> Plants do have organ systems — e.g. the <KW>shoot system</KW> (stem, leaves, flowers).</> },
+    { id: 32, cat: "organisation", q: "What are cells?",
+      a: <>Cells are the <KW>basic structural units</KW> of all living organisms.</> },
+    { id: 33, cat: "organisation", q: "Define the term 'organelle'.",
+      a: <>Organelles are <KW>structures within cells</KW> that carry out particular functions, e.g. the <Bold>nucleus</Bold>.</> },
+    { id: 34, cat: "organisation", q: "List the levels of organisation in complex multicellular organisms.",
+      a: <ol style={{ margin: "4px 0", paddingLeft: 22 }}>
+            <li><KW>Organelles</KW></li>
+            <li><KW>Cells</KW></li>
+            <li><KW>Tissues</KW></li>
+            <li><KW>Organs</KW></li>
+            <li><KW>Organ systems</KW></li>
+          </ol> },
+    { id: 35, cat: "organisation", q: "At which level of organisation is muscle in animals?",
+      a: <>Muscle is a <KW>tissue</KW> — a group of muscle cells working together to bring about <Bold>movement</Bold>.</> },
+    { id: 36, cat: "organisation", q: "Name the organ system responsible for transport of substances in the human body.",
+      a: <>The <KW>circulatory system</KW> transports substances around the human body.</> },
+    { id: 37, cat: "organisation", q: "Define the term 'tissue'.",
+      a: <>A tissue is a group of <KW>similar cells</KW> that <Bold>work together</Bold> to carry out a specific function.</> },
+    { id: 38, cat: "organisation", q: "True or False? Leaves are an example of a plant organ.",
+      a: <><Bold>True.</Bold> Leaves contain several tissues (palisade mesophyll, spongy mesophyll, vascular tissue) that work together to carry out <KW>photosynthesis</KW>.</> },
+
+    // ── Microscope (5) — magnification, units ──
+    { id: 39, cat: "microscope", q: "State the formula for calculating magnification.",
+      a: <>Magnification = <KW>image size ÷ actual size</KW></> },
+    { id: 40, cat: "microscope", q: "True or False? Magnification has units.",
+      a: <><Bold>False.</Bold> Magnification has <KW>no units</KW>. It is written as e.g. ×10 or 5000×.</> },
+    { id: 41, cat: "microscope", q: "What is the equation for calculating actual size?",
+      a: <>Actual size = <KW>image size ÷ magnification</KW></> },
+    { id: 42, cat: "microscope", q: "How many μm are there in 1 mm? (Extended)",
+      a: <>There are <KW>1 000 μm</KW> in 1 mm.</> },
+    { id: 43, cat: "microscope", q: "True or False? 1.2 mm is the same as 12 000 μm. (Extended)",
+      a: <><Bold>False.</Bold> Convert by multiplying by 1 000 → 1.2 × 1000 = <KW>1 200 μm</KW>, not 12 000 μm.</> },
+
+    // ── Extra Cell Parts (2) ──
+    { id: 44, cat: "parts", q: "Why do prokaryotes lack a true nucleus?",
+      a: <>Prokaryotes have <KW>circular DNA</KW> floating freely in the cytoplasm; it is <Bold>not enclosed by a nuclear membrane</Bold>. So it doesn't qualify as a true nucleus.</> },
+    { id: 45, cat: "parts", q: "What are plasmids and why are they important to scientists?",
+      a: <>Plasmids are <KW>small circular pieces of DNA</KW> in bacteria. Scientists insert <Bold>useful genes</Bold> (e.g. for human insulin) into plasmids and use bacteria to mass-produce the protein — this is <KW c={PU}>genetic engineering</KW>.</> },
+
+    // ── Extra Specialised (3) ──
+    { id: 46, cat: "specialised", q: "Explain why ciliated cells contain many mitochondria.",
+      a: <>The cilia beat continuously to move mucus, requiring lots of <KW>energy</KW>. Mitochondria carry out <Bold>aerobic respiration</Bold> to release this energy.</> },
+    { id: 47, cat: "specialised", q: "Why does the sperm cell's mid-piece contain so many mitochondria?",
+      a: <>The mitochondria release <KW>energy by aerobic respiration</KW> to power the <Bold>tail's swimming motion</Bold> as the sperm travels to the egg.</> },
+    { id: 48, cat: "specialised", q: "Why are mature xylem vessels DEAD with no cytoplasm?",
+      a: <>Empty hollow tubes give a <KW>continuous water column</KW> from root to leaf with <Bold>no obstruction</Bold>. Lignified walls also provide structural support.</> },
+
+    // ── Extra Microscope (2) ──
+    { id: 49, cat: "microscope", q: "Convert 0.0025 cm to micrometres (μm).",
+      a: <>0.0025 cm × 10 000 = <KW>25 μm</KW>. Or: 0.0025 cm → 0.025 mm → 25 μm.</> },
+    { id: 50, cat: "microscope", q: "An electron micrograph shows a 1 μm scale bar that measures 5 mm long. What is the magnification?",
+      a: <>Image of scale bar = 5 mm = <KW>5000 μm</KW>. Mag = 5000 ÷ 1 = <Bold>×5000</Bold>.</> },
+  ];
+
+  // count cards per category
+  categories.forEach(c => {
+    c.count = c.id === "all" ? cards.length : cards.filter(x => x.cat === c.id).length;
+  });
+
+  const visibleCards = activeCat === "all" ? cards : cards.filter(c => c.cat === activeCat);
+  const flippedCount = visibleCards.filter(c => flipped[c.id]).length;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Header banner */}
+      <div style={{ background: TL, color: "#fff", borderRadius: 10, padding: "12px 18px", fontSize: 13, lineHeight: 1.55 }}>
+        <div style={{ fontWeight: 700, marginBottom: 3 }}>📇 Save My Exams · 50 Flashcards</div>
+        <div style={{ fontSize: 12, opacity: 0.95 }}>Click any card to flip · Filter by category · Track your progress</div>
+      </div>
+
+      {/* Category filter */}
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        {categories.map(c => (
+          <button key={c.id} onClick={() => setActiveCat(c.id)}
+            style={{
+              padding: "6px 11px", borderRadius: 16,
+              border: activeCat === c.id ? `2px solid ${c.color}` : `1.5px solid ${BD}`,
+              background: activeCat === c.id ? c.color : "#fff",
+              color: activeCat === c.id ? "#fff" : c.color,
+              fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+            }}>
+            {c.label} <span style={{ opacity: 0.75, fontWeight: 500 }}>({c.count})</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Progress + control bar */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: TLL, borderRadius: 8, padding: "8px 14px", fontSize: 12, color: TL }}>
+        <div>
+          <Bold>Progress:</Bold> {flippedCount} / {visibleCards.length} revealed
+          <div style={{ width: 140, height: 5, background: "#fff", borderRadius: 3, marginTop: 4, overflow: "hidden" }}>
+            <div style={{ width: `${visibleCards.length ? (flippedCount / visibleCards.length) * 100 : 0}%`,
+              height: "100%", background: TL, transition: "width .3s" }} />
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => flipAll(true)}  style={btnSm(TL,  true)}>Flip all</button>
+          <button onClick={() => flipAll(false)} style={btnSm(TL, false)}>Reset</button>
+        </div>
+      </div>
+
+      {/* Card grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+        {visibleCards.map(c => {
+          const isFlip = !!flipped[c.id];
+          const catColor = categories.find(x => x.id === c.cat)?.color || TL;
+          return (
+            <div key={c.id} onClick={() => toggle(c.id)}
+              style={{
+                position: "relative", minHeight: 180, cursor: "pointer",
+                border: `1.5px solid ${isFlip ? catColor : BD}`,
+                borderRadius: 10,
+                background: isFlip ? "#fffdf6" : "#fff",
+                padding: "12px 14px", transition: "all .2s",
+                boxShadow: isFlip ? `0 2px 8px ${catColor}22` : "0 1px 3px #00000010",
+                display: "flex", flexDirection: "column",
+              }}>
+              {/* Card header */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+                fontSize: 10, color: catColor, fontWeight: 700, letterSpacing: 0.5, marginBottom: 6 }}>
+                <span>#{c.id} · {categories.find(x => x.id === c.cat).label.toUpperCase()}</span>
+                <span style={{ fontSize: 10, color: "#999" }}>{isFlip ? "ANSWER ↺" : "Q · click ↻"}</span>
+              </div>
+              {/* Card body */}
+              <div style={{ fontSize: 12.5, lineHeight: 1.55, color: GR, flex: 1 }}>
+                {isFlip ? c.a : <span style={{ fontWeight: 600 }}>{c.q}</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer note */}
+      <div style={{ marginTop: 6, padding: "9px 14px", background: GL, borderRadius: 8,
+        fontSize: 11, color: G, textAlign: "center", lineHeight: 1.5 }}>
+        💡 <Bold>Study tip:</Bold> Read the question, attempt your answer aloud, then flip to check.
+        Use category filters to drill weak areas.
+      </div>
+    </div>
+  );
+}
+
+const btnSm = (color, filled) => ({
+  padding: "5px 10px", borderRadius: 5, fontSize: 11, fontWeight: 600, cursor: "pointer",
+  border: `1.5px solid ${color}`,
+  background: filled ? color : "#fff",
+  color: filled ? "#fff" : color,
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// MAIN APP — STANDARD TEMPLATE (do not modify; only CHAPTER_META above is chapter-specific)
+// ════════════════════════════════════════════════════════════════════════════
+function App() {
+  const [active, setActive] = useState("essence");
+  const tab = TABS.find(t => t.id === active);
+
+  return (
+    <div style={{ fontFamily: "'Segoe UI', Arial, sans-serif", maxWidth: 800, margin: "0 auto", padding: "20px 16px", color: GR }}>
+      {/* Top nav: Index button on the left */}
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 12 }}>
+        <a href="contents.html" style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          fontSize: 12, fontWeight: 600, color: G, textDecoration: "none",
+          padding: "5px 10px 5px 6px", borderRadius: 6,
+          border: `1px solid ${BD}`, background: "#fff", transition: "all .15s",
+        }}>
+          <span style={{ fontSize: 14, lineHeight: 1 }}>‹</span>
+          <span>Index</span>
+        </a>
+      </div>
+
+      {/* Header */}
+      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 12 }}>
+        <div style={{ fontSize: 11, color: "#999", letterSpacing: 1, marginBottom: 3 }}>IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
+        <div style={{ fontSize: 22, fontWeight: 800, color: G, lineHeight: 1.2 }}>
+          {CHAPTER_META.title}
+        </div>
+        <div style={{ fontSize: 13, color: "#666", marginTop: 4 }}>
+          {CHAPTER_META.subtitle}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 4, flexWrap: "wrap" }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setActive(t.id)} style={{
+            padding: "9px 16px", borderRadius: 8,
+            border: active === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+            background: active === t.id ? t.color : "#fff",
+            color: active === t.id ? "#fff" : t.color,
+            fontSize: 12, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+          }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, color: tab.color, marginBottom: 16, paddingLeft: 4 }}>{tab.sub}</div>
+
+      {active === "essence"   && <EssenceTab />}
+      {active === "exam"      && <ExamTab />}
+      {active === "summary"   && <SummaryTab />}
+      {active === "textbook"  && <TextbookTab />}
+      {active === "flashcard" && <FlashcardTab />}
+
+      <div style={{ marginTop: 24, padding: "10px 16px", background: "#f5f5f3", borderRadius: 8, fontSize: 11, color: "#999", textAlign: "center" }}>
+        Hodder Cambridge IGCSE Biology Ch.{CHAPTER_META.number} · All English · NLCS Jeju — Extended (Paper 1, 4, 6)
+      </div>
+    </div>
+  );
+}
+
+
+const __rootEl = document.getElementById('root');
+const __root = ReactDOM.createRoot(__rootEl);
+__root.render(<App />);
+const __loader = document.getElementById('loader');
+if (__loader) {
+  setTimeout(() => {
+    __loader.classList.add('hidden');
+    setTimeout(() => __loader.remove(), 350);
+  }, 100);
+}
+</script>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('nlcs-bio-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
