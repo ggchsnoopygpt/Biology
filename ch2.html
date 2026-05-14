@@ -65,6 +65,45 @@
   .theme-toggle .icon-moon { display: block; }
 
   /* ═══════════════════════════════════════════════════════════════════════
+     CHAPTER TITLE — punchy black on light, neon green on dark
+     ═══════════════════════════════════════════════════════════════════════ */
+  .chapter-title {
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #1f4d36;
+    -webkit-text-stroke: 0.3px #1f4d36;
+  }
+  html.dark .chapter-title {
+    color: #b6ff3c;
+    -webkit-text-stroke: 0.3px #b6ff3c;
+    text-shadow:
+      0 0 6px rgba(182, 255, 60, 0.85),
+      0 0 14px rgba(182, 255, 60, 0.55),
+      0 0 28px rgba(182, 255, 60, 0.35);
+  }
+  .chapter-kicker {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  html.dark .chapter-kicker {
+    color: #b6ff3c;
+    text-shadow: 0 0 8px rgba(182, 255, 60, 0.5);
+  }
+  .chapter-subtitle {
+    font-size: 13px;
+    color: #555;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+  html.dark .chapter-subtitle { color: #b8b8b8; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
      DARK MODE
      ═══════════════════════════════════════════════════════════════════════ */
   html.dark { background: #1a1a1a; }
@@ -2306,13 +2345,13 @@ function App() {
         </a>
       </div>
 
-      {/* Header */}
-      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 12 }}>
-        <div style={{ fontSize: 11, color: "#999", letterSpacing: 1, marginBottom: 3 }}>IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
-        <div style={{ fontSize: 22, fontWeight: 800, color: G, lineHeight: 1.2 }}>
-          {CHAPTER_META.title}
+            {/* Header */}
+      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 14 }}>
+        <div className="chapter-kicker">IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
+        <div>
+          <span className="chapter-title">{CHAPTER_META.title}</span>
         </div>
-        <div style={{ fontSize: 13, color: "#666", marginTop: 4 }}>
+        <div className="chapter-subtitle">
           {CHAPTER_META.subtitle}
         </div>
       </div>

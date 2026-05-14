@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Ch.21 — Biotechnology and Genetic Modification</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjE4IiBmaWxsPSIjMmQ2YTRmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmb250LXNpemU9IjU1IiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QjwvdGV4dD48L3N2Zz4=" />
+
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('nlcs-bio-theme');
+      if (saved === null || saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch(e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #fafaf7;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  .loader { position: fixed; inset: 0; background: #fafaf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 100; transition: opacity 0.3s; }
+  .loader.hidden { opacity: 0; pointer-events: none; }
+  .loader-spinner { width: 36px; height: 36px; border: 3px solid #d8f3dc; border-top-color: #2d6a4f; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .loader-text { font-size: 13px; color: #888; letter-spacing: 0.5px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    top: max(env(safe-area-inset-top), 14px);
+    right: 14px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e4e4e0;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .theme-toggle:hover { transform: scale(1.08); }
+  .theme-toggle svg { width: 18px; height: 18px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: #2d6a4f; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     CHAPTER TITLE — punchy black on light, neon green on dark
+     ═══════════════════════════════════════════════════════════════════════ */
+  .chapter-title {
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #1f4d36;
+    -webkit-text-stroke: 0.3px #1f4d36;
+  }
+  html.dark .chapter-title {
+    color: #b6ff3c;
+    -webkit-text-stroke: 0.3px #b6ff3c;
+    text-shadow:
+      0 0 6px rgba(182, 255, 60, 0.85),
+      0 0 14px rgba(182, 255, 60, 0.55),
+      0 0 28px rgba(182, 255, 60, 0.35);
+  }
+  .chapter-kicker {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  html.dark .chapter-kicker {
+    color: #b6ff3c;
+    text-shadow: 0 0 8px rgba(182, 255, 60, 0.5);
+  }
+  .chapter-subtitle {
+    font-size: 13px;
+    color: #555;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+  html.dark .chapter-subtitle { color: #b8b8b8; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     DARK MODE
+     ═══════════════════════════════════════════════════════════════════════ */
+  html.dark { background: #1a1a1a; }
+  html.dark body { background: #1a1a1a; color: #e8e8e8; }
+  html.dark .loader { background: #1a1a1a; }
+  html.dark .loader-text { color: #999; }
+  html.dark .theme-toggle { background: rgba(40, 40, 40, 0.92); border-color: #3a3a3a; }
+  html.dark .theme-toggle svg { stroke: #f3d488; }
+  html.dark .theme-toggle .icon-sun { display: block; }
+  html.dark .theme-toggle .icon-moon { display: none; }
+
+  /* ─── Pure white & off-white backgrounds → dark ─── */
+  html.dark #root [style*="background: rgb(255, 255, 255)"],
+  html.dark #root [style*="background:#fff"],
+  html.dark #root [style*="background: #fff"] {
+    background: #2a2a2a !important;
+  }
+  html.dark #root [style*="rgb(245, 245, 243)"],
+  html.dark #root [style*="#f5f5f3"] { background: #232323 !important; }
+  html.dark #root [style*="rgb(248, 248, 246)"],
+  html.dark #root [style*="#f8f8f6"] { background: #252525 !important; }
+  html.dark #root [style*="rgb(250, 250, 247)"],
+  html.dark #root [style*="#fafaf7"] { background: #1a1a1a !important; }
+
+  /* ─── Pastel backgrounds (exam cards, flashcard backs) → dark ─── */
+  /* RL #fdf0f0 - light red/pink (exam card hard) */
+  html.dark #root [style*="rgb(253, 240, 240)"],
+  html.dark #root [style*="#fdf0f0"] { background: #2a1a1a !important; color: #e8e8e8 !important; }
+  /* AL #fff3e0 - light amber */
+  html.dark #root [style*="rgb(255, 243, 224)"],
+  html.dark #root [style*="#fff3e0"] { background: #2a200f !important; color: #e8e8e8 !important; }
+  /* PL #ede9fe - light purple */
+  html.dark #root [style*="rgb(237, 233, 254)"],
+  html.dark #root [style*="#ede9fe"] { background: #1f1c2e !important; color: #e8e8e8 !important; }
+  /* GL #d8f3dc - light green */
+  html.dark #root [style*="rgb(216, 243, 220)"],
+  html.dark #root [style*="#d8f3dc"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  /* TLL #e6f4f2 - light teal */
+  html.dark #root [style*="rgb(230, 244, 242)"],
+  html.dark #root [style*="#e6f4f2"] { background: #1a2a28 !important; color: #e8e8e8 !important; }
+  /* Flashcard back: #fffdf6 - cream */
+  html.dark #root [style*="rgb(255, 253, 246)"],
+  html.dark #root [style*="#fffdf6"] { background: #2a2820 !important; color: #e8e8e8 !important; }
+  /* Exam card backgrounds (e8f7ec, fff4e6, fdf0f0 used in diffMeta.bg) */
+  html.dark #root [style*="rgb(232, 247, 236)"],
+  html.dark #root [style*="#e8f7ec"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  html.dark #root [style*="rgb(255, 244, 230)"],
+  html.dark #root [style*="#fff4e6"] { background: #2a200f !important; color: #e8e8e8 !important; }
+
+  /* Default text */
+  html.dark #root > div { color: #e8e8e8 !important; }
+
+  /* Grey text → light */
+  html.dark #root [style*="color: rgb(61, 61, 61)"],
+  html.dark #root [style*="color:#3d3d3d"],
+  html.dark #root [style*="color: #3d3d3d"] { color: #e8e8e8 !important; }
+  html.dark #root [style*="color: rgb(102, 102, 102)"],
+  html.dark #root [style*="color:#666"],
+  html.dark #root [style*="color: #666"] { color: #b8b8b8 !important; }
+  html.dark #root [style*="color: rgb(136, 136, 136)"],
+  html.dark #root [style*="color:#888"],
+  html.dark #root [style*="color: #888"] { color: #999 !important; }
+  html.dark #root [style*="color: rgb(153, 153, 153)"],
+  html.dark #root [style*="color:#999"],
+  html.dark #root [style*="color: #999"] { color: #888 !important; }
+
+  /* Border default */
+  html.dark #root [style*="rgb(228, 228, 224)"],
+  html.dark #root [style*="#e4e4e0"] { border-color: #3a3a3a !important; }
+
+  /* Dark text on colored backgrounds (exam card question text "#2a0000") → light */
+  html.dark #root [style*="rgb(42, 0, 0)"],
+  html.dark #root [style*="#2a0000"] { color: #f0d4d4 !important; }
+  /* Dark amber text on AL background */
+  html.dark #root [style*="rgb(42, 16, 0)"],
+  html.dark #root [style*="#2a1000"] { color: #f0d8b5 !important; }
+  /* Highlighted dark red */
+  html.dark #root [style*="rgb(58, 0, 0)"],
+  html.dark #root [style*="#3a0000"] { color: #f0c8c8 !important; }
+
+  /* SVG diagrams: keep white card */
+  html.dark #root svg[viewBox] {
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb { background: #444; }
+
+  html.dark #root strong[style*="color: rgb(61, 61, 61)"],
+  html.dark #root strong[style*="#3d3d3d"] { color: #f0f0f0 !important; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     TAB COLORS — vibrant neon for the 5 main tab buttons
+     ═══════════════════════════════════════════════════════════════════════ */
+  /* Tab text color (when not active) */
+  html.dark #root button[style*="color: rgb(181, 84, 10)"],
+  html.dark #root button[style*="color:#b5540a"],
+  html.dark #root button[style*="color: #b5540a"] { color: #ffa726 !important; }
+  html.dark #root button[style*="color: rgb(176, 32, 32)"],
+  html.dark #root button[style*="color:#b02020"],
+  html.dark #root button[style*="color: #b02020"] { color: #ff6b6b !important; }
+  html.dark #root button[style*="color: rgb(91, 63, 166)"],
+  html.dark #root button[style*="color:#5b3fa6"],
+  html.dark #root button[style*="color: #5b3fa6"] { color: #a78bfa !important; }
+  html.dark #root button[style*="color: rgb(45, 106, 79)"],
+  html.dark #root button[style*="color:#2d6a4f"],
+  html.dark #root button[style*="color: #2d6a4f"] { color: #5dcaa5 !important; }
+  html.dark #root button[style*="color: rgb(26, 122, 110)"],
+  html.dark #root button[style*="color:#1a7a6e"],
+  html.dark #root button[style*="color: #1a7a6e"] { color: #5eead4 !important; }
+
+  /* Tab active background */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"] { background-color: #ffa726 !important; border-color: #ffa726 !important; }
+  html.dark #root button[style*="background: rgb(176, 32, 32)"] { background-color: #ff6b6b !important; border-color: #ff6b6b !important; }
+  html.dark #root button[style*="background: rgb(91, 63, 166)"] { background-color: #a78bfa !important; border-color: #a78bfa !important; }
+  html.dark #root button[style*="background: rgb(45, 106, 79)"] { background-color: #5dcaa5 !important; border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="background: rgb(26, 122, 110)"] { background-color: #5eead4 !important; border-color: #5eead4 !important; }
+
+  /* Active tab: white text → dark text on neon bg */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(176, 32, 32)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(91, 63, 166)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(45, 106, 79)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(26, 122, 110)"][style*="color: rgb(255, 255, 255)"] {
+    color: #1a1a1a !important;
+  }
+
+  /* Tab borders */
+  html.dark #root button[style*="2px solid rgb(181, 84, 10)"] { border-color: #ffa726 !important; }
+  html.dark #root button[style*="2px solid rgb(176, 32, 32)"] { border-color: #ff6b6b !important; }
+  html.dark #root button[style*="2px solid rgb(91, 63, 166)"] { border-color: #a78bfa !important; }
+  html.dark #root button[style*="2px solid rgb(45, 106, 79)"] { border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="2px solid rgb(26, 122, 110)"] { border-color: #5eead4 !important; }
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<div class="loader" id="loader"><div class="loader-spinner"></div><div class="loader-text">Loading Ch.21…</div></div>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+// ── Colour palette ──────────────────────────────────────────────────────────
+const G = "#2d6a4f";   // forest green (chapter colour)
+const GL = "#d8f3dc";  // light green
+const GM = "#52b788";  // mid green
+const AM = "#b5540a";  // amber
+const AL = "#fff3e0";  // light amber
+const PU = "#5b3fa6";  // purple
+const PL = "#ede9fe";  // light purple
+const RD = "#b02020";  // red
+const RL = "#fdf0f0";  // light red
+const GR = "#3d3d3d";  // dark grey text
+const BD = "#e4e4e0";  // border
+
+// ── Highlight / keyword helper ───────────────────────────────────────────────
+const KW = ({ c = G, children }) => (
+  <span style={{ background: c === G ? GL : c === AM ? AL : c === PU ? PL : RL,
+    color: c, fontWeight: 700, borderRadius: 3, padding: "1px 5px", fontSize: "0.95em" }}>
+    {children}
+  </span>
+);
+const Bold = ({ children }) => <strong style={{ color: GR }}>{children}</strong>;
+const Ext = () => (
+  <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700, marginLeft: 4 }}>EXT</span>
+);
+
+// ── Tab config ───────────────────────────────────────────────────────────────
+const TL = "#1a7a6e";   // teal (flashcard tab)
+const TLL = "#e6f4f2";  // light teal
+
+// ════════════════════════════════════════════════════════════════════════════
+// CHAPTER METADATA — only edit this block when creating a new chapter
+// ════════════════════════════════════════════════════════════════════════════
+const CHAPTER_META = {
+  number: 21,
+  title: "Biotechnology and Genetic Modification",
+  subtitle: "Bacteria & Yeast · Fermenters · Enzymes in Industry · Genetic Modification · GM Crops",
+  flashcardCount: 25,
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// TABS — standard 5-tab structure, identical across all chapters
+// Do NOT modify this array; only CHAPTER_META above is chapter-specific.
+// ════════════════════════════════════════════════════════════════════════════
+const TABS = [
+  { id: "essence",   label: "① Quick Essence",  color: AM, bg: AL,  sub: "Last-minute 5-min review" },
+  { id: "exam",      label: "② Exam Practice",  color: RD, bg: RL,  sub: "Past & predicted questions" },
+  { id: "summary",   label: "③ Summary",        color: PU, bg: PL,  sub: "Concept flow & key tables" },
+  { id: "textbook",  label: "④ Textbook",       color: G,  bg: GL,  sub: "Hodder complete notes" },
+  { id: "flashcard", label: "⑤ SME Flashcard",  color: TL, bg: TLL, sub: "Save My Exams · click to flip" },
+];
+
+// ════════════════════════════════════════════════════════════════════════════
+// SVG DIAGRAMS — freshly redesigned for Ch.21
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Bread-making flow ────────────────────────────────────────────────────────
+function BreadMakingSVG() {
+  return (
+    <svg viewBox="0 0 720 360" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="360" rx="12" fill="#fafafa" stroke={AM} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={AM}>
+        Bread-making — yeast fermentation in dough
+      </text>
+
+      {/* Step 1: Mixing ingredients */}
+      <rect x="30" y="55" width="170" height="80" rx="8" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="115" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>① Mix ingredients</text>
+      <text x="115" y="93" textAnchor="middle" fontSize="9.5" fill={GR}>flour · water · salt</text>
+      <text x="115" y="106" textAnchor="middle" fontSize="9.5" fill={GR}>oil · sugar · yeast</text>
+      <text x="115" y="124" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">water activates amylases</text>
+
+      <line x1="200" y1="95" x2="240" y2="95" stroke={AM} strokeWidth="2" markerEnd="url(#arrAM)"/>
+
+      {/* Step 2: Knead */}
+      <rect x="245" y="55" width="170" height="80" rx="8" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="330" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>② Knead dough</text>
+      <text x="330" y="93" textAnchor="middle" fontSize="9.5" fill={GR}>amylase: starch → sugar</text>
+      <text x="330" y="108" textAnchor="middle" fontSize="9.5" fill={GR}>gluten forms an</text>
+      <text x="330" y="121" textAnchor="middle" fontSize="9.5" fill={GR}>elastic protein network</text>
+
+      <line x1="415" y1="95" x2="455" y2="95" stroke={AM} strokeWidth="2" markerEnd="url(#arrAM)"/>
+
+      {/* Step 3: Rise */}
+      <rect x="460" y="55" width="230" height="80" rx="8" fill={AL} stroke={AM} strokeWidth="1.5"/>
+      <text x="575" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill={AM}>③ Rise · 1–2 h at ~27 °C</text>
+      <text x="575" y="93" textAnchor="middle" fontSize="9.5" fill={GR}>yeast respires sugar →</text>
+      <text x="575" y="106" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={AM}>CO₂ + ethanol</text>
+      <text x="575" y="122" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">CO₂ bubbles trapped by gluten</text>
+
+      {/* Down arrow */}
+      <line x1="575" y1="138" x2="575" y2="170" stroke={AM} strokeWidth="2" markerEnd="url(#arrAM)"/>
+
+      {/* Step 4: Bake */}
+      <rect x="460" y="175" width="230" height="80" rx="8" fill="#fff" stroke={RD} strokeWidth="1.5"/>
+      <text x="575" y="196" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>④ Bake at ~200 °C</text>
+      <text x="575" y="213" textAnchor="middle" fontSize="9.5" fill={GR}>bubbles expand · ethanol</text>
+      <text x="575" y="226" textAnchor="middle" fontSize="9.5" fill={GR}>evaporates · yeast killed</text>
+      <text x="575" y="242" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">crust forms · dough sets</text>
+
+      {/* Result */}
+      <rect x="30" y="280" width="660" height="60" rx="8" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="302" textAnchor="middle" fontSize="12" fontWeight="700" fill={G}>Result — light, airy loaf with characteristic texture</text>
+      <text x="360" y="320" textAnchor="middle" fontSize="10" fill={GR}>CO₂ from anaerobic respiration of yeast gives the bread its rise · ethanol cooks off in the oven</text>
+      <text x="360" y="333" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">Yeast = single-celled fungus · Saccharomyces · only the CO₂ matters here, not the alcohol</text>
+
+      {/* Drawn loaves */}
+      <ellipse cx="125" cy="220" rx="35" ry="12" fill="#d4a36b" stroke="#7a4a1a" strokeWidth="1.2"/>
+      <path d="M90 220 Q125 200 160 220" fill="#e8b97a" stroke="#7a4a1a" strokeWidth="1.2"/>
+      <ellipse cx="125" cy="195" rx="32" ry="6" fill="#e8b97a" stroke="#7a4a1a" strokeWidth="1"/>
+      <text x="125" y="248" textAnchor="middle" fontSize="9" fill="#666">finished loaf</text>
+
+      <defs>
+        <marker id="arrAM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={AM}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Industrial fermenter ─────────────────────────────────────────────────────
+function FermenterSVG() {
+  return (
+    <svg viewBox="0 0 720 460" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="460" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Industrial fermenter — controlled conditions for microbial production
+      </text>
+
+      {/* Fermenter vessel */}
+      <rect x="200" y="60" width="240" height="280" rx="14" fill="#e6f0fa" stroke={G} strokeWidth="2"/>
+      <rect x="210" y="80" width="220" height="240" rx="4" fill="#cfe2f3" stroke={G} strokeWidth="1" opacity="0.5"/>
+      {/* Dots representing culture */}
+      <circle cx="240" cy="110" r="3" fill={G}/><circle cx="270" cy="130" r="3" fill={G}/>
+      <circle cx="310" cy="105" r="3" fill={G}/><circle cx="350" cy="130" r="3" fill={G}/>
+      <circle cx="390" cy="115" r="3" fill={G}/><circle cx="245" cy="150" r="3" fill={G}/>
+      <circle cx="290" cy="170" r="3" fill={G}/><circle cx="330" cy="155" r="3" fill={G}/>
+      <circle cx="370" cy="180" r="3" fill={G}/><circle cx="420" cy="160" r="3" fill={G}/>
+      <circle cx="220" cy="190" r="3" fill={G}/><circle cx="260" cy="220" r="3" fill={G}/>
+      <circle cx="300" cy="200" r="3" fill={G}/><circle cx="340" cy="230" r="3" fill={G}/>
+      <circle cx="380" cy="210" r="3" fill={G}/><circle cx="410" cy="240" r="3" fill={G}/>
+      <circle cx="250" cy="260" r="3" fill={G}/><circle cx="290" cy="280" r="3" fill={G}/>
+      <circle cx="330" cy="265" r="3" fill={G}/><circle cx="380" cy="290" r="3" fill={G}/>
+      <circle cx="225" cy="300" r="3" fill={G}/><circle cx="270" cy="310" r="3" fill={G}/>
+      <circle cx="320" cy="305" r="3" fill={G}/><circle cx="370" cy="315" r="3" fill={G}/>
+      <circle cx="410" cy="310" r="3" fill={G}/>
+
+      {/* Stirring shaft */}
+      <line x1="320" y1="60" x2="320" y2="320" stroke="#444" strokeWidth="3"/>
+      {/* Stirring paddles */}
+      <rect x="285" y="200" width="70" height="10" fill="#666" stroke="#222" strokeWidth="1"/>
+      <rect x="285" y="260" width="70" height="10" fill="#666" stroke="#222" strokeWidth="1"/>
+      <text x="240" y="206" fontSize="9" fill="#666">paddles</text>
+
+      {/* Top: motor */}
+      <rect x="305" y="40" width="30" height="22" rx="3" fill="#888" stroke="#222"/>
+      <text x="320" y="55" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">M</text>
+      <text x="305" y="36" fontSize="9" fill="#666">motor</text>
+
+      {/* Inputs and outputs - LEFT */}
+      {/* Nutrient feed in */}
+      <line x1="200" y1="90" x2="160" y2="90" stroke={AM} strokeWidth="2.5"/>
+      <polygon points="160,86 152,90 160,94" fill={AM}/>
+      <text x="155" y="84" fontSize="10" fill={AM} fontWeight="700">nutrient feedstock</text>
+      <text x="155" y="74" fontSize="9" fill="#666">(sugar, NH₄⁺, salts)</text>
+
+      {/* Sterile air in */}
+      <line x1="200" y1="240" x2="160" y2="240" stroke={PU} strokeWidth="2.5"/>
+      <polygon points="160,236 152,240 160,244" fill={PU}/>
+      <text x="155" y="234" fontSize="10" fill={PU} fontWeight="700">sterile air</text>
+      <text x="155" y="248" fontSize="9" fill="#666">(through air filter)</text>
+
+      {/* Cooling water jacket */}
+      <line x1="200" y1="310" x2="160" y2="310" stroke="#2a8acc" strokeWidth="2.5"/>
+      <polygon points="160,306 152,310 160,314" fill="#2a8acc"/>
+      <text x="155" y="304" fontSize="10" fill="#2a8acc" fontWeight="700">cooling water in</text>
+
+      {/* Inputs and outputs - RIGHT */}
+      {/* CO₂ / waste gases out */}
+      <line x1="440" y1="90" x2="490" y2="90" stroke={RD} strokeWidth="2.5"/>
+      <polygon points="490,86 498,90 490,94" fill={RD}/>
+      <text x="495" y="84" fontSize="10" fill={RD} fontWeight="700">waste gases out</text>
+      <text x="495" y="98" fontSize="9" fill="#666">(CO₂, exhaust)</text>
+
+      {/* Probes */}
+      <line x1="440" y1="180" x2="475" y2="180" stroke="#444" strokeWidth="1.5"/>
+      <circle cx="478" cy="180" r="4" fill={PU} stroke="#222" strokeWidth="1"/>
+      <text x="490" y="183" fontSize="9.5" fill="#444">pH probe</text>
+
+      <line x1="440" y1="210" x2="475" y2="210" stroke="#444" strokeWidth="1.5"/>
+      <circle cx="478" cy="210" r="4" fill={RD} stroke="#222" strokeWidth="1"/>
+      <text x="490" y="213" fontSize="9.5" fill="#444">temperature probe</text>
+
+      <line x1="440" y1="240" x2="475" y2="240" stroke="#444" strokeWidth="1.5"/>
+      <circle cx="478" cy="240" r="4" fill={G} stroke="#222" strokeWidth="1"/>
+      <text x="490" y="243" fontSize="9.5" fill="#444">O₂ probe</text>
+
+      {/* Cooling water out */}
+      <line x1="440" y1="310" x2="490" y2="310" stroke="#2a8acc" strokeWidth="2.5"/>
+      <polygon points="490,306 498,310 490,314" fill="#2a8acc"/>
+      <text x="495" y="313" fontSize="10" fill="#2a8acc" fontWeight="700">cooling water out</text>
+
+      {/* Product tap */}
+      <rect x="310" y="335" width="20" height="20" rx="2" fill="#888" stroke="#222"/>
+      <line x1="320" y1="355" x2="320" y2="380" stroke="#444" strokeWidth="3"/>
+      <text x="280" y="378" textAnchor="middle" fontSize="10" fill={RD} fontWeight="700">product out</text>
+      <text x="280" y="392" textAnchor="middle" fontSize="9" fill="#666">(antibiotic / insulin /</text>
+      <text x="280" y="405" textAnchor="middle" fontSize="9" fill="#666">mycoprotein etc.)</text>
+      <text x="320" y="372" textAnchor="middle" fontSize="14" fill={RD}>↓</text>
+
+      {/* Control box */}
+      <rect x="560" y="60" width="140" height="115" rx="6" fill="#fff" stroke="#444" strokeWidth="1.5"/>
+      <text x="630" y="78" textAnchor="middle" fontSize="11" fontWeight="700" fill="#444">CONDITIONS</text>
+      <text x="572" y="96" fontSize="9.5" fill={GR}>· Temp: ~26 °C</text>
+      <text x="572" y="111" fontSize="9.5" fill={GR}>· pH: 5–6 (acidic)</text>
+      <text x="572" y="126" fontSize="9.5" fill={GR}>· O₂: aerated (stirred)</text>
+      <text x="572" y="141" fontSize="9.5" fill={GR}>· Sterile conditions</text>
+      <text x="572" y="156" fontSize="9.5" fill={GR}>· Nutrient supply</text>
+      <text x="572" y="171" fontSize="9.5" fill={GR}>· Waste removal</text>
+
+      {/* Footer note */}
+      <rect x="40" y="395" width="640" height="55" rx="6" fill={GL} stroke={G} strokeWidth="1"/>
+      <text x="360" y="415" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>
+        Conditions are MONITORED &amp; CONTROLLED at all times — heat from microbial respiration must be removed
+      </text>
+      <text x="360" y="432" textAnchor="middle" fontSize="10" fill={GR}>
+        Used to produce: penicillin (Penicillium) · insulin (GM bacteria) · mycoprotein (Fusarium) · enzymes · biofuels
+      </text>
+      <text x="360" y="445" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">
+        Tank capacity up to 100 000 L · 24–48 h growth · nutrient drop → product secreted
+      </text>
+    </svg>
+  );
+}
+
+// ── Genetic modification (insulin production) ──────────────────────────────
+function GeneticModSVG() {
+  return (
+    <svg viewBox="0 0 760 560" style={{ width: "100%", maxWidth: 760, display: "block", margin: "10px auto" }}>
+      <rect width="760" height="560" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="380" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Genetic modification — making bacteria produce human insulin
+      </text>
+
+      {/* === STEP 1: TWO SOURCES === */}
+      {/* Left: human DNA */}
+      <rect x="40" y="50" width="320" height="100" rx="8" fill="#fff" stroke={RD} strokeWidth="1.5"/>
+      <text x="200" y="70" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>① Human DNA (insulin gene)</text>
+      {/* Linear DNA with insulin gene marked */}
+      <line x1="60" y1="100" x2="340" y2="100" stroke="#222" strokeWidth="1.5"/>
+      <line x1="60" y1="110" x2="340" y2="110" stroke="#222" strokeWidth="1.5"/>
+      {/* Insulin gene block */}
+      <rect x="170" y="96" width="60" height="18" fill={RD} opacity="0.6"/>
+      <text x="200" y="135" textAnchor="middle" fontSize="9" fontWeight="700" fill={RD}>insulin gene</text>
+      {/* Restriction enzyme arrows */}
+      <text x="170" y="92" textAnchor="middle" fontSize="14" fill={AM}>✂</text>
+      <text x="230" y="92" textAnchor="middle" fontSize="14" fill={AM}>✂</text>
+      <text x="200" y="80" textAnchor="middle" fontSize="9" fill={AM} fontWeight="700">cut by restriction enzyme E</text>
+
+      {/* Right: bacterial plasmid */}
+      <rect x="400" y="50" width="320" height="100" rx="8" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="560" y="70" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>① Bacterial plasmid</text>
+      <circle cx="560" cy="110" r="28" fill="none" stroke={G} strokeWidth="2.5"/>
+      <text x="600" y="113" fontSize="10" fill={G}>plasmid (circular DNA)</text>
+      <text x="560" y="98" textAnchor="middle" fontSize="14" fill={AM}>✂</text>
+      <text x="560" y="148" textAnchor="middle" fontSize="9" fontWeight="700" fill={AM}>cut by SAME restriction enzyme E</text>
+
+      {/* Arrows down */}
+      <line x1="200" y1="156" x2="200" y2="190" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+      <line x1="560" y1="156" x2="560" y2="190" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+
+      {/* === STEP 2: STICKY ENDS === */}
+      <rect x="40" y="195" width="320" height="90" rx="8" fill={RL} stroke={RD} strokeWidth="1.5"/>
+      <text x="200" y="215" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>② Insulin gene with sticky ends</text>
+      {/* Sticky-end DNA fragment */}
+      <line x1="100" y1="245" x2="120" y2="245" stroke="#222" strokeWidth="1.5"/>
+      <line x1="100" y1="255" x2="160" y2="255" stroke="#222" strokeWidth="1.5"/>
+      <rect x="160" y="241" width="80" height="18" fill={RD} opacity="0.6"/>
+      <line x1="240" y1="245" x2="300" y2="245" stroke="#222" strokeWidth="1.5"/>
+      <line x1="240" y1="255" x2="280" y2="255" stroke="#222" strokeWidth="1.5"/>
+      <text x="120" y="275" textAnchor="middle" fontSize="9" fill={RD} fontWeight="700">sticky end</text>
+      <text x="280" y="275" textAnchor="middle" fontSize="9" fill={RD} fontWeight="700">sticky end</text>
+
+      <rect x="400" y="195" width="320" height="90" rx="8" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <text x="560" y="215" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>② Plasmid opened — matching sticky ends</text>
+      {/* Opened plasmid as a C-shape */}
+      <path d="M 560 230 A 25 25 0 1 0 560 270" fill="none" stroke={G} strokeWidth="2.5"/>
+      <line x1="560" y1="230" x2="555" y2="232" stroke={G} strokeWidth="2"/>
+      <line x1="560" y1="270" x2="555" y2="268" stroke={G} strokeWidth="2"/>
+      <text x="600" y="252" fontSize="10" fill={G}>open plasmid · same overhang</text>
+
+      {/* Arrows converge */}
+      <line x1="200" y1="290" x2="320" y2="320" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+      <line x1="560" y1="290" x2="440" y2="320" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+
+      {/* === STEP 3: LIGASE JOINS === */}
+      <rect x="200" y="325" width="360" height="90" rx="8" fill={PL} stroke={PU} strokeWidth="1.5"/>
+      <text x="380" y="345" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>③ DNA ligase joins sticky ends → recombinant plasmid</text>
+      {/* Recombinant plasmid */}
+      <circle cx="380" cy="380" r="22" fill="none" stroke={G} strokeWidth="2"/>
+      <rect x="370" y="358" width="20" height="6" fill={RD}/>
+      <text x="420" y="383" fontSize="10" fill={GR}>insulin gene now in plasmid</text>
+      <text x="420" y="397" fontSize="9" fill="#666">(joined by ligase — molecular "glue")</text>
+
+      {/* Arrow down */}
+      <line x1="380" y1="420" x2="380" y2="450" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+
+      {/* === STEP 4: BACTERIAL CELL === */}
+      <rect x="100" y="455" width="560" height="95" rx="8" fill="#fff" stroke={G} strokeWidth="1.5"/>
+      <text x="380" y="475" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>④ Plasmid taken up by bacterium · multiplies · expresses gene → produces insulin</text>
+      {/* Bacterium */}
+      <ellipse cx="200" cy="520" rx="50" ry="22" fill={GL} stroke={G} strokeWidth="1.5"/>
+      <circle cx="180" cy="515" r="6" fill="none" stroke={G} strokeWidth="1.5"/>
+      <rect x="178" y="513" width="4" height="4" fill={RD}/>
+      <circle cx="210" cy="525" r="6" fill="none" stroke={G} strokeWidth="1.5"/>
+      <rect x="208" y="523" width="4" height="4" fill={RD}/>
+      <circle cx="225" cy="510" r="6" fill="none" stroke={G} strokeWidth="1.5"/>
+      <rect x="223" y="508" width="4" height="4" fill={RD}/>
+      <text x="200" y="555" textAnchor="middle" fontSize="9" fill={GR} fontWeight="700">bacterium with recombinant plasmid</text>
+
+      {/* Reproduces — arrow */}
+      <line x1="260" y1="520" x2="320" y2="520" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU2)"/>
+      <text x="290" y="510" textAnchor="middle" fontSize="9" fill={PU} fontWeight="700">divides by mitosis</text>
+
+      {/* Mass of bacteria */}
+      <circle cx="360" cy="515" r="10" fill={GL} stroke={G} strokeWidth="1.2"/>
+      <circle cx="380" cy="525" r="10" fill={GL} stroke={G} strokeWidth="1.2"/>
+      <circle cx="400" cy="515" r="10" fill={GL} stroke={G} strokeWidth="1.2"/>
+      <circle cx="370" cy="535" r="9" fill={GL} stroke={G} strokeWidth="1.2"/>
+      <circle cx="390" cy="540" r="9" fill={GL} stroke={G} strokeWidth="1.2"/>
+
+      {/* Arrow → insulin */}
+      <line x1="430" y1="520" x2="475" y2="520" stroke={RD} strokeWidth="2.5" markerEnd="url(#arrRD2)"/>
+      <text x="452" y="510" textAnchor="middle" fontSize="9" fill={RD} fontWeight="700">EXPRESSED</text>
+
+      {/* Insulin droplets */}
+      <ellipse cx="510" cy="510" rx="7" ry="9" fill={RD}/>
+      <ellipse cx="530" cy="525" rx="7" ry="9" fill={RD}/>
+      <ellipse cx="550" cy="510" rx="7" ry="9" fill={RD}/>
+      <ellipse cx="570" cy="525" rx="7" ry="9" fill={RD}/>
+      <ellipse cx="590" cy="510" rx="7" ry="9" fill={RD}/>
+      <text x="550" y="555" textAnchor="middle" fontSize="9" fill={RD} fontWeight="700">human insulin (in fermenter)</text>
+
+      <defs>
+        <marker id="arrPU2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={PU}/>
+        </marker>
+        <marker id="arrRD2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={RD}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Lactose-free milk: immobilised lactase on beads ─────────────────────────
+function LactaseBeadsSVG() {
+  return (
+    <svg viewBox="0 0 720 320" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="320" rx="12" fill="#fafafa" stroke={TL} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={TL}>
+        Lactose-free milk — immobilised lactase on beads
+      </text>
+
+      {/* Column */}
+      <rect x="280" y="60" width="160" height="200" rx="6" fill="#eaf6f3" stroke={TL} strokeWidth="2"/>
+      {/* Beads with lactase */}
+      {[80,100,120,140,160,180,200,220].map((y,i) => (
+        <g key={i}>
+          <circle cx={310+(i%2)*30} cy={y} r="9" fill={TLL} stroke={TL} strokeWidth="1.5"/>
+          <circle cx={340+(i%2)*30} cy={y+10} r="9" fill={TLL} stroke={TL} strokeWidth="1.5"/>
+          <circle cx={400-(i%2)*30} cy={y} r="9" fill={TLL} stroke={TL} strokeWidth="1.5"/>
+        </g>
+      ))}
+
+      {/* Milk enters top */}
+      <line x1="360" y1="30" x2="360" y2="60" stroke="#888" strokeWidth="2.5" markerEnd="url(#arrGR)"/>
+      <text x="360" y="48" textAnchor="end" fontSize="10" fill={GR} fontWeight="700">milk (lactose) →</text>
+
+      {/* Milk exits bottom */}
+      <line x1="360" y1="260" x2="360" y2="295" stroke="#888" strokeWidth="2.5" markerEnd="url(#arrGR)"/>
+      <text x="360" y="285" textAnchor="start" fontSize="10" fill={TL} fontWeight="700">  ← lactose-free milk (glucose + galactose)</text>
+
+      {/* Side annotations */}
+      <text x="40" y="80" fontSize="11" fontWeight="700" fill={TL}>① Lactase enzyme</text>
+      <text x="40" y="95" fontSize="9.5" fill={GR}>(from yeast or fungi)</text>
+      <text x="40" y="108" fontSize="9.5" fill={GR}>fixed onto small beads</text>
+
+      <text x="40" y="135" fontSize="11" fontWeight="700" fill={TL}>② Milk passes over</text>
+      <text x="40" y="150" fontSize="9.5" fill={GR}>contact with surface</text>
+      <text x="40" y="163" fontSize="9.5" fill={GR}>of beads → lactose</text>
+      <text x="40" y="176" fontSize="9.5" fill={GR}>broken to glucose +</text>
+      <text x="40" y="189" fontSize="9.5" fill={GR}>galactose</text>
+
+      <text x="40" y="216" fontSize="11" fontWeight="700" fill={TL}>③ Lactose-free milk</text>
+      <text x="40" y="231" fontSize="9.5" fill={GR}>leaves the column;</text>
+      <text x="40" y="244" fontSize="9.5" fill={GR}>enzyme stays behind</text>
+
+      <text x="520" y="80" fontSize="11" fontWeight="700" fill={TL}>Why immobilise?</text>
+      <text x="520" y="95" fontSize="9.5" fill={GR}>· enzyme isn't lost</text>
+      <text x="520" y="108" fontSize="9.5" fill={GR}>· can be re-used</text>
+      <text x="520" y="121" fontSize="9.5" fill={GR}>· no enzyme in product</text>
+      <text x="520" y="134" fontSize="9.5" fill={GR}>· continuous process</text>
+
+      <text x="520" y="160" fontSize="11" fontWeight="700" fill={TL}>Reaction</text>
+      <text x="520" y="175" fontSize="10" fill={GR}>lactose</text>
+      <text x="555" y="175" fontSize="11" fill={TL} fontWeight="700">→</text>
+      <text x="520" y="190" fontSize="10" fill={GR}>glucose +</text>
+      <text x="520" y="205" fontSize="10" fill={GR}>galactose</text>
+      <text x="520" y="220" fontSize="9" fill="#888" fontStyle="italic">(both absorbable</text>
+      <text x="520" y="232" fontSize="9" fill="#888" fontStyle="italic">monosaccharides)</text>
+
+      <defs>
+        <marker id="arrGR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Biological washing powder mechanism ─────────────────────────────────────
+function WashingPowderSVG() {
+  return (
+    <svg viewBox="0 0 720 320" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="320" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={PU}>
+        Biological washing powder — enzymes attack stains
+      </text>
+
+      {/* Before */}
+      <text x="180" y="55" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>BEFORE — large, insoluble stains</text>
+      <rect x="60" y="65" width="240" height="120" rx="6" fill="#fff" stroke={BD} strokeWidth="1.5"/>
+      {/* Cloth */}
+      <pattern id="cloth1" patternUnits="userSpaceOnUse" width="8" height="8">
+        <rect width="8" height="8" fill="#fafaf8"/>
+        <line x1="0" y1="0" x2="8" y2="0" stroke="#ddd" strokeWidth="0.5"/>
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#ddd" strokeWidth="0.5"/>
+      </pattern>
+      <rect x="70" y="75" width="220" height="100" fill="url(#cloth1)"/>
+      {/* Protein stain (red blob) */}
+      <ellipse cx="130" cy="115" rx="22" ry="14" fill="#aa3a3a" opacity="0.7"/>
+      <text x="130" y="138" textAnchor="middle" fontSize="9" fill="#722">protein stain</text>
+      <text x="130" y="150" textAnchor="middle" fontSize="9" fill="#722">(blood, egg)</text>
+      {/* Fat stain (yellow blob) */}
+      <ellipse cx="230" cy="145" rx="22" ry="14" fill="#d4a700" opacity="0.7"/>
+      <text x="230" y="170" textAnchor="middle" fontSize="9" fill="#7a4a00">fat stain</text>
+      <text x="230" y="120" textAnchor="middle" fontSize="9" fill="#7a4a00">(grease, oil)</text>
+
+      {/* Arrow */}
+      <line x1="310" y1="125" x2="400" y2="125" stroke={PU} strokeWidth="3" markerEnd="url(#arrPU3)"/>
+      <text x="355" y="115" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>biological</text>
+      <text x="355" y="128" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>washing powder</text>
+      <text x="355" y="146" textAnchor="middle" fontSize="9" fill={GR}>warm water</text>
+      <text x="355" y="158" textAnchor="middle" fontSize="9" fill={GR}>(40 °C — NOT hot)</text>
+
+      {/* After */}
+      <text x="540" y="55" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>AFTER — clean cloth</text>
+      <rect x="420" y="65" width="240" height="120" rx="6" fill="#fff" stroke={BD} strokeWidth="1.5"/>
+      <rect x="430" y="75" width="220" height="100" fill="url(#cloth1)"/>
+      {/* Tiny scattered molecules */}
+      {[[460,110],[480,130],[500,118],[520,140],[540,115],[560,135],[580,120],[600,140],[480,160],[530,165],[570,160]].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="2" fill="#888"/>
+      ))}
+      <text x="540" y="200" textAnchor="middle" fontSize="9" fill={G}>amino acids · fatty acids · glycerol</text>
+      <text x="540" y="213" textAnchor="middle" fontSize="9" fill={G}>(small, soluble — wash out)</text>
+
+      {/* Bottom legend */}
+      <rect x="40" y="235" width="640" height="70" rx="6" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="360" y="255" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>Enzymes in biological washing powder</text>
+      <text x="60" y="275" fontSize="10.5" fill={GR}>
+        <tspan fontWeight="700" fill={PU}>· Protease </tspan>
+        breaks protein → amino acids (soluble)
+      </text>
+      <text x="60" y="290" fontSize="10.5" fill={GR}>
+        <tspan fontWeight="700" fill={PU}>· Lipase </tspan>
+        breaks fat → fatty acids + glycerol (soluble)
+      </text>
+      <text x="380" y="275" fontSize="10" fill={RD}>
+        <tspan fontWeight="700">⚠ High temperature</tspan> denatures the enzymes
+      </text>
+      <text x="380" y="290" fontSize="10" fill={G}>
+        <tspan fontWeight="700">✓ Saves energy</tspan> — wash at 40 °C, no boiling needed
+      </text>
+
+      <defs>
+        <marker id="arrPU3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={PU}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Pectinase in fruit juice production ─────────────────────────────────────
+function PectinaseSVG() {
+  return (
+    <svg viewBox="0 0 720 280" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="280" rx="12" fill="#fafafa" stroke={AM} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={AM}>
+        Pectinase — releases juice from fruit cells
+      </text>
+
+      {/* Apple cells without pectinase */}
+      <text x="160" y="55" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>① Apple pulp · pectin "glue"</text>
+      {/* Grid of cells */}
+      <g>
+        {[0,1,2].map(r =>
+          [0,1,2].map(c => (
+            <rect key={`${r}-${c}`} x={70+c*50} y={70+r*40} width="46" height="36" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+          ))
+        )}
+        {/* Pectin (gluey gaps) */}
+        {[0,1,2].map(r =>
+          [0,1].map(c => (
+            <rect key={`p-${r}-${c}`} x={114+c*50} y={70+r*40} width="4" height="36" fill="#e8a72c"/>
+          ))
+        )}
+        {[0,1].map(r =>
+          [0,1,2].map(c => (
+            <rect key={`ph-${r}-${c}`} x={70+c*50} y={104+r*40} width="46" height="4" fill="#e8a72c"/>
+          ))
+        )}
+      </g>
+      <text x="160" y="225" textAnchor="middle" fontSize="9.5" fill={RD}>plant cells stuck together by pectin (orange)</text>
+      <text x="160" y="240" textAnchor="middle" fontSize="9.5" fill={RD}>juice cannot escape easily</text>
+
+      {/* Arrow */}
+      <line x1="290" y1="135" x2="380" y2="135" stroke={AM} strokeWidth="3" markerEnd="url(#arrAM2)"/>
+      <text x="335" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={AM}>pectinase</text>
+      <text x="335" y="148" textAnchor="middle" fontSize="9" fill={GR}>(from Aspergillus)</text>
+
+      {/* Result: broken cells */}
+      <text x="540" y="55" textAnchor="middle" fontSize="11" fontWeight="700" fill={G}>② After pectinase</text>
+      {/* Scattered cell pieces */}
+      <ellipse cx="450" cy="90" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="510" cy="105" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="570" cy="90" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="620" cy="115" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="470" cy="140" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="540" cy="155" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      <ellipse cx="600" cy="160" rx="14" ry="10" fill="#c9e4d2" stroke={G} strokeWidth="1.2"/>
+      {/* Juice droplets */}
+      {[[485,180],[510,195],[540,185],[570,200],[600,180],[450,195],[620,195],[465,170],[555,170],[595,170]].map(([x,y],i)=>(
+        <ellipse key={i} cx={x} cy={y} rx="3" ry="4" fill="#d4a700" opacity="0.7"/>
+      ))}
+      <text x="540" y="225" textAnchor="middle" fontSize="9.5" fill={G}>pectin broken down · cells separate</text>
+      <text x="540" y="240" textAnchor="middle" fontSize="9.5" fill={G}>juice (golden) flows out · clearer + sweeter</text>
+
+      <text x="360" y="265" textAnchor="middle" fontSize="9.5" fill="#888" fontStyle="italic">
+        Sugars in pectin are released too → juice tastes sweeter
+      </text>
+
+      <defs>
+        <marker id="arrAM2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={AM}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Bacterial cell structure ─────────────────────────────────────────────────
+function BacteriumSVG() {
+  return (
+    <svg viewBox="0 0 720 280" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="280" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="14" fontWeight="700" fill={G}>
+        Bacterial cell — DNA · plasmids · why so useful for biotechnology
+      </text>
+
+      {/* Bacterium body */}
+      <ellipse cx="360" cy="155" rx="220" ry="90" fill={GL} stroke={G} strokeWidth="2"/>
+      <ellipse cx="360" cy="155" rx="210" ry="80" fill="#eef7ee" stroke={G} strokeWidth="1" opacity="0.6"/>
+
+      {/* Main DNA loop (chromosome) */}
+      <path d="M 300 130 Q 280 105 320 95 Q 365 92 405 110 Q 440 140 410 175 Q 380 200 335 195 Q 290 185 295 155 Q 297 140 305 132" fill="none" stroke="#222" strokeWidth="2.2"/>
+      <text x="360" y="160" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#222">main DNA</text>
+      <text x="360" y="173" textAnchor="middle" fontSize="9" fill="#444">(single circular chromosome)</text>
+
+      {/* Plasmids */}
+      <circle cx="240" cy="120" r="14" fill="none" stroke={G} strokeWidth="2.2"/>
+      <circle cx="240" cy="120" r="14" fill="none" stroke={G} strokeWidth="2.2"/>
+      <circle cx="500" cy="115" r="11" fill="none" stroke={G} strokeWidth="2.2"/>
+      <circle cx="220" cy="180" r="13" fill="none" stroke={G} strokeWidth="2.2"/>
+      <circle cx="490" cy="200" r="14" fill="none" stroke={G} strokeWidth="2.2"/>
+      <circle cx="430" cy="220" r="11" fill="none" stroke={G} strokeWidth="2.2"/>
+
+      {/* Cell wall + membrane labels */}
+      <line x1="120" y1="60" x2="200" y2="115" stroke="#444" strokeWidth="1.2"/>
+      <text x="120" y="55" textAnchor="end" fontSize="10" fontWeight="700" fill={G}>cell wall</text>
+
+      <line x1="120" y1="220" x2="190" y2="170" stroke="#444" strokeWidth="1.2"/>
+      <text x="120" y="234" textAnchor="end" fontSize="10" fontWeight="700" fill={G}>cell membrane</text>
+
+      <line x1="600" y1="60" x2="510" y2="105" stroke="#444" strokeWidth="1.2"/>
+      <text x="610" y="55" fontSize="10" fontWeight="700" fill={G}>plasmid</text>
+      <text x="610" y="68" fontSize="9" fill={GR}>(small loop of DNA</text>
+      <text x="610" y="80" fontSize="9" fill={GR}>in cytoplasm)</text>
+
+      <line x1="600" y1="230" x2="510" y2="180" stroke="#444" strokeWidth="1.2"/>
+      <text x="610" y="235" fontSize="10" fontWeight="700" fill={G}>cytoplasm</text>
+
+      {/* Note panel */}
+      <rect x="40" y="245" width="640" height="30" rx="6" fill={GL} stroke={G} strokeWidth="1"/>
+      <text x="360" y="265" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={G}>
+        No nucleus · DNA is in the cytoplasm · plasmids can be cut and used as vectors for gene transfer
+      </text>
+    </svg>
+  );
+}
+
+// ── GM crops summary diagram ────────────────────────────────────────────────
+function GMCropsSVG() {
+  return (
+    <svg viewBox="0 0 720 380" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="380" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Applications of GM crops — three main benefits
+      </text>
+
+      {/* Pest resistance */}
+      <rect x="30" y="55" width="210" height="180" rx="10" fill="#fff" stroke={G} strokeWidth="2"/>
+      <rect x="30" y="55" width="210" height="32" rx="10" fill={G}/>
+      <text x="135" y="76" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">① Pest resistance</text>
+
+      {/* Maize plant icon */}
+      <line x1="105" y1="180" x2="105" y2="120" stroke={G} strokeWidth="2.5"/>
+      <ellipse cx="95" cy="135" rx="15" ry="5" fill={G} transform="rotate(-20 95 135)"/>
+      <ellipse cx="115" cy="140" rx="15" ry="5" fill={G} transform="rotate(20 115 140)"/>
+      <ellipse cx="93" cy="155" rx="15" ry="5" fill={G} transform="rotate(-20 93 155)"/>
+      <ellipse cx="117" cy="160" rx="15" ry="5" fill={G} transform="rotate(20 117 160)"/>
+      <rect x="100" y="175" width="10" height="8" fill="#444"/>
+      {/* Caterpillar with X */}
+      <ellipse cx="155" cy="135" rx="10" ry="5" fill="#999" stroke="#666" strokeWidth="1"/>
+      <line x1="143" y1="125" x2="167" y2="145" stroke={RD} strokeWidth="2"/>
+      <line x1="167" y1="125" x2="143" y2="145" stroke={RD} strokeWidth="2"/>
+
+      <text x="135" y="200" textAnchor="middle" fontSize="10" fontWeight="700" fill={G}>Bt gene from</text>
+      <text x="135" y="213" textAnchor="middle" fontSize="10" fontWeight="700" fill={G}>Bacillus thuringiensis</text>
+      <text x="135" y="226" textAnchor="middle" fontSize="9" fill={GR}>plant produces own toxin</text>
+
+      {/* Herbicide resistance */}
+      <rect x="255" y="55" width="210" height="180" rx="10" fill="#fff" stroke={AM} strokeWidth="2"/>
+      <rect x="255" y="55" width="210" height="32" rx="10" fill={AM}/>
+      <text x="360" y="76" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">② Herbicide resistance</text>
+
+      {/* Crop standing tall, weeds dead */}
+      <line x1="320" y1="180" x2="320" y2="120" stroke={G} strokeWidth="2.5"/>
+      <ellipse cx="313" cy="130" rx="10" ry="3" fill={G} transform="rotate(-20 313 130)"/>
+      <ellipse cx="327" cy="135" rx="10" ry="3" fill={G} transform="rotate(20 327 135)"/>
+      <ellipse cx="313" cy="150" rx="10" ry="3" fill={G} transform="rotate(-20 313 150)"/>
+      <text x="320" y="195" textAnchor="middle" fontSize="9" fontWeight="700" fill={G}>Crop ✓</text>
+
+      {/* Withered weed */}
+      <line x1="395" y1="180" x2="400" y2="150" stroke="#8a6b4a" strokeWidth="2" strokeDasharray="2,2"/>
+      <ellipse cx="392" cy="155" rx="8" ry="3" fill="#8a6b4a" transform="rotate(30 392 155)"/>
+      <ellipse cx="408" cy="160" rx="8" ry="3" fill="#8a6b4a" transform="rotate(-30 408 160)"/>
+      <text x="400" y="195" textAnchor="middle" fontSize="9" fontWeight="700" fill="#a04040">Weed ✗</text>
+
+      <text x="360" y="220" textAnchor="middle" fontSize="10" fontWeight="700" fill={AM}>e.g. glyphosate-resistant</text>
+      <text x="360" y="232" textAnchor="middle" fontSize="9" fill={GR}>spray kills weeds, not crop</text>
+
+      {/* Nutrition */}
+      <rect x="480" y="55" width="210" height="180" rx="10" fill="#fff" stroke={PU} strokeWidth="2"/>
+      <rect x="480" y="55" width="210" height="32" rx="10" fill={PU}/>
+      <text x="585" y="76" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">③ Improved nutrition</text>
+
+      {/* Rice grain - golden */}
+      <ellipse cx="550" cy="150" rx="40" ry="22" fill="#f4cb1a" stroke="#a47d00" strokeWidth="1.5"/>
+      <text x="550" y="155" textAnchor="middle" fontSize="11" fontWeight="700" fill="#704c00">Golden Rice</text>
+      {/* Plain rice (white) for contrast */}
+      <ellipse cx="615" cy="180" rx="20" ry="11" fill="#fafafa" stroke="#888" strokeWidth="1.2"/>
+      <text x="615" y="184" textAnchor="middle" fontSize="9" fill="#666">white</text>
+
+      <text x="585" y="200" textAnchor="middle" fontSize="10" fontWeight="700" fill={PU}>extra β-carotene gene</text>
+      <text x="585" y="213" textAnchor="middle" fontSize="9" fill={GR}>→ vitamin A in body</text>
+      <text x="585" y="225" textAnchor="middle" fontSize="9" fill={GR}>prevents blindness</text>
+
+      {/* Other examples */}
+      <rect x="30" y="255" width="660" height="110" rx="8" fill={PL} stroke={PU} strokeWidth="1"/>
+      <text x="360" y="275" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>Other GM-crop examples (Hodder)</text>
+      <text x="50" y="295" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Maize</tspan> — extra iron uptake (fights anaemia)</text>
+      <text x="50" y="310" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Wheat</tspan> — gluten-free (avoids food allergy)</text>
+      <text x="50" y="325" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Vegetables</tspan> — boosted vitamin E (heart health)</text>
+      <text x="380" y="295" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Cassava</tspan> — more iron + protein (Africa staple)</text>
+      <text x="380" y="310" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Crops with citrate gene</tspan> — tolerate acid soils</text>
+      <text x="380" y="325" fontSize="10" fill={GR}><tspan fontWeight="700" fill={PU}>· Crops with salt-tolerance</tspan> — reclaim salty land</text>
+      <text x="360" y="350" textAnchor="middle" fontSize="9" fill="#888" fontStyle="italic">
+        Most GM is for higher yield · 60 % of processed foods contain GM soya
+      </text>
+    </svg>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ① QUICK ESSENCE TAB — 5-minute review
+// ════════════════════════════════════════════════════════════════════════════
+function EssenceTab() {
+  const card = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${AM}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 12 };
+  const h = { fontSize: 13, fontWeight: 800, color: AM, marginBottom: 8, letterSpacing: 0.3 };
+  const li = { fontSize: 12.5, lineHeight: 1.65, marginBottom: 5, color: GR };
+
+  return (
+    <div>
+      <div style={{ background: AL, border: `1px solid ${AM}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: AM, fontWeight: 600 }}>
+        ⚡ <Bold>The 5-minute Essence</Bold> — read this the morning of the exam
+      </div>
+
+      <div style={card}>
+        <div style={h}>① WHY BACTERIA? — TWO BIG REASONS</div>
+        <div style={li}>· <KW c={AM}>Rapid reproduction</KW> — bacteria divide up to 3 times an hour, so millions of cells can be cultured quickly.</div>
+        <div style={li}>· <KW c={AM}>Make complex molecules</KW> — proteins and other useful chemicals, all from cheap raw materials.</div>
+        <div style={li}>· No ethical objection to growing/manipulating bacteria. <KW c={AM}>Genetic code is universal</KW> — human genes work inside bacteria.</div>
+        <div style={li}>· Bacterial DNA = <Bold>one big circular chromosome</Bold> + small circular <KW c={AM}>plasmids</KW> in the cytoplasm (handy as "vectors").</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>② FERMENTATION USES OF YEAST &amp; ENZYMES</div>
+        <div style={li}>· <KW c={AM}>Bread</KW>: yeast respires sugar → <Bold>CO₂</Bold> (raises dough) + ethanol (evaporates on baking). Amylase in flour digests starch → sugar.</div>
+        <div style={li}>· <KW c={AM}>Biofuels</KW>: yeast ferments sugar/grain → <Bold>ethanol</Bold>. Less polluting than petrol — Brazil/Zimbabwe/USA use it for cars. <Bold>Concern:</Bold> if crops are grown specifically for biofuel, less land is available for food crops.</div>
+        <div style={li}>· <KW c={AM}>Pectinase</KW> (from <i>Aspergillus</i>) breaks down pectin in apple cells → more juice, clearer, sweeter.</div>
+        <div style={li}>· <KW c={AM}>Biological washing powder</KW> = <Bold>proteases</Bold> (blood/egg) + <Bold>lipases</Bold> (grease/oil). Big insoluble stains → small soluble products. Saves energy (works at 40 °C). Hot water denatures the enzymes.</div>
+        <div style={li}>· <KW c={AM}>Lactase</KW> breaks lactose → glucose + galactose. <Bold>Lactose-free milk</Bold> for lactose-intolerant people. Lactase is often <Bold>immobilised on beads</Bold> so it doesn't end up in the milk.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>③ FERMENTERS — controlled tanks for microbes</div>
+        <div style={li}>· Sealed vessels up to <Bold>100 000 L</Bold> for industrial production: penicillin, insulin, mycoprotein, enzymes.</div>
+        <div style={li}>· Six conditions monitored: <KW c={AM}>temperature</KW> (~26 °C, cooled because microbes give off heat), <KW c={AM}>pH</KW> (slightly acidic 5–6), <KW c={AM}>oxygen</KW> (sterile air pumped + stirred), <KW c={AM}>nutrients</KW>, <KW c={AM}>sterile conditions</KW>, <KW c={AM}>waste removal</KW>.</div>
+        <div style={li}>· Stirring paddles = even distribution of nutrients, gases and heat.</div>
+        <div style={li}>· <Bold>Sterile</Bold> = essential, otherwise contaminating microbes spoil the culture.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>④ GENETIC MODIFICATION (GM) — KEY ENZYMES</div>
+        <div style={li}>· Definition: <KW c={AM}>changing the genetic material of an organism by removing, changing or inserting individual genes</KW>.</div>
+        <div style={li}>· <KW c={AM}>Restriction enzyme</KW> — cuts DNA at specific base sequences (e.g. between A and T in GAA–TTC), leaving <Bold>sticky ends</Bold>.</div>
+        <div style={li}>· <KW c={AM}>DNA ligase</KW> — joins matching sticky ends. The "molecular glue" that seals the recombinant plasmid.</div>
+        <div style={li}>· <Bold>Same restriction enzyme</Bold> must be used to cut both the human DNA AND the plasmid → so sticky ends match.</div>
+        <div style={li}>· <KW c={AM}>Plasmid</KW> = vector. Other vectors: viruses. <KW c={AM}>Expression</KW> = bacterium makes the human protein from the inserted gene.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑤ MAKING INSULIN — six steps</div>
+        <div style={li}>· <Bold>1</Bold> Identify and isolate the human insulin gene.</div>
+        <div style={li}>· <Bold>2</Bold> Cut it out with a restriction enzyme → sticky ends.</div>
+        <div style={li}>· <Bold>3</Bold> Cut bacterial plasmid with the <Bold>same</Bold> restriction enzyme → matching sticky ends.</div>
+        <div style={li}>· <Bold>4</Bold> Insulin gene + plasmid joined by <KW c={AM}>DNA ligase</KW> → <Bold>recombinant plasmid</Bold>.</div>
+        <div style={li}>· <Bold>5</Bold> Plasmid inserted into bacteria → bacteria reproduce by mitosis → millions of identical copies.</div>
+        <div style={li}>· <Bold>6</Bold> Bacteria <Bold>express the gene</Bold> in a fermenter → insulin is extracted, purified, used to treat diabetes.</div>
+        <div style={li}>· In use since 1982 · GM insulin is <Bold>purer</Bold> than pig/cow insulin (no allergens) and acceptable across religions.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑥ GM CROPS — three big benefits</div>
+        <div style={li}>· <KW c={AM}>Pest resistance</KW>: <i>Bacillus thuringiensis</i> (<Bold>Bt</Bold>) toxin gene → maize, cotton, soybean kill caterpillars themselves.</div>
+        <div style={li}>· <KW c={AM}>Herbicide resistance</KW>: gene that breaks down glyphosate → crops survive blanket spray. ~94% US soya / 92% US maize is GM.</div>
+        <div style={li}>· <KW c={AM}>Better nutrition</KW>: <Bold>Golden Rice</Bold> (β-carotene → vit. A, prevents blindness); iron-rich maize; gluten-free wheat; cassava with extra iron and protein.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑦ ADVANTAGES vs DISADVANTAGES OF GM</div>
+        <div style={li}>· <Bold>✓ Pros</Bold>: higher yield, fewer pesticides (Bt crops), pollution↓, vitamin/iron content↑, salt/drought tolerance, only the target gene transferred (precise).</div>
+        <div style={li}>· <Bold>✗ Cons</Bold>: GM genes might spread to wild plants (super-weeds); antibiotic-resistance markers in bacteria could pass to gut bacteria; allergens possible; long-term effects unknown; only farmers in rich countries benefit; loss of biodiversity in agriculture.</div>
+      </div>
+
+      <div style={{ background: AL, border: `1px solid ${AM}`, borderRadius: 8,
+        padding: "12px 16px", marginTop: 14, fontSize: 12, color: GR }}>
+        <Bold>Key word check</Bold>: biotechnology, genetic modification, plasmid, restriction enzyme, sticky ends, DNA ligase, recombinant plasmid, expression, vector, fermenter, lactase, lactose intolerance, pectinase, protease, lipase, mycoprotein, Bt toxin, Golden Rice, glyphosate, immobilised enzyme.
+      </div>
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ② EXAM PRACTICE TAB — infinite test bank
+// ════════════════════════════════════════════════════════════════════════════
+function ExamTab() {
+  const [rev, setRev] = useState({});
+  const [diff, setDiff] = useState("all");
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setRev(p => ({ ...p, [id]: !p[id] }));
+
+  const qs = [
+    // ─────────────────── EASY ───────────────────
+    { id: "e1", diff: "easy", topic: "bact", marks: 2, star: "★★★",
+      q: "Define biotechnology.",
+      hint: "Use of living organisms in industry",
+      a: <>Biotechnology is the <Bold>application of biological organisms, systems or processes</Bold> [1] to manufacturing or service industries [1].</> },
+
+    { id: "e2", diff: "easy", topic: "bact", marks: 2, star: "★★★",
+      q: "Give two reasons why bacteria are particularly useful in biotechnology.",
+      hint: "Speed + product type",
+      a: <>Any two: bacteria <Bold>reproduce very rapidly</Bold> (up to three times an hour) [1]; they can make <Bold>complex molecules</Bold> such as proteins from cheap raw materials [1]; their <Bold>genetic code is universal</Bold>, so foreign genes work in them [1]; there are <Bold>few ethical objections</Bold> to growing or manipulating them [1].</> },
+
+    { id: "e3", diff: "easy", topic: "bact", marks: 2, star: "★★★",
+      q: "State two ways in which bacterial DNA differs from DNA in an animal cell.",
+      hint: "Shape + location + plasmids",
+      a: <>Bacterial DNA is in a single <Bold>circular chromosome</Bold>, animal DNA is in <Bold>linear chromosomes</Bold> [1]. Bacterial DNA is <Bold>free in the cytoplasm</Bold> (no nucleus), while animal DNA is enclosed in a <Bold>nuclear membrane</Bold> [1]. (Also: bacteria have <Bold>plasmids</Bold>; animal cells do not.)</> },
+
+    { id: "e4", diff: "easy", topic: "yeast", marks: 2, star: "★★★",
+      q: "State the role of yeast in bread-making.",
+      hint: "CO₂ from sugar",
+      a: <>Yeast respires the sugar in the dough <Bold>anaerobically</Bold> [1], producing <Bold>carbon dioxide</Bold> which forms bubbles, making the dough rise [1]. (Ethanol is also produced but evaporates during baking.)</> },
+
+    { id: "e5", diff: "easy", topic: "yeast", marks: 1, star: "★★★",
+      q: "Name the protein in flour that gives bread its elastic texture.",
+      hint: "Holds the gas",
+      a: <><Bold>Gluten</Bold> — a sticky protein in wheat flour that traps the CO₂ bubbles produced by the yeast [1].</> },
+
+    { id: "e6", diff: "easy", topic: "yeast", marks: 2, star: "★★★",
+      q: "Explain why ethanol can be used as a biofuel.",
+      hint: "Renewable, less polluting",
+      a: <>Ethanol is produced by yeast fermenting sugar or starch from plant material — a <Bold>renewable</Bold> source of energy [1]. Burning it produces <Bold>less pollution</Bold> than burning petrol or diesel [1].</> },
+
+    { id: "e7", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "State the role of pectinase in fruit juice production.",
+      hint: "Breaks down 'glue' between cells",
+      a: <>Pectinase breaks down <Bold>pectin</Bold>, the jelly-like substance that sticks plant cell walls together [1]. This releases the juice from the fruit and makes the juice <Bold>clearer and sweeter</Bold> [1].</> },
+
+    { id: "e8", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "Name the two types of enzyme in biological washing powders and the type of stain each removes.",
+      hint: "Protein + fat",
+      a: <><Bold>Proteases</Bold> digest <Bold>protein</Bold> stains (e.g. blood, egg) [1]. <Bold>Lipases</Bold> digest <Bold>fat</Bold> stains (e.g. grease, oil) [1].</> },
+
+    { id: "e9", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "Explain why biological washing powders save energy compared with non-biological powders.",
+      hint: "Lower temperature",
+      a: <>The enzymes work at <Bold>lower temperatures</Bold> (around 40 °C), so there is no need to use very hot water [1]. Less energy is needed to heat the water, reducing fuel/electricity use [1].</> },
+
+    { id: "e10", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "Explain why biological washing powders are not effective if used in very hot water.",
+      hint: "Denaturation",
+      a: <>At high temperatures the enzymes become <Bold>denatured</Bold> [1] — their active sites change shape so they can no longer break down protein or fat molecules in stains [1].</> },
+
+    { id: "e11", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "Define lactose intolerance.",
+      hint: "Missing enzyme",
+      a: <>A digestive problem where the body does not produce enough of the enzyme <Bold>lactase</Bold> [1], so undigested lactose stays in the gut, where bacteria ferment it, causing wind, diarrhoea and stomach pain [1].</> },
+
+    { id: "e12", diff: "easy", topic: "enzymes", marks: 2, star: "★★★",
+      q: "State the products formed when lactase breaks down lactose, and explain why this helps lactose-intolerant people.",
+      hint: "Two monosaccharides",
+      a: <>Lactose → <Bold>glucose + galactose</Bold> [1]. Both are monosaccharides that can be absorbed by the small intestine, so lactose-intolerant people can drink the milk without symptoms [1].</> },
+
+    { id: "e13", diff: "easy", topic: "ferment", marks: 2, star: "★★★",
+      q: "State two products made on an industrial scale in fermenters.",
+      hint: "Drugs + food protein",
+      a: <>Any two: <Bold>penicillin</Bold> (antibiotic) [1]; <Bold>insulin</Bold> (medicine for diabetes) [1]; <Bold>mycoprotein</Bold> (food / Quorn) [1]; <Bold>enzymes</Bold> for washing powders or food production [1]; <Bold>yoghurt</Bold> [1].</> },
+
+    { id: "e14", diff: "easy", topic: "ferment", marks: 4, star: "★★★",
+      q: "State four conditions that must be controlled in a fermenter for the production of penicillin.",
+      hint: "Temp, pH, O₂, food, sterility",
+      a: <>Any four: <Bold>temperature</Bold> (~26 °C — cooled because respiration releases heat) [1]; <Bold>pH</Bold> (slightly acidic, 5–6) [1]; <Bold>oxygen</Bold> (sterile air pumped in, mixture stirred) [1]; <Bold>nutrient supply</Bold> (sugar, amino acids, mineral salts) [1]; <Bold>sterile conditions</Bold> (no contaminating microbes) [1]; <Bold>waste removal</Bold> [1].</> },
+
+    { id: "e15", diff: "easy", topic: "ferment", marks: 2, star: "★★★",
+      q: "Explain why fermenters need a cooling jacket.",
+      hint: "Respiration is exothermic",
+      a: <>Microbial <Bold>respiration releases heat</Bold>; without cooling the mixture would overheat [1] and the enzymes / microbes would be denatured / killed, stopping production [1].</> },
+
+    { id: "e16", diff: "easy", topic: "ferment", marks: 2, star: "★★★",
+      q: "Explain why sterile conditions are essential during fermentation.",
+      hint: "Contamination ruins yield",
+      a: <>Any contaminating bacteria or fungi could grow alongside the wanted microbe, using up nutrients and producing unwanted substances [1], which would spoil the product or stop the wanted microbe growing [1].</> },
+
+    { id: "e17", diff: "easy", topic: "gm", marks: 2, star: "★★★",
+      q: "Define genetic modification.",
+      hint: "Adding/removing/changing genes",
+      a: <>Genetic modification is <Bold>changing the genetic material of an organism</Bold> by <Bold>removing, changing or inserting individual genes</Bold> [2].</> },
+
+    { id: "e18", diff: "easy", topic: "gm", marks: 1, star: "★★★",
+      q: "What is a plasmid?",
+      hint: "Small + circular",
+      a: <>A small <Bold>circular piece of DNA</Bold> found in the cytoplasm of bacteria, separate from the main chromosome [1].</> },
+
+    { id: "e19", diff: "easy", topic: "gm", marks: 2, star: "★★★",
+      q: "Name and state the role of the two enzymes used to make a recombinant plasmid.",
+      hint: "Cut + paste",
+      a: <><Bold>Restriction enzyme</Bold> — cuts the DNA at specific sites, leaving sticky ends [1]. <Bold>DNA ligase</Bold> — joins the sticky ends together to seal the inserted gene into the plasmid [1].</> },
+
+    { id: "e20", diff: "easy", topic: "gm", marks: 3, star: "★★★",
+      q: "Outline how genetically modified bacteria are used to produce insulin.",
+      hint: "Gene → plasmid → bacterium → ferment",
+      a: <>The human insulin <Bold>gene is cut out</Bold> of human DNA using a restriction enzyme [1]. The gene is <Bold>inserted into a bacterial plasmid</Bold> using DNA ligase, which is returned to a bacterium [1]. The bacterium is grown in a fermenter; it <Bold>expresses the gene</Bold> and produces human insulin, which is extracted and purified [1].</> },
+
+    { id: "e21", diff: "easy", topic: "gmcrop", marks: 2, star: "★★★",
+      q: "State two ways in which crops have been genetically modified.",
+      hint: "Pests + herbicides + nutrition",
+      a: <>Any two: <Bold>insect / pest resistance</Bold> (Bt toxin gene from Bacillus thuringiensis kills caterpillars) [1]; <Bold>herbicide resistance</Bold> (crops survive glyphosate spray) [1]; <Bold>improved nutritional quality</Bold> (e.g. Golden Rice with vitamin A) [1].</> },
+
+    { id: "e22", diff: "easy", topic: "gmcrop", marks: 2, star: "★★★",
+      q: "Explain how Golden Rice helps prevent blindness.",
+      hint: "β-carotene → vitamin A",
+      a: <>Golden Rice contains an inserted gene that makes the plant produce <Bold>β-carotene</Bold> (the yellow precursor of vitamin A) [1]. People who eat it convert β-carotene to vitamin A, preventing the vitamin A deficiency that causes blindness in over 100 million children worldwide [1].</> },
+
+    { id: "e23", diff: "easy", topic: "gmcrop", marks: 3, star: "★★★",
+      q: "State three advantages of GM crops.",
+      hint: "Yield, pesticide, nutrition",
+      a: <>Any three: <Bold>higher yields</Bold> [1]; <Bold>less pesticide use</Bold> (Bt crops make their own toxin) [1]; <Bold>better nutritional quality</Bold> (Golden Rice etc.) [1]; <Bold>only the target gene is transferred</Bold> (unlike cross-breeding) [1]; resistance to <Bold>drought, salt, or acid soils</Bold> can be added [1].</> },
+
+    { id: "e24", diff: "easy", topic: "gmcrop", marks: 3, star: "★★★",
+      q: "State three concerns about GM crops.",
+      hint: "Wild plants, antibiotics, allergens",
+      a: <>Any three: GM genes may <Bold>spread to wild plants</Bold> by pollination (e.g. herbicide-resistance creating "super-weeds") [1]; <Bold>antibiotic-resistance marker genes</Bold> could transfer to gut bacteria [1]; possible <Bold>allergens or toxins</Bold> in food [1]; long-term effects unknown [1]; <Bold>reduced biodiversity</Bold> [1]; small farmers dependent on big seed companies [1].</> },
+
+    // ─────────────────── MEDIUM ───────────────────
+    { id: "m1", diff: "medium", topic: "yeast", marks: 4, star: "★★★",
+      q: "Describe the biology of how bread dough rises and what happens when it is baked.",
+      hint: "Amylase → sugar → yeast → CO₂ → bubbles expand",
+      a: <>Water activates the <Bold>amylase already in the flour</Bold>, which digests some starch to sugar [1]. The yeast respires this sugar anaerobically, producing <Bold>CO₂ and ethanol</Bold> [1]. The CO₂ bubbles are <Bold>trapped by the gluten protein network</Bold> in the dough, making it rise [1]. In the oven (~200 °C) the bubbles expand, the ethanol evaporates and the heat kills the yeast and sets the dough [1].</> },
+
+    { id: "m2", diff: "medium", topic: "yeast", marks: 4, star: "★★",
+      q: "Discuss the disadvantages of producing ethanol biofuel from sugar cane.",
+      hint: "Energy cost + deforestation",
+      a: <>The energy used to <Bold>grow, fertilise, harvest and transport the cane</Bold> plus the cost of extracting the sugar and converting it to ethanol can exceed the energy released by burning the ethanol [1]. <Bold>Forests are cleared</Bold> to plant the crops (soy, oil palm) [1], destroying habitats of thousands of species (e.g. orang-utan) [1]. The fuel is also <Bold>more expensive to produce</Bold> than petrol or diesel [1].</> },
+
+    { id: "m3", diff: "medium", topic: "enzymes", marks: 5, star: "★★★",
+      q: "(a) Describe how lactase can be used to produce lactose-free milk on a large scale by immobilising the enzyme. (b) State one advantage of immobilising the enzyme.",
+      hint: "Beads → milk passes over → product",
+      a: <>(a) Lactase is <Bold>fixed onto small beads</Bold> [1]; the milk is then <Bold>passed over the beads</Bold> [1]; the lactase on the bead surface breaks the lactose in the milk into <Bold>glucose and galactose</Bold> [1]; the milk leaves the column lactose-free [1]. (b) The enzyme molecules <Bold>stay on the beads</Bold> and are not lost in the milk, so the lactase can be re-used and the milk contains no enzyme [1]. <i>(Also accept: continuous process, no further purification needed.)</i></> },
+
+    { id: "m4", diff: "medium", topic: "enzymes", marks: 4, star: "★★★",
+      q: "Explain how a biological washing powder removes a protein stain on a shirt.",
+      hint: "Protease → small soluble products",
+      a: <>The powder contains a <Bold>protease enzyme</Bold> [1]. Proteins in the stain are large and insoluble, so they stick to the fibres [1]. The protease <Bold>digests the protein into amino acids</Bold> [1], which are <Bold>small and soluble</Bold>, so they dissolve in the water and wash out of the cloth [1].</> },
+
+    { id: "m5", diff: "medium", topic: "ferment", marks: 5, star: "★★★", type: "labelling",
+      q: "Sketch a fermenter used for penicillin production. Label five important features.",
+      hint: "Tank · paddle · air in · cooling jacket · probe · outlet",
+      a: <>Award 1 mark per labelled feature, up to 5: <Bold>sealed vessel</Bold> (often stainless steel) [1]; <Bold>paddles / stirrer</Bold> driven by motor at the top [1]; <Bold>sterile air inlet</Bold> (with filter) [1]; <Bold>cooling water jacket</Bold> with inlet and outlet [1]; <Bold>pH / temperature / O₂ probes</Bold> [1]; <Bold>nutrient feed pipe</Bold> [1]; <Bold>product outlet / tap</Bold> [1]; <Bold>exhaust gas vent</Bold> [1].</> },
+
+    { id: "m6", diff: "medium", topic: "ferment", marks: 4, star: "★★",
+      q: "Explain what mycoprotein is and why it has become a popular meat substitute.",
+      hint: "Fungus + low fat + vegan",
+      a: <>Mycoprotein is a <Bold>protein-rich food made from the fungus Fusarium venenatum</Bold> [1], grown on glucose in a large fermenter. It contains <Bold>no cholesterol</Bold> and is <Bold>low in saturated fat</Bold> [1], so it is healthier than meat. It is <Bold>suitable for vegetarian and vegan diets</Bold> [1] and gives a high protein yield per hectare compared with farming animals [1].</> },
+
+    { id: "m7", diff: "medium", topic: "gm", marks: 6, star: "★★★", type: "labelling",
+      q: "Describe the six main stages used to produce human insulin from genetically modified bacteria.",
+      hint: "Isolate → cut → cut plasmid → ligase → bacteria → ferment",
+      a: <><Bold>1</Bold> The <Bold>human insulin gene is identified and isolated</Bold> from human DNA [1]. <Bold>2</Bold> A <Bold>restriction enzyme</Bold> cuts the gene out, leaving sticky ends [1]. <Bold>3</Bold> A bacterial plasmid is cut open with the <Bold>same restriction enzyme</Bold> so the sticky ends match [1]. <Bold>4</Bold> The insulin gene is inserted and sealed in with <Bold>DNA ligase</Bold>, giving a recombinant plasmid [1]. <Bold>5</Bold> The plasmid is taken up by bacteria, which reproduce so each daughter cell carries the gene [1]. <Bold>6</Bold> Bacteria are grown in a <Bold>fermenter</Bold>, where they <Bold>express the gene</Bold> and produce insulin, which is extracted, purified and used to treat diabetes [1].</> },
+
+    { id: "m8", diff: "medium", topic: "gm", marks: 4, star: "★★★",
+      q: "Explain why the same restriction enzyme must be used to cut both the human DNA and the bacterial plasmid.",
+      hint: "Sticky ends must match",
+      a: <>Restriction enzymes cut DNA at <Bold>specific base sequences</Bold> [1], producing characteristic short single-stranded <Bold>sticky ends</Bold> [1]. Using the <Bold>same enzyme</Bold> on both produces sticky ends with <Bold>complementary bases</Bold> [1], so the human DNA can pair with the plasmid by base-pairing before DNA ligase seals the join [1].</> },
+
+    { id: "m9", diff: "medium", topic: "gm", marks: 3, star: "★★★",
+      q: "Explain what is meant by 'expression' of an inserted human gene in a bacterium.",
+      hint: "Transcription + translation",
+      a: <>The bacterium uses the inserted gene as a <Bold>template for transcription</Bold> [1] and then for <Bold>translation at its ribosomes</Bold>, making the protein coded for by the gene [1]. So the bacterium produces a <Bold>human protein</Bold> (such as insulin) from the human gene [1].</> },
+
+    { id: "m10", diff: "medium", topic: "gm", marks: 4, star: "★★★",
+      q: "Compare GM insulin with insulin extracted from pigs or cattle.",
+      hint: "Purity, allergy, religion, supply",
+      a: <>GM insulin is <Bold>purer</Bold> — it contains no traces of foreign animal protein, so it does not trigger allergic reactions [1]. It is <Bold>identical to human insulin</Bold>, so it is more effective [1]. It is <Bold>acceptable</Bold> to people whose religion forbids the use of pig or cow products [1]. It can be produced in <Bold>much larger quantities</Bold> from a fermenter culture than from slaughtered animals [1].</> },
+
+    { id: "m11", diff: "medium", topic: "gmcrop", marks: 4, star: "★★★",
+      q: "Explain how the Bt gene gives a crop plant protection against insect pests.",
+      hint: "Bacterial toxin gene transferred into the plant",
+      a: <>The bacterium <Bold>Bacillus thuringiensis</Bold> naturally produces a toxin that kills caterpillars and other insect larvae [1]. The gene for this toxin has been transferred (using a bacterial vector) into crops like maize, cotton and soybean [1]. The plant now produces the toxin in its own cells [1]. Insects that eat the plant <Bold>take in the toxin and die</Bold>, so the crop is protected without external spraying [1].</> },
+
+    { id: "m12", diff: "medium", topic: "gmcrop", marks: 4, star: "★★★",
+      q: "Explain why farmers find herbicide-resistant GM crops useful, and one possible drawback.",
+      hint: "Easy weed control + cross-pollination risk",
+      a: <>The herbicide (e.g. <Bold>glyphosate</Bold>) kills most green plants but the GM crop has an <Bold>enzyme that breaks the herbicide down</Bold>, so the crop survives [1]. Farmers can spray the whole field, removing all weeds in one application — quicker and using less herbicide overall [1]. Drawback: <Bold>pollen from the crop</Bold> may transfer the resistance gene to wild plants via pollination [1], producing herbicide-tolerant "<Bold>super-weeds</Bold>" that cannot be killed [1].</> },
+
+    { id: "m13", diff: "medium", topic: "gmcrop", marks: 4, star: "★★★",
+      q: "Describe three ways in which genetic modification could be used to solve worldwide nutritional deficiencies.",
+      hint: "Vit A, iron, salt-tolerance",
+      a: <>Any three of: <Bold>Golden Rice</Bold> with a β-carotene gene to provide vitamin A and prevent blindness [1]; <Bold>maize</Bold> with a gene that increases iron uptake, treating anaemia [1]; <Bold>cassava</Bold> with genes to boost protein and iron content, improving diet quality in Africa [1]; <Bold>wheat</Bold> with a gene to remove gluten, helping people with gluten allergy [1]; <Bold>vegetables</Bold> with a vitamin E gene to help fight heart disease [1].</> },
+
+    { id: "m14", diff: "medium", topic: "gm", marks: 3, star: "★★",
+      q: "Explain why plasmids are described as 'vectors' in genetic modification.",
+      hint: "Carry foreign DNA into a cell",
+      a: <>A vector is a <Bold>carrier of DNA</Bold> from one cell or organism into another [1]. Plasmids can pick up the inserted foreign gene (after restriction-enzyme cutting and ligase joining) [1] and <Bold>deliver it into the bacterial cell</Bold>, where it can be expressed [1]. (Viruses can also be used as vectors.)</> },
+
+    { id: "m15", diff: "medium", topic: "gmcrop", marks: 3, star: "★★",
+      q: "Suggest why governments in many countries require strict regulation before allowing the planting of GM crops.",
+      hint: "Long-term, gene spread, food safety",
+      a: <>Any three of: long-term effects of GM crops on the environment are <Bold>not yet known</Bold> [1]; modified genes may <Bold>spread to wild plants</Bold> via pollination [1]; possibility of new <Bold>allergens or toxins</Bold> in the food [1]; risk of <Bold>antibiotic-resistance genes</Bold> spreading from bacterial vectors [1]; <Bold>biodiversity</Bold> loss [1]; ethical concerns about transferring genes between species [1].</> },
+
+    // ─────────────────── HARD ───────────────────
+    { id: "h1", diff: "hard", topic: "gm", marks: 6, star: "★★★", ext: true, type: "labelling",
+      q: "Annotate a flow diagram of insulin production from human gene to fermenter product. Mark in the function of the restriction enzyme, DNA ligase, and the plasmid, and explain what 'expression' means.",
+      hint: "Stage-by-stage with enzyme roles",
+      a: <>Marking points (max 6): (i) <Bold>restriction enzyme</Bold> cuts at a specific base sequence in both human DNA and plasmid, producing <Bold>complementary sticky ends</Bold> [1]; (ii) the cut insulin gene has bases that <Bold>pair</Bold> with the matching sticky ends of the opened plasmid [1]; (iii) <Bold>DNA ligase seals</Bold> the join between gene and plasmid, forming a recombinant plasmid [1]; (iv) plasmid acts as a <Bold>vector</Bold> — carries the foreign gene into the bacterial cell [1]; (v) bacterium <Bold>reproduces by mitosis</Bold>, copying the recombinant DNA [1]; (vi) <Bold>expression</Bold> = the bacterium transcribes and translates the human gene at its ribosomes, producing human insulin protein, which is extracted from the fermenter and purified [1].</> },
+
+    { id: "h2", diff: "hard", topic: "ferment", marks: 5, star: "★★★",
+      q: "Explain in detail why pH, temperature, oxygen and sterility must all be carefully controlled in a fermenter producing antibiotics.",
+      hint: "Each affects enzyme activity / microbe growth",
+      a: <><Bold>Temperature</Bold>: each microbe has an optimum (~26 °C for Penicillium); too cold and enzymes work slowly, too hot and they denature → no product [1]. Microbial respiration releases heat → fermenter must be cooled [1]. <Bold>pH</Bold>: enzymes work in a narrow pH window (5–6 for Penicillium); the wrong pH denatures enzymes → no product [1]. <Bold>Oxygen</Bold>: most industrial microbes respire aerobically — sterile air is pumped in and stirring distributes it; without enough O₂, anaerobic respiration takes over, slowing growth and yielding by-products like ethanol [1]. <Bold>Sterility</Bold>: any contaminating bacteria or fungi would compete for nutrients, produce different by-products, or contaminate the medicine — so all inputs and equipment must be sterilised [1].</> },
+
+    { id: "h3", diff: "hard", topic: "gmcrop", marks: 6, star: "★★",
+      q: "Construct a balanced argument for and against the wide use of GM crops in farming today.",
+      hint: "Three pros + three cons",
+      a: <><Bold>For</Bold> (any 3): higher yields → more food security [1]; pest-resistant crops (Bt) reduce pesticide use → less pollution + safer for farm workers [1]; vitamin-enriched crops (Golden Rice) can prevent malnutrition disorders [1]; salt- or drought-tolerant varieties allow farming on marginal land [1]; precise transfer of one gene avoids the random damage of cross-breeding [1]. <Bold>Against</Bold> (any 3): risk of <Bold>resistance genes spreading</Bold> to wild relatives (super-weeds) [1]; possible spread of <Bold>antibiotic-resistance marker</Bold> genes to gut bacteria [1]; possible allergens / toxins in food [1]; mainly benefits farmers in rich countries — small farmers become dependent on large biotech companies [1]; <Bold>reduces biodiversity</Bold> in agriculture [1]; long-term ecological effects unknown [1].</> },
+
+    { id: "h4", diff: "hard", topic: "enzymes", marks: 5, star: "★★",
+      q: "Describe the practical method you would use to investigate the effect of temperature on the volume of juice extracted from apple pulp using pectinase.",
+      hint: "Variables · five steps",
+      a: <>Set up several beakers each with the <Bold>same volume of apple pulp</Bold> (e.g. 100 cm³) and add the <Bold>same volume of pectinase</Bold> (e.g. 5 cm³ of 50 %) [1]. Place each at a different temperature (e.g. 10, 20, 30, 40, 50 °C) [1]. After 24 h, filter the mixture through filter paper into a measuring cylinder [1]. Record the <Bold>volume of clear juice</Bold> collected [1]. Plot juice volume against temperature; expect a peak at the optimum temperature for pectinase (around 30–40 °C). Control variables: pulp volume, enzyme volume + concentration, time, type of apple, particle size [1].</> },
+
+    { id: "h5", diff: "hard", topic: "enzymes", marks: 4, star: "★★", type: "calc",
+      q: "An experiment compared four washing-powder treatments on identical egg-stained cloths. Beaker A (water only) showed almost no stain removal; B (non-bio powder) removed about 30 % of the stain; C (bio powder at 40 °C) removed about 85 %; D (bio powder boiled first then cooled) removed about 35 %. (a) Explain why C cleaned best. (b) Explain why D cleaned no better than B.",
+      hint: "Active enzymes vs denatured",
+      a: <>(a) Beaker C contains <Bold>active protease and lipase</Bold> enzymes at 40 °C [1] that digest the protein and fat in the egg stain to small soluble molecules (amino acids, fatty acids, glycerol), which dissolve away [1]. (b) In beaker D the powder was <Bold>boiled</Bold>, so the enzymes were <Bold>denatured</Bold> — their active sites changed shape and no longer fit the substrate [1]. So D works only by the detergent's surfactant action — much like B (no enzymes) [1].</> },
+
+    { id: "h6", diff: "hard", topic: "gm", marks: 5, star: "★★", ext: true,
+      q: "Apart from making insulin, describe TWO further important applications of genetic modification used today.",
+      hint: "Vaccine in plant · gene for pest resistance",
+      a: <>Any two well-developed examples (~2½ marks each): (i) <Bold>Hepatitis B vaccine in yeast / banana</Bold> — the gene for the viral coat protein is inserted into yeast or transgenic banana plants; the protein produced acts as an antigen that triggers antibody production in those who eat / receive it; cheap oral vaccine for tropical countries [3]. (ii) <Bold>Bt maize / cotton</Bold> — gene from Bacillus thuringiensis inserted into the plant produces a toxin that kills caterpillars; reduces pesticide use; passed to plant's offspring; but caterpillars are developing resistance [2]. (Other accepted answers: transgenic rabies/cholera-vaccine plants; nitrogen-fixation genes in cereals; salt-tolerance in mangrove → crops.)</> },
+
+    { id: "h7", diff: "hard", topic: "gmcrop", marks: 5, star: "★★", ext: true,
+      q: "A field of Bt cotton next to a field of conventional cotton has noticeably fewer caterpillars. Explain why this is so, AND why after several years insect numbers may rise again.",
+      hint: "Toxin in every cell · resistance evolves",
+      a: <>The Bt gene from <Bold>Bacillus thuringiensis</Bold> is expressed in every cell of the cotton plant, so the plant <Bold>produces its own toxin</Bold> in every leaf [1]. Caterpillars eating the leaves are <Bold>killed by the toxin</Bold>, so far fewer survive [1]. Over years, however, any caterpillar with a <Bold>resistance allele</Bold> (e.g. an altered receptor in the gut) survives [1]. Those survivors reproduce and pass the allele to offspring — <Bold>natural selection</Bold> [1]. After many generations the population is largely resistant, and pest numbers rise to original levels — known as the <Bold>pesticide-resistance cascade</Bold> [1].</> },
+
+    { id: "h8", diff: "hard", topic: "gm", marks: 4, star: "★★", ext: true,
+      q: "Explain why scientists try to find ways to insert foreign genes WITHOUT using bacterial vectors carrying antibiotic-resistance marker genes.",
+      hint: "Spread of antibiotic resistance",
+      a: <>The marker gene is used to <Bold>select the bacteria that have taken up the new DNA</Bold> — only those with the marker survive when grown on a medium containing the antibiotic [1]. However, if the modified bacteria reach the gut, the antibiotic-resistance gene could <Bold>transfer to harmful gut bacteria</Bold> (by conjugation or plasmid transfer) [1]. Those bacteria would then become <Bold>resistant to that antibiotic</Bold> [1], reducing the effectiveness of medical treatment of infections — a serious public-health risk, so safer marker systems are being developed [1].</> },
+
+    // ─────────────────── MCQ ─────────────────────
+    { id: "mcq1", diff: "easy", topic: "bact", marks: 1, star: "★★★", type: "mcq",
+      q: <>Bacteria are particularly useful in biotechnology because they:<br/>A. have a nucleus that stores DNA safely.<br/>B. reproduce rapidly and can make complex proteins.<br/>C. have no cell wall, so chemicals enter freely.<br/>D. carry out photosynthesis to produce sugars.</>,
+      hint: "Speed of reproduction matters",
+      a: <><Bold>B</Bold> — rapid binary fission (up to 3 times an hour) allows a single cell to become millions overnight, and they can express genes that make proteins like insulin [1].</> },
+
+    { id: "mcq2", diff: "easy", topic: "yeast", marks: 1, star: "★★★", type: "mcq",
+      q: <>In bread-making, the role of the yeast is to:<br/>A. produce ethanol that flavours the bread.<br/>B. produce carbon dioxide that makes the dough rise.<br/>C. break down gluten to give a smooth texture.<br/>D. denature amylase in the flour.</>,
+      hint: "Bubbles in the dough",
+      a: <><Bold>B</Bold> — yeast ferments sugar producing CO₂ bubbles trapped by gluten. The ethanol evaporates during baking [1].</> },
+
+    { id: "mcq3", diff: "easy", topic: "enzymes", marks: 1, star: "★★★", type: "mcq",
+      q: <>Lactase is used in industry to make lactose-free milk because it:<br/>A. converts lactose into glucose and galactose.<br/>B. removes lactose by precipitation.<br/>C. kills the bacteria that produce lactose.<br/>D. converts lactose into sucrose, which is sweeter.</>,
+      hint: "Hydrolysis of a disaccharide",
+      a: <><Bold>A</Bold> — lactose is a disaccharide; lactase hydrolyses it to two absorbable monosaccharides (glucose + galactose) [1].</> },
+
+    { id: "mcq4", diff: "easy", topic: "enzymes", marks: 1, star: "★★★", type: "mcq",
+      q: <>Biological washing powders work best at around 40 °C because at higher temperatures:<br/>A. the stains become insoluble.<br/>B. enzymes are denatured and lose their function.<br/>C. the dye on the cloth dissolves.<br/>D. detergent stops working.</>,
+      hint: "Active site changes shape",
+      a: <><Bold>B</Bold> — high heat denatures the protease and lipase, so the enzymes can no longer fit the protein or fat substrates [1].</> },
+
+    { id: "mcq5", diff: "medium", topic: "ferment", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which is NOT a condition that must be carefully controlled in a fermenter?<br/>A. Light intensity.<br/>B. Temperature.<br/>C. pH.<br/>D. Sterility.</>,
+      hint: "Most industrial microbes are not photosynthetic",
+      a: <><Bold>A</Bold> — industrial fermenters use bacteria or fungi that do not photosynthesise, so light is irrelevant. Temperature, pH, oxygen, nutrients and sterility are the key controlled variables [1].</> },
+
+    { id: "mcq6", diff: "medium", topic: "gm", marks: 1, star: "★★★", type: "mcq",
+      q: <>In the production of recombinant plasmids, which enzyme JOINS the human DNA to the bacterial plasmid?<br/>A. Restriction enzyme.<br/>B. Amylase.<br/>C. DNA ligase.<br/>D. Lactase.</>,
+      hint: "'Ligate' = to tie",
+      a: <><Bold>C</Bold> — DNA ligase seals the sugar-phosphate backbone where matching sticky ends have base-paired. Restriction enzyme does the opposite (it cuts) [1].</> },
+
+    { id: "mcq7", diff: "medium", topic: "gm", marks: 1, star: "★★★", type: "mcq",
+      q: <>The function of a plasmid in genetic modification is to:<br/>A. provide energy for the bacterium.<br/>B. carry foreign DNA into a bacterial cell.<br/>C. translate the gene into a protein.<br/>D. destroy invading viruses.</>,
+      hint: "A 'vector'",
+      a: <><Bold>B</Bold> — a plasmid acts as a vector (carrier) that delivers the inserted gene into the bacterial cell, where it can then be expressed [1].</> },
+
+    { id: "mcq8", diff: "medium", topic: "gmcrop", marks: 1, star: "★★", type: "mcq",
+      q: <>Bt maize is protected from insect pests because:<br/>A. its leaves are too tough for caterpillars to bite.<br/>B. it produces a chemical that attracts pest predators.<br/>C. it produces a toxin in its tissues that kills insect larvae.<br/>D. its sap is too acidic for insects to digest.</>,
+      hint: "Bacillus thuringiensis gene",
+      a: <><Bold>C</Bold> — a gene from Bacillus thuringiensis lets the maize make a toxin that kills caterpillars that eat its tissues [1].</> },
+
+    { id: "mcq9", diff: "hard", topic: "gm", marks: 1, star: "★★", type: "mcq", ext: true,
+      q: <>Statements about restriction enzymes: (1) they cut DNA at specific base sequences; (2) they produce blunt ends only; (3) they are extracted from bacteria; (4) they join two DNA strands together. Which statements are correct?<br/>A. 1 and 3 only<br/>B. 2 and 4 only<br/>C. 1, 2 and 3 only<br/>D. 1, 3 and 4 only</>,
+      hint: "Cut · sticky · from bacteria",
+      a: <><Bold>A</Bold> — (1) and (3) are correct: they cut at specific recognition sequences and they come from bacteria. (2) is wrong — they typically leave SHORT single-stranded "sticky" ends, not blunt. (4) is wrong — DNA ligase joins strands; restriction enzymes only cut [1].</> },
+
+    { id: "mcq10", diff: "hard", topic: "gmcrop", marks: 1, star: "★★", type: "mcq", ext: true,
+      q: <>Which is the BEST reason for ensuring that GM crops cannot cross-pollinate with wild plants?<br/>A. Pollen could trigger allergies in farm workers.<br/>B. Wild plants could gain herbicide-resistance genes and become 'super-weeds'.<br/>C. The crop yield would fall.<br/>D. Crops would no longer be sweet-tasting.</>,
+      hint: "Spread of resistance is the worry",
+      a: <><Bold>B</Bold> — if a herbicide-resistance gene moved into a weed, that weed would survive blanket spraying, defeating the purpose of the GM trait and creating a worse weed problem [1].</> },
+
+    { id: "mcq11", diff: "easy", topic: "gm", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which is the correct sequence for producing human insulin from GM bacteria?<br/>A. Cut plasmid → cut human gene → ligate → insert into bacterium → ferment.<br/>B. Insert into bacterium → cut human gene → ligate → cut plasmid → ferment.<br/>C. Ferment → cut human gene → ligate → cut plasmid → insert into bacterium.<br/>D. Cut plasmid → ferment → ligate → insert into bacterium → cut human gene.</>,
+      hint: "Both cuts come before joining",
+      a: <><Bold>A</Bold> — both pieces of DNA must be cut (with the same restriction enzyme) before they can be joined by ligase, before the recombinant plasmid is inserted into the bacterium and the bacteria are then cultured in a fermenter [1].</> },
+
+    { id: "mcq12", diff: "medium", topic: "yeast", marks: 1, star: "★★★", type: "mcq",
+      q: <>During bread-making, the dough is left at about 27 °C for an hour or two before baking. The main reason is to:<br/>A. activate amylase in the flour.<br/>B. denature gluten.<br/>C. allow yeast to respire sugar and produce CO₂.<br/>D. let salt dissolve.</>,
+      hint: "Why 'proving' the dough",
+      a: <><Bold>C</Bold> — at 27 °C the yeast respires actively, producing CO₂ that is trapped by the gluten network, doubling the dough volume. This is the proving / proofing step [1].</> },
+
+    { id: "mcq13", diff: "easy", topic: "ferment", marks: 1, star: "★★★", type: "mcq",
+      q: <>Mycoprotein is produced by:<br/>A. genetically modified bacteria.<br/>B. the fungus Fusarium venenatum in fermenters.<br/>C. boiling soya beans with glucose.<br/>D. yeast respiring lactose.</>,
+      hint: "Fungus + Quorn",
+      a: <><Bold>B</Bold> — Fusarium venenatum is a filamentous soil fungus that is fermented on glucose. The harvested mycelium becomes Quorn [1].</> },
+
+    { id: "mcq14", diff: "medium", topic: "enzymes", marks: 1, star: "★★★", type: "mcq",
+      q: <>Pectinase used to extract apple juice is most commonly obtained from:<br/>A. Aspergillus (a fungus).<br/>B. Lactobacillus (a bacterium).<br/>C. yeast.<br/>D. genetically modified rice.</>,
+      hint: "Filamentous fungus",
+      a: <><Bold>A</Bold> — pectinase is obtained from the fungus Aspergillus niger. It digests pectin between plant cell walls, releasing juice [1].</> },
+  ];
+
+  // Topic palette
+  const topics = [
+    { id: "all", label: "All topics", color: RD },
+    { id: "bact", label: "Bacteria basics", color: "#2d6a4f" },
+    { id: "yeast", label: "Yeast · biofuel · bread", color: "#b5540a" },
+    { id: "enzymes", label: "Enzymes in industry", color: "#3a5fa8" },
+    { id: "ferment", label: "Fermenters", color: "#1a7a6e" },
+    { id: "gm", label: "Genetic modification", color: "#5b3fa6" },
+    { id: "gmcrop", label: "GM crops", color: "#9b2c2c" },
+  ];
+
+  const diffs = [
+    { id: "all",    label: "All",    color: RD,        bg: RL },
+    { id: "easy",   label: "Easy",   color: "#1a7a3a", bg: "#e8f7ec" },
+    { id: "medium", label: "Medium", color: "#b85c00", bg: "#fff4e6" },
+    { id: "hard",   label: "Hard",   color: "#b02020", bg: "#fdf0f0" },
+  ];
+
+  const filtered = qs.filter(q =>
+    (diff === "all" || q.diff === diff) &&
+    (topic === "all" || q.topic === topic)
+  );
+  const totalMarks = filtered.reduce((s, q) => s + q.marks, 0);
+  const revealedCount = filtered.filter(q => rev[q.id]).length;
+
+  const dCount = id => id === "all" ? qs.length : qs.filter(q => q.diff === id).length;
+  const tCount = id => id === "all" ? qs.length : qs.filter(q => q.topic === id).length;
+
+  return (
+    <div>
+      {/* Header banner */}
+      <div style={{ background: RL, border: `1px solid ${RD}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: RD, fontWeight: 600 }}>
+        🎯 <Bold>Exam Practice — Infinite Test Bank</Bold> · filter by difficulty and topic
+      </div>
+
+      {/* Difficulty filter */}
+      <div style={{ fontSize: 10, fontWeight: 700, color: "#888", letterSpacing: 1, marginBottom: 5 }}>DIFFICULTY</div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {diffs.map(d => (
+          <button key={d.id} onClick={() => setDiff(d.id)} style={{
+            padding: "6px 12px", borderRadius: 6,
+            border: diff === d.id ? `1.5px solid ${d.color}` : `1px solid ${BD}`,
+            background: diff === d.id ? d.color : "#fff",
+            color: diff === d.id ? "#fff" : d.color,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {d.label} ({dCount(d.id)})
+          </button>
+        ))}
+      </div>
+
+      {/* Topic filter */}
+      <div style={{ fontSize: 10, fontWeight: 700, color: "#888", letterSpacing: 1, marginBottom: 5 }}>TOPIC</div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {topics.map(t => (
+          <button key={t.id} onClick={() => setTopic(t.id)} style={{
+            padding: "6px 10px", borderRadius: 6,
+            border: topic === t.id ? `1.5px solid ${t.color}` : `1px solid ${BD}`,
+            background: topic === t.id ? t.color : "#fff",
+            color: topic === t.id ? "#fff" : t.color,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {t.label} ({tCount(t.id)})
+          </button>
+        ))}
+      </div>
+
+      {/* Stats */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "8px 12px", background: "#f7f7f4", borderRadius: 6, fontSize: 11,
+        color: GR, marginBottom: 14, border: `1px solid ${BD}` }}>
+        <span><Bold>{filtered.length}</Bold> questions · <Bold>{totalMarks}</Bold> marks · <Bold>{revealedCount}</Bold> revealed</span>
+        <button onClick={() => setRev({})} style={{
+          padding: "4px 10px", fontSize: 10, fontWeight: 700,
+          background: "#fff", color: GR, border: `1px solid ${BD}`,
+          borderRadius: 4, cursor: "pointer",
+        }}>Hide all</button>
+      </div>
+
+      {/* Question cards */}
+      {filtered.map(q => {
+        const dInfo = diffs.find(d => d.id === q.diff);
+        const tInfo = topics.find(t => t.id === q.topic);
+        const isRev = rev[q.id];
+        return (
+          <div key={q.id} style={{
+            background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${tInfo.color}`,
+            borderRadius: 8, padding: "12px 14px", marginBottom: 10,
+          }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", marginBottom: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: dInfo.bg, color: dInfo.color, borderRadius: 3 }}>{dInfo.label.toUpperCase()}</span>
+              <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: "#f5f5f3", color: tInfo.color, borderRadius: 3, border: `1px solid ${tInfo.color}33` }}>{tInfo.label}</span>
+              {q.ext && <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: PL, color: PU, borderRadius: 3 }}>EXT</span>}
+              {q.type && <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: "#eef", color: "#446", borderRadius: 3 }}>{q.type.toUpperCase()}</span>}
+              <span style={{ fontSize: 10, color: "#b85c00", marginLeft: 2 }}>{q.star}</span>
+              <span style={{ marginLeft: "auto", fontSize: 10, fontWeight: 700, color: GR,
+                background: "#f5f5f3", padding: "2px 8px", borderRadius: 4 }}>{q.marks} marks</span>
+            </div>
+
+            <div style={{ fontSize: 12.5, lineHeight: 1.55, color: GR, marginBottom: 8 }}>
+              <Bold>Q{q.id.toUpperCase()}.</Bold> {q.q}
+            </div>
+
+            {!isRev && q.hint && (
+              <div style={{ fontSize: 11, color: "#888", fontStyle: "italic", marginBottom: 8 }}>
+                💡 Hint: {q.hint}
+              </div>
+            )}
+
+            <button onClick={() => toggle(q.id)} style={{
+              padding: "5px 12px", fontSize: 11, fontWeight: 700,
+              background: isRev ? "#f5f5f3" : RD, color: isRev ? GR : "#fff",
+              border: isRev ? `1px solid ${BD}` : "none", borderRadius: 4, cursor: "pointer",
+            }}>
+              {isRev ? "Hide answer" : "Show answer"}
+            </button>
+
+            {isRev && (
+              <div style={{ marginTop: 10, padding: "10px 12px", background: RL,
+                borderRadius: 6, fontSize: 12, lineHeight: 1.6, color: GR, border: `1px solid ${RD}33` }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: RD, marginBottom: 4 }}>MODEL ANSWER</div>
+                {q.a}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <div style={{ marginTop: 16, padding: "10px 14px", background: "#f7f7f4",
+        borderRadius: 6, fontSize: 10, color: "#888", textAlign: "center", border: `1px solid ${BD}` }}>
+        Infinite test mode: <Bold>{qs.length}</Bold> questions loaded · filters applied
+      </div>
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ③ SUMMARY TAB — concept flow & key tables
+// ════════════════════════════════════════════════════════════════════════════
+function SummaryTab() {
+  const section = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${PU}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 14 };
+  const h = { fontSize: 13, fontWeight: 800, color: PU, marginBottom: 10, letterSpacing: 0.3 };
+  const td = { padding: "7px 9px", fontSize: 11.5, color: GR, border: `1px solid ${BD}` };
+  const th = { padding: "7px 9px", fontSize: 11, fontWeight: 700, color: "#fff", background: PU, border: `1px solid ${PU}`, textAlign: "left" };
+
+  return (
+    <div>
+      <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: PU, fontWeight: 600 }}>
+        📊 <Bold>Summary</Bold> · concept flow, comparison tables, and big-picture overview
+      </div>
+
+      {/* Key terms */}
+      <div style={section}>
+        <div style={h}>★ KEY TERMS — definitions you must know</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Term</th><th style={th}>Definition</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Biotechnology</Bold></td><td style={td}>The application of biological organisms, systems or processes to industry.</td></tr>
+            <tr><td style={td}><Bold>Genetic modification</Bold></td><td style={td}>Changing the genetic material of an organism by removing, changing or inserting individual genes.</td></tr>
+            <tr><td style={td}><Bold>Transgenic organism</Bold></td><td style={td}>Another name for a genetically modified organism — its DNA contains genes from a different species.</td></tr>
+            <tr><td style={td}><Bold>Recombinant DNA</Bold></td><td style={td}>DNA combining genetic material from two different organisms (e.g. a plasmid + a human gene).</td></tr>
+            <tr><td style={td}><Bold>Plasmid</Bold></td><td style={td}>Small circular piece of DNA in bacterial cytoplasm, separate from the chromosome.</td></tr>
+            <tr><td style={td}><Bold>Restriction enzyme</Bold></td><td style={td}>Bacterial enzyme that cuts DNA at a specific base sequence, leaving sticky ends.</td></tr>
+            <tr><td style={td}><Bold>Sticky end</Bold></td><td style={td}>A short single-stranded overhang produced when a restriction enzyme cuts DNA.</td></tr>
+            <tr><td style={td}><Bold>DNA ligase</Bold></td><td style={td}>Enzyme that seals matching sticky ends, joining DNA fragments together.</td></tr>
+            <tr><td style={td}><Bold>Recombinant plasmid</Bold></td><td style={td}>A plasmid that has had a foreign gene inserted into it.</td></tr>
+            <tr><td style={td}><Bold>Vector</Bold></td><td style={td}>A carrier (plasmid or virus) that delivers a gene from one organism into another.</td></tr>
+            <tr><td style={td}><Bold>Expression</Bold></td><td style={td}>Use of an inserted gene by a cell to make the protein that gene codes for.</td></tr>
+            <tr><td style={td}><Bold>Fermenter</Bold></td><td style={td}>Sealed vessel in which microbes are grown under controlled conditions for industrial production.</td></tr>
+            <tr><td style={td}><Bold>Lactose intolerance</Bold></td><td style={td}>Inability to digest lactose due to lack of the enzyme lactase.</td></tr>
+            <tr><td style={td}><Bold>Mycoprotein</Bold></td><td style={td}>Protein-rich meat substitute made by growing the fungus Fusarium venenatum in fermenters.</td></tr>
+            <tr><td style={td}><Bold>Bt toxin</Bold></td><td style={td}>Insect-killing protein originally made by Bacillus thuringiensis; the Bt gene is transferred into crops.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Why bacteria */}
+      <div style={section}>
+        <div style={h}>★ WHY BACTERIA? — four reasons</div>
+        <BacteriumSVG />
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 6 }}>
+          <thead><tr><th style={th}>Feature</th><th style={th}>Why it's useful</th></tr></thead>
+          <tbody>
+            <tr><td style={td}>Rapid reproduction</td><td style={td}>Up to 3 divisions per hour → millions of cells overnight; large yield from small starter culture.</td></tr>
+            <tr><td style={td}>Universal genetic code</td><td style={td}>Genes from any organism (humans, plants) can be transcribed and translated in bacteria.</td></tr>
+            <tr><td style={td}>Make complex molecules</td><td style={td}>Bacteria can be made to produce proteins (insulin), antibiotics, enzymes.</td></tr>
+            <tr><td style={td}>No ethical concerns</td><td style={td}>Few people object to growing or genetically modifying bacteria.</td></tr>
+            <tr><td style={td}>Plasmids</td><td style={td}>Small circular DNA — easy to cut, paste a new gene into, and return to a bacterium.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Bread-making */}
+      <div style={section}>
+        <div style={h}>★ BREAD-MAKING — yeast fermentation step by step</div>
+        <BreadMakingSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          <Bold>Key idea:</Bold> in bread the wanted product is <KW c={PU}>CO₂</KW>, not ethanol. Amylase in the flour digests starch to sugar; yeast respires the sugar anaerobically → CO₂ + ethanol. Gluten (sticky protein in flour) traps the CO₂ as bubbles, making the dough rise. Baking at 200 °C expands the bubbles, evaporates the ethanol and kills the yeast.
+        </div>
+      </div>
+
+      {/* Industrial fermenter */}
+      <div style={section}>
+        <div style={h}>★ INDUSTRIAL FERMENTER — six controlled conditions</div>
+        <FermenterSVG />
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 6 }}>
+          <thead><tr><th style={th}>Condition</th><th style={th}>Detail</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Temperature</Bold></td><td style={td}>~26 °C for Penicillium. Microbes generate heat (respiration), so a <Bold>cooling water jacket</Bold> removes it.</td></tr>
+            <tr><td style={td}><Bold>pH</Bold></td><td style={td}>Slightly acidic (5–6); enzymes have a narrow optimum window.</td></tr>
+            <tr><td style={td}><Bold>Oxygen</Bold></td><td style={td}>Sterile air bubbled in; stirring paddles disperse it.</td></tr>
+            <tr><td style={td}><Bold>Nutrients</Bold></td><td style={td}>Sugar (e.g. molasses, corn-steep liquor), amino acids, mineral salts.</td></tr>
+            <tr><td style={td}><Bold>Sterility</Bold></td><td style={td}>All inputs and equipment sterilised — contaminants would ruin the culture.</td></tr>
+            <tr><td style={td}><Bold>Waste removal</Bold></td><td style={td}>Spent medium, antibiotic-containing waste, exhaust gases extracted.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Enzymes in industry */}
+      <div style={section}>
+        <div style={h}>★ ENZYMES IN INDUSTRY — what each one does</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Enzyme</th><th style={th}>Source</th><th style={th}>Use / product</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Amylase</Bold></td><td style={td}>Flour (natural)</td><td style={td}>Digests starch → sugar in bread dough.</td></tr>
+            <tr><td style={td}><Bold>Pectinase</Bold></td><td style={td}>Fungi (Aspergillus)</td><td style={td}>Breaks down pectin → releases juice from apples; clearer + sweeter.</td></tr>
+            <tr><td style={td}><Bold>Protease</Bold></td><td style={td}>Bacteria / fungi</td><td style={td}>Biological washing powder — digests protein stains (blood, egg).</td></tr>
+            <tr><td style={td}><Bold>Lipase</Bold></td><td style={td}>Bacteria / fungi</td><td style={td}>Biological washing powder — digests fat / grease stains.</td></tr>
+            <tr><td style={td}><Bold>Lactase</Bold></td><td style={td}>Yeast (Kluyveromyces) / fungi (Aspergillus)</td><td style={td}>Lactose-free milk — breaks lactose → glucose + galactose. Often immobilised on beads.</td></tr>
+            <tr><td style={td}><Bold>Restriction enzyme</Bold></td><td style={td}>Bacteria</td><td style={td}>Cuts DNA at specific base sequences in genetic modification.</td></tr>
+            <tr><td style={td}><Bold>DNA ligase</Bold></td><td style={td}>Bacteria</td><td style={td}>Joins matching sticky ends → recombinant plasmid.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Lactose-free milk */}
+      <div style={section}>
+        <div style={h}>★ LACTOSE-FREE MILK — immobilised lactase</div>
+        <LactaseBeadsSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          Immobilising the lactase on beads means the enzyme <Bold>stays on the beads</Bold> rather than ending up in the milk. The treated milk is <Bold>continuously</Bold> produced as fresh milk flows over the bead column, and the enzyme can be <Bold>re-used many times</Bold>. Lactose intolerance is more common in adults from East Asian, sub-Saharan African and many Middle Eastern populations.
+        </div>
+      </div>
+
+      {/* Pectinase */}
+      <div style={section}>
+        <div style={h}>★ PECTINASE — clearer, sweeter apple juice</div>
+        <PectinaseSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          Pectin acts as a "glue" between plant cells. Without pectinase, juice is trapped in the pulp and the released juice is cloudy. Pectinase breaks down pectin, so cells separate and clear, sweet juice flows out. (Sugars released from pectin add to the sweetness.)
+        </div>
+      </div>
+
+      {/* Biological washing powder */}
+      <div style={section}>
+        <div style={h}>★ BIOLOGICAL WASHING POWDER — protease + lipase</div>
+        <WashingPowderSVG />
+      </div>
+
+      {/* GM key flow */}
+      <div style={section}>
+        <div style={h}>★ GENETIC MODIFICATION — the insulin flow</div>
+        <GeneticModSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          The <KW c={PU}>same restriction enzyme</KW> is used to cut BOTH the human DNA AND the plasmid — that's what makes their sticky ends complementary so they can pair. <Bold>Ligase</Bold> then seals the join. Inside the bacterium the plasmid replicates with each cell division, so every daughter cell contains the gene. <KW c={PU}>Expression</KW> means the bacterium uses the gene to make human protein, which is harvested from the fermenter.
+        </div>
+      </div>
+
+      {/* GM crops */}
+      <div style={section}>
+        <div style={h}>★ GM CROPS — three main applications</div>
+        <GMCropsSVG />
+      </div>
+
+      {/* Advantages vs disadvantages of GM */}
+      <div style={section}>
+        <div style={h}>★ GM CROPS — advantages &amp; disadvantages <Ext/></div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Advantages</th><th style={th}>Disadvantages</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style={td}><Bold>Higher yields</Bold> — Bt crops lose less to pests; herbicide-tolerant crops face less weed competition.</td>
+              <td style={td}>GM genes may <Bold>spread to wild relatives</Bold> through pollination → "super-weeds" with herbicide resistance.</td>
+            </tr>
+            <tr>
+              <td style={td}><Bold>Less pesticide use</Bold> — plants make their own toxin (Bt); fewer sprayings → less pollution.</td>
+              <td style={td}><Bold>Antibiotic-resistance marker</Bold> genes in bacterial vectors may transfer to gut bacteria, reducing antibiotic effectiveness.</td>
+            </tr>
+            <tr>
+              <td style={td}><Bold>Better nutrition</Bold> — Golden Rice (vit A), iron-rich maize, gluten-free wheat, vitamin-E vegetables.</td>
+              <td style={td}>Potential <Bold>allergens or toxins</Bold> introduced into food; long-term effects unknown.</td>
+            </tr>
+            <tr>
+              <td style={td}><Bold>Tolerance to harsh conditions</Bold> — drought, salt, acid soils → cultivable land expanded.</td>
+              <td style={td}>Mostly benefits <Bold>large agribusiness</Bold>; small farmers in poor countries cannot afford seeds.</td>
+            </tr>
+            <tr>
+              <td style={td}><Bold>Precise gene transfer</Bold> — only the wanted gene crosses, unlike traditional cross-breeding.</td>
+              <td style={td}>Reduces <Bold>biodiversity</Bold> in agriculture; ethical unease about mixing genes from very different species.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Going further: yoghurt, antibiotics, hepatitis vaccine */}
+      <div style={section}>
+        <div style={h}>★ MORE EXAMPLES (GOING FURTHER) <Ext/></div>
+        <div style={{ fontSize: 12, lineHeight: 1.7, color: GR }}>
+          <Bold>Yoghurt</Bold>: <i>Lactobacillus bulgaricus</i> + <i>Streptococcus thermophilus</i> ferment lactose to <Bold>lactic acid</Bold> at 42 °C; pH falls to 4.5 → milk clots into yoghurt; produced in large fermenters.<br/><br/>
+          <Bold>Antibiotic production</Bold>: <i>Penicillium</i> mould fermented on sugar + corn-steep liquor at 26 °C and pH 5–6 for 24–48 h; nutrient supply drops → mould secretes <Bold>penicillin</Bold>; extracted by crystallisation. Other antibiotics from <i>Streptomyces</i> (e.g. streptomycin).<br/><br/>
+          <Bold>Hepatitis B vaccine</Bold>: gene for the viral coat protein inserted into yeast → harvested protein acts as antigen, stimulating antibody production. GM banana plants have been used as oral vaccine carriers — cheap, no needles needed.<br/><br/>
+          <Bold>Mycoprotein (Quorn)</Bold>: <i>Fusarium venenatum</i> grown on glucose; low fat, no cholesterol, suitable for vegan diets.
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ④ TEXTBOOK TAB — complete Hodder notes
+// ════════════════════════════════════════════════════════════════════════════
+function TextbookTab() {
+  const section = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${G}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 14 };
+  const h = { fontSize: 14, fontWeight: 800, color: G, marginBottom: 8, letterSpacing: 0.3 };
+  const sub = { fontSize: 12, fontWeight: 700, color: G, marginTop: 10, marginBottom: 5 };
+  const p = { fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8 };
+
+  return (
+    <div>
+      <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: G, fontWeight: 600 }}>
+        📚 <Bold>Textbook</Bold> · complete Hodder notes for Chapter 21
+      </div>
+
+      {/* 1. INTRODUCTION */}
+      <div style={section}>
+        <div style={h}>1 · Biotechnology &amp; the role of bacteria</div>
+
+        <div style={sub}>1.1 Definitions</div>
+        <p style={p}>
+          <KW>Biotechnology</KW> is the application of living organisms, biological systems or biological processes to industries such as manufacturing, food production and medicine. <KW>Genetic modification</KW> is the transfer of one or more genes from one organism to another (usually unrelated) species, changing the recipient's genetic material.
+        </p>
+        <p style={p}>
+          Both processes lean heavily on <Bold>bacteria</Bold>, because bacteria can make <Bold>complex molecules</Bold> (such as proteins) from cheap starting materials and they reproduce very rapidly.
+        </p>
+
+        <div style={sub}>1.2 Why bacteria are so useful</div>
+        <p style={p}>
+          Bacteria are useful in biotechnology and genetic modification for several reasons. They can be grown and manipulated <Bold>without ethical concerns</Bold>. They have a genetic code that is the <Bold>same as all other organisms</Bold>, so genes from animals or plants can be transferred into bacterial DNA and still work. They <Bold>reproduce extremely quickly</Bold> — sometimes up to three times an hour — so cultures grow large in a short time.
+        </p>
+        <p style={p}>
+          Bacterial DNA is in the form of a <Bold>single circular chromosome</Bold> floating in the cytoplasm (there is no proper nucleus). In addition, bacteria contain small extra circular pieces of DNA called <KW>plasmids</KW>. Plasmids often carry genes for antibiotic resistance (e.g. against tetracycline, ampicillin). Scientists have developed techniques to <Bold>cut plasmids open</Bold> and insert sections of DNA from other organisms; once the plasmid is returned to a bacterium, the new gene is copied every time the bacterium divides. The plasmid may then carry, for example, the gene to make human insulin, which can be extracted and used to treat diabetes.
+        </p>
+        <BacteriumSVG />
+      </div>
+
+      {/* 2. FERMENTATION USES */}
+      <div style={section}>
+        <div style={h}>2 · Fermentation — biofuels, bread, juice, washing powder, milk</div>
+
+        <p style={p}>
+          Biotechnology is far older than it sounds. <Bold>Baking, brewing, wine-making and cheese</Bold> all rely on fermentation by yeasts, other fungi or bacteria — or by enzymes from these organisms. <Bold>Antibiotics</Bold> are produced by moulds (e.g. <i>Penicillium</i>) or bacteria. Industrial chemicals like <Bold>citric acid</Bold> and <Bold>lactic acid</Bold> are produced by microorganisms. Even <Bold>sewage treatment</Bold> uses bacteria as the base of the food chain that purifies the effluent.
+        </p>
+
+        <div style={sub}>2.1 Biofuels</div>
+        <p style={p}>
+          Microorganisms involved in fermentation are using a chemical reaction (anaerobic respiration of glucose) to release energy for their own life processes. <KW>Ethanol</KW> can be made by yeast fermenting sugar or spare grain, and used as a <Bold>renewable fuel</Bold>. Since 2013, 94 % of new cars in Brazil run on a petrol–ethanol mix. As well as being renewable, ethanol burns more cleanly than petrol. Vegetable oils from rapeseed or sunflower can be processed into <Bold>biodiesel</Bold>, replacing diesel — less polluting but more expensive.
+        </p>
+        <p style={p}>
+          However, biofuels are <Bold>not yet economical</Bold>. The energy used to grow, fertilise, harvest and transport the crop (and to extract and convert the sugar) often exceeds the energy released when the fuel is burned. There are also <Bold>environmental costs</Bold>: forests are cleared to plant soya or oil palms, removing habitat for thousands of species, some of which (e.g. orang-utans) are nearing extinction.
+        </p>
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderLeft: `4px solid ${G}`,
+          borderRadius: 6, padding: "10px 14px", marginTop: 6, marginBottom: 8, fontSize: 11.5, color: GR }}>
+          <div style={{ fontWeight: 700, color: G, marginBottom: 4 }}>📋 Biofuel production — 4-step procedure</div>
+          <div>1. Plant material is broken into small pieces and mixed with yeast.</div>
+          <div>2. Yeast cells use the plant material as a substrate in anaerobic respiration, producing ethanol.</div>
+          <div>3. The liquid is separated from the remaining solids and water is removed, leaving a <Bold>concentrated solution of ethanol</Bold>.</div>
+          <div>4. The ethanol is blended with petrol, or used on its own as a fuel.</div>
+          <div style={{ marginTop: 6, fontStyle: "italic", color: "#666" }}>
+            ⚠ Concern: when crops are grown <Bold>specifically</Bold> to make biofuel (not just using waste plant parts), less land is available for local people to grow food crops needed for survival.
+          </div>
+        </div>
+
+        <div style={sub}>2.2 Bread-making</div>
+        <p style={p}>
+          Yeast is the microorganism used in bread-making, and the only fermentation product needed is <Bold>carbon dioxide</Bold>. The dough is mixed from flour, water, salt, oil, sugar and yeast. Yeast cannot digest the starch in the flour itself, but adding water <Bold>activates the amylases</Bold> already present in the flour, which digest some of the starch to sugar. The yeast then ferments the sugar to <Bold>ethanol and CO₂</Bold>.
+        </p>
+        <p style={p}>
+          A sticky, elastic protein in wheat flour called <KW>gluten</KW> gives the dough its texture and traps the CO₂ bubbles. The dough is kneaded (by hand or mechanically) and left at about <Bold>27 °C for an hour or two</Bold>; the yeast respires actively and the CO₂ bubbles build up, doubling the dough's volume. The dough is then placed in baking tins and baked at about <Bold>200 °C</Bold>. The heat expands the bubbles, evaporates the small amount of ethanol, and kills the yeast — leaving a light, airy loaf.
+        </p>
+        <BreadMakingSVG />
+
+        <div style={sub}>2.3 Fruit juice (pectinase)</div>
+        <p style={p}>
+          <KW>Pectinases</KW> are enzymes that separate juice from fruit such as apples. They are extracted from fungi (e.g. <i>Aspergillus niger</i>) and work by breaking down <Bold>pectin</Bold>, the jelly-like substance that sticks plant cell walls together. Pectinases also make fruit juice <Bold>more transparent</Bold>, because various polysaccharides released during breakdown are also digested. The sugars produced make the juice <Bold>sweeter</Bold>.
+        </p>
+        <PectinaseSVG />
+
+        <div style={sub}>2.4 Biological washing powders</div>
+        <p style={p}>
+          Most commercial enzyme production involves protein-digesting enzymes (<KW>proteases</KW>) and fat-digesting enzymes (<KW>lipases</KW>) used in the food and textile industries. When combined in washing powders they <Bold>remove stains from clothes</Bold> caused by proteins (e.g. blood or egg) and fats (e.g. grease and oil). Protein and fat molecules are large and insoluble. When digested they become small, soluble molecules (amino acids; fatty acids and glycerol) that can pass out of the cloth.
+        </p>
+        <p style={p}>
+          Biological washing powders <Bold>save energy</Bold>, because they wash effectively at <Bold>lower temperatures</Bold> — there is no need to boil water. However, if used in water that is <Bold>too hot</Bold>, the enzymes become <Bold>denatured</Bold> and are no longer effective.
+        </p>
+        <WashingPowderSVG />
+
+        <div style={sub}>2.5 Lactose-free milk (lactase)</div>
+        <p style={p}>
+          <KW>Lactose</KW> is a disaccharide sugar found in milk and dairy products. People with <KW>lactose intolerance</KW> do not produce enough of the enzyme <Bold>lactase</Bold>, so undigested lactose stays in the gut, where bacteria ferment it. This causes wind, diarrhoea and stomach pains. Many foods contain dairy products, so lactose-intolerant people either avoid them or suffer these symptoms.
+        </p>
+        <p style={p}>
+          Lactase can be produced on a large scale by fermenting yeasts (e.g. <i>Kluyveromyces fragilis</i>) or fungi (e.g. <i>Aspergillus niger</i>). The simplest way to make lactose-free milk is to <Bold>add lactase to the milk</Bold>: the enzyme breaks lactose into <Bold>glucose and galactose</Bold>, both monosaccharides that can be absorbed by the intestine.
+        </p>
+        <p style={p}>
+          A better large-scale method is to <Bold>immobilise the lactase on the surface of beads</Bold>. Milk is passed over the beads; the lactose is broken down on contact, and the enzyme molecules <Bold>stay on the beads</Bold> instead of entering the milk. This makes a clean, continuous process — and the lactase can be re-used.
+        </p>
+        <LactaseBeadsSVG />
+      </div>
+
+      {/* 3. FERMENTERS */}
+      <div style={section}>
+        <div style={h}>3 · Fermenters — controlled tanks for industrial culture</div>
+
+        <div style={sub}>3.1 Why use a fermenter?</div>
+        <p style={p}>
+          Fermenters are giant sealed vessels — up to <Bold>100 000 L in capacity</Bold> — used to culture microorganisms on a huge scale and harvest their products. Penicillin, insulin, mycoprotein and many enzymes are all produced in this way. The tank is filled with a <KW>nutrient solution</KW>; a culture of the appropriate microbe is added; conditions are controlled, and after 24–48 h the wanted product is extracted from the broth.
+        </p>
+        <FermenterSVG />
+
+        <div style={sub}>3.2 Insulin production</div>
+        <p style={p}>
+          Insulin can be produced in large quantities by genetically modified bacteria growing in fermenters. The bacteria respire aerobically, so <Bold>air is pumped into the fermenter</Bold>. Other conditions (nutrient levels, temperature, pH, moisture) are kept at the optimum so the bacteria grow and reproduce rapidly. The nutrients are then reduced, which triggers the bacteria to <Bold>produce the insulin</Bold>, which is extracted from the culture and purified.
+        </p>
+
+        <div style={sub}>3.3 Penicillin</div>
+        <p style={p}>
+          Antibiotics are produced in giant fermenting tanks up to 100 000 L. For penicillin production the carbohydrate source is sugar, mainly lactose or <Bold>corn-steep liquor</Bold> (a by-product of cornflour and maize starch manufacture, containing amino acids as well as sugars). Mineral salts are added and the pH adjusted to <Bold>between 5 and 6</Bold>. The temperature is held at about <Bold>26 °C</Bold>; air is blown through the liquid and it is stirred. A culture of <i>Penicillium</i> is added and allowed to grow for 24 to 48 hours. <Bold>Sterile conditions are essential</Bold> — any contaminating bacteria or fungi would spoil the process. As the nutrient supply reduces, the mould begins to <Bold>secrete penicillin into the medium</Bold>. The nutrient fluid is then filtered off and the antibiotic extracted by crystallisation or other methods.
+        </p>
+        <div style={{ background: "#fff8e6", border: `1px solid ${AM}`, borderLeft: `4px solid ${AM}`,
+          borderRadius: 6, padding: "8px 12px", marginTop: 4, marginBottom: 8, fontSize: 11.5, color: GR }}>
+          <Bold style={{ color: AM }}>How penicillin kills bacteria:</Bold> penicillin <Bold>interferes with the building of the bacterial cell wall</Bold>. When the bacterium tries to grow or divide, the weakened wall cannot withstand internal pressure, and the cell <Bold>ruptures and dies</Bold>. This is why penicillin only kills <Bold>growing</Bold> bacteria.
+        </div>
+
+        <div style={sub}>3.4 Mycoprotein</div>
+        <p style={p}>
+          <KW>Mycoprotein</KW> is a protein-rich meat substitute extracted from a fungus — the filamentous <i>Fusarium venenatum</i>, found naturally in soil. Mycoprotein contains <Bold>no cholesterol</Bold> and is lower in saturated fat than meat. It is suitable for vegan diets (no animal products), partly because of its high protein content. It is fermented in a similar way to antibiotics and enzymes, using <Bold>glucose and salts</Bold> as the feedstock. One commercial mycoprotein product is <Bold>Quorn</Bold>.
+        </p>
+
+        <div style={sub}>3.5 Conditions to control — summary</div>
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 5 }}>
+          <thead><tr>
+            <th style={{ background: GL, color: G, padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5, textAlign: "left" }}>Condition</th>
+            <th style={{ background: GL, color: G, padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5, textAlign: "left" }}>Detail</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>Temperature</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>Around 26 °C. Heat is released during fermentation, so the mixture is <Bold>cooled</Bold>.</td></tr>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>pH</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>Slightly acidic (5–6).</td></tr>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>Oxygen</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>Sterilised air is pumped into the mixture and stirred to aerate it.</td></tr>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>Nutrient supply</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>Depends on product; for penicillin the feedstock is molasses or corn-steep liquor.</td></tr>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>Waste products</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>Spent nutrient fluid with bacterial residue (hazardous if traces of antibiotic). Gases include CO₂.</td></tr>
+            <tr><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}><Bold>Sterility</Bold></td><td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5 }}>All inputs and equipment sterilised to prevent contamination.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* 4. GENETIC MODIFICATION */}
+      <div style={section}>
+        <div style={h}>4 · Genetic modification — recombinant DNA technology</div>
+
+        <p style={p}>
+          <KW>Genetic modification</KW> is changing the genetic material of an organism by removing, changing or inserting individual genes. To understand the principles, you need to know about <Bold>bacteria</Bold> (Chapter 2 / Fig 2.9) and about <KW>restriction enzymes</KW>.
+        </p>
+
+        <div style={{ background: PL, border: `1px solid ${PU}`, borderLeft: `4px solid ${PU}`,
+          borderRadius: 6, padding: "10px 14px", marginBottom: 8, fontSize: 11.5, color: GR }}>
+          <div style={{ fontWeight: 700, color: PU, marginBottom: 5 }}>🔤 Key SME terms</div>
+          <div style={{ marginBottom: 3 }}>
+            <Bold>Genetically modified (GM):</Bold> describes an organism that has received DNA from another organism.
+          </div>
+          <div style={{ marginBottom: 3 }}>
+            <Bold>Transgenic organism:</Bold> another name for a genetically modified organism — its genome now contains a gene (or genes) from a different species.
+          </div>
+          <div>
+            <Bold>Recombinant DNA:</Bold> DNA that contains genetic material from <Bold>two different organisms</Bold> combined into a single molecule (e.g. a bacterial plasmid carrying the human insulin gene).
+          </div>
+        </div>
+
+        <div style={sub}>4.1 Restriction enzymes — the molecular scissors</div>
+        <p style={p}>
+          Restriction enzymes are produced by bacteria. They cut DNA at <Bold>specific recognition sites</Bold>, for example between the A and the T in the sequence GAA–TTC. Different restriction enzymes recognise different sequences. Using a chosen restriction enzyme, DNA from different organisms can be cut at <Bold>predictable sites</Bold> and made to produce lengths of DNA that contain specific genes — for example the gene that codes for insulin.
+        </p>
+
+        <div style={sub}>4.2 DNA ligase — the molecular glue</div>
+        <p style={p}>
+          DNA from human cells can be removed and restriction enzymes used to <Bold>cut out a sequence of DNA that includes a specific gene</Bold>, leaving <KW>sticky ends</KW> (short single-stranded overhangs). Plasmids are removed from bacteria and cut open with the <Bold>same restriction enzyme</Bold>, producing matching sticky ends. When the human DNA is mixed with the plasmids, some of the human DNA pairs by base-pairing with the matching sticky ends of the open plasmids. The enzyme <KW>DNA ligase</KW> then seals the joins, producing <KW>recombinant plasmids</KW>.
+        </p>
+
+        <div style={sub}>4.3 Bacterial uptake, replication and expression</div>
+        <p style={p}>
+          Bacteria can be stimulated to take up the recombinant plasmids. Scientists have devised ways to <Bold>select only the bacteria that contain the recombinant DNA</Bold>. Given suitable nutrient solutions, these bacteria reproduce rapidly by <Bold>mitosis</Bold> to make millions of identical cells. Each daughter bacterium contains the same DNA and the same plasmids as the parent.
+        </p>
+        <p style={p}>
+          The human DNA in the plasmids continues to produce the same protein as it did in the human cells. When bacteria are modified so they can produce a human protein like insulin, the process is described as <KW>expression</KW>. The bacteria are cultured in fermenters, and the insulin they produce can be extracted from the culture medium and purified for use in treating diabetes.
+        </p>
+        <GeneticModSVG />
+
+        <div style={sub}>4.4 Variations in genetic modification <Ext/></div>
+        <p style={p}>
+          Plasmids are described as <Bold>vectors</Bold> that carry the human DNA into the bacteria, and the technique is sometimes called <Bold>gene-splicing</Bold>. Using plasmids is only one type of genetic modification. The vector may be a <Bold>virus</Bold> rather than a plasmid; DNA may be inserted directly without a vector; the donor DNA may be <Bold>synthesised from nucleotides</Bold> rather than extracted from cells; or yeast may be used instead of bacteria. The outcome is the same — DNA from one species is inserted into a different species and made to produce its normal proteins.
+        </p>
+      </div>
+
+      {/* 5. APPLICATIONS */}
+      <div style={section}>
+        <div style={h}>5 · Applications of genetic modification</div>
+
+        <div style={sub}>5.1 Human proteins (insulin)</div>
+        <p style={p}>
+          Human insulin has been produced by GM bacteria <Bold>since 1982</Bold>. The human insulin gene is inserted into bacteria, which then secrete human insulin. It is <Bold>purer</Bold> than insulin extracted from pigs or cattle, which can sometimes trigger allergic reactions because of traces of foreign protein. GM insulin is also acceptable to people whose religious beliefs forbid the use of insulin from cows or pigs.
+        </p>
+
+        <div style={sub}>5.2 Hepatitis B vaccine <Ext/></div>
+        <p style={p}>
+          The gene for the <Bold>protein coat</Bold> of the hepatitis virus is inserted into yeast cells. When these are cultured they produce a protein that acts as an <Bold>antigen</Bold> (a vaccine), which promotes the production of antibodies against the disease. Transgenic plants — including banana, which is cheap and widespread in the tropics — have been modified to produce oral vaccines against diseases such as rabies and cholera. Strict controls ensure such plants cannot enter the human food chain by accident.
+        </p>
+
+        <div style={sub}>5.3 GM crops — pest resistance</div>
+        <p style={p}>
+          Genetic modification has huge potential in agriculture. In the USA, <Bold>94 % of soya beans</Bold> and <Bold>92 % of maize</Bold> are GM, resistant to herbicides and insect pests. In many countries, GM crops are grown only on a trial basis and there is resistance to their use.
+        </p>
+        <p style={p}>
+          The bacterium <i>Bacillus thuringiensis</i> produces a toxin (<KW>Bt toxin</KW>) that kills caterpillars and other insect larvae. The gene has been transferred into crops like <Bold>maize, cotton and soybean</Bold> using a bacterial vector. The plants now produce the toxin themselves and show increased resistance to attack. The gene is passed on to the plant's offspring. Unfortunately, there are signs that some insects are evolving immunity to the toxin. Most American GM maize carries a pesticide gene to reduce damage from stem-boring moth larvae.
+        </p>
+
+        <div style={sub}>5.4 GM crops — herbicide resistance</div>
+        <p style={p}>
+          Some of the most effective herbicides (e.g. <KW>glyphosate</KW>) kill any green plant but become harmless when they reach the soil. These cannot be used on crops because they would kill the crop too. A gene for an <Bold>enzyme that breaks down glyphosate</Bold> is introduced into plant cell cultures, producing herbicide-tolerant crops. Most American GM maize has this gene, allowing reduced overall use of herbicides. Some scientists suspect glyphosate is carcinogenic, so it is being banned in some countries.
+        </p>
+
+        <div style={sub}>5.5 GM crops — improved nutritional quality</div>
+        <p style={p}>
+          Modifying plant products to improve nutritional value rather than yield. Examples include:
+        </p>
+        <ul style={{ fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8, paddingLeft: 22 }}>
+          <li><Bold>Golden Rice</Bold> with a β-carotene gene — vitamin A precursor; tackles the deficiency that causes blindness in over 100 million children.</li>
+          <li><Bold>Maize</Bold> with a gene to increase iron uptake — combats anaemia caused by iron deficiency.</li>
+          <li><Bold>Wheat</Bold> engineered to be free of gluten — for people with gluten allergy.</li>
+          <li><Bold>Vegetables</Bold> with a gene to boost vitamin E — to help fight heart disease.</li>
+          <li><Bold>Cassava</Bold> with genes inserted to increase root iron uptake and protein content — important in many African countries where cassava is a staple but poor in protein, vitamins and minerals.</li>
+        </ul>
+        <p style={p}>
+          Other modifications under trial: a gene that produces <Bold>citrate</Bold>, which binds aluminium in acid soils and allows maize to grow well (cuts the 8 % yield loss in tropical/subtropical regions); <Bold>salt-tolerance</Bold> genes from mangroves transferred to crops to reclaim land salted by irrigation; <Bold>nitrogen-fixation</Bold> genes transferred to cereals to reduce the need for fertiliser; and <Bold>drought-resistance</Bold> genes.
+        </p>
+        <GMCropsSVG />
+      </div>
+
+      {/* 6. PROS / CONS / CONCERNS */}
+      <div style={section}>
+        <div style={h}>6 · Advantages &amp; disadvantages of GM crops</div>
+
+        <div style={sub}>6.1 The benefits</div>
+        <p style={p}>
+          GM crops show increased yields and better nutritional quality. They can be made <Bold>resistant to pests, herbicides, salt, drought and acid soils</Bold>. Unlike conventional cross-breeding, GM transfers <Bold>only the target gene</Bold>, avoiding the harmful traits that can come with whole-genome mixing. The differences between the genomes of different species are not as great as it seems — plants and animals share around 60 % of their genes; humans share 50 % of their genes with fruit flies. Not all genetic modification involves "alien" genes; sometimes only the plant's own genes are modified to improve field performance.
+        </p>
+
+        <div style={sub}>6.2 The risks</div>
+        <p style={p}>
+          One concern is the <Bold>spread of modified genes to wild plants</Bold>. If a herbicide-resistance gene reached a weed via pollination, that weed could become a <Bold>super-weed</Bold> that cannot be killed. Strict field trials assess this risk before licences are issued. Some scientists add a gene that <Bold>stops the GM plant producing pollen</Bold>, allowing seeds and fruits to develop without fertilisation (a process called apomixis, which occurs naturally in some species).
+        </p>
+        <p style={p}>
+          Another concern is that the bacterial vectors used contain <Bold>antibiotic-resistance marker genes</Bold> (used to select the bacteria that took up the new DNA). If those genes reached <Bold>gut bacteria</Bold>, harmful bacteria might become antibiotic-resistant. Although there is no evidence so far that this happens, biotech companies are seeking vectors that don't rely on antibiotic markers.
+        </p>
+        <p style={p}>
+          There is also concern about possible <Bold>pesticide residues</Bold> or <Bold>allergens</Bold> in GM food. However, GM products undergo more rigorous testing than products from conventional cross-breeding. Only a handful of GM foods are widely available; about 60 % of processed foods contain GM soya in one form or another.
+        </p>
+        <p style={p}>
+          <Bold>Golden Rice</Bold> contains a gene for β-carotene (vitamin A precursor). Some critics argue that β-carotene might change into toxic substances once eaten — currently only the Philippines and Bangladesh allow GM Golden Rice. Other concerns: <Bold>reduced biodiversity</Bold>; <Bold>subsistence farmers</Bold> becoming tied to large agricultural suppliers who control seed prices; and a general unease about introducing genes from one species into a totally different species — something that does not happen naturally, so the long-term effects are unknown.
+        </p>
+
+        <div style={sub}>6.3 GM crops — at-a-glance comparison <Ext/></div>
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 5 }}>
+          <thead><tr>
+            <th style={{ background: GL, color: G, padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5, textAlign: "left", width: "50%" }}>✓ Advantages</th>
+            <th style={{ background: RL, color: RD, padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11.5, textAlign: "left", width: "50%" }}>✗ Disadvantages</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Reduced use of chemicals (herbicides, pesticides) — better for the environment; cheaper and less time-consuming for farmers.</td>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Increased seed costs — GM seed companies charge more to cover development costs; smaller, poorer farmers cannot compete with larger farms.</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Increased crop yields — crops do not compete with weeds for resources and do not suffer pest damage.</td>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Increased dependency on certain chemicals (e.g. herbicides crops are resistant to) — often made by the same companies that produce the seeds, and expensive to buy.</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Improved nutritional content (e.g. Golden Rice for vitamin A, iron-fortified maize).</td>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Risk of inserted genes being transferred to wild plants by pollination, possibly creating herbicide-resistant weeds and reducing the usefulness of the GM crop.</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Only the target gene is transferred (unlike cross-breeding, which mixes whole genomes).</td>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Reduced biodiversity — fewer plant species where herbicides are used; this can impact insects and insect-eating birds further along the food chain.</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>GM crops can be made resistant to salt, drought and acid soils, allowing growing in poor environments.</td>
+              <td style={{ padding: "6px 9px", border: `1px solid ${BD}`, fontSize: 11, verticalAlign: "top" }}>Some research suggests plants with inserted genes do not grow as well as non-GM plants; long-term effects of GM food on humans are unknown.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* 7. PRACTICAL WORK */}
+      <div style={section}>
+        <div style={h}>7 · Practical work — three experiments</div>
+
+        <div style={sub}>7.1 Pectinase &amp; fruit juice</div>
+        <p style={p}>
+          Make about 100 cm³ of apple purée using a liquidiser (or use tinned purée). Transfer to a 250 cm³ beaker. Using a syringe, add 5 cm³ of 50 % pectinase, stir, and leave for about 5 minutes. Transfer the purée into a folded filter paper inside a funnel placed over a 100 cm³ measuring cylinder, and leave in a warm place for up to 24 hours. Repeat with purée kept at <Bold>different temperatures</Bold> to compare juice extraction.
+        </p>
+        <p style={p}>
+          <Bold>Result:</Bold> juice is extracted from the purée and collects in the measuring cylinder, transparent and clarified.
+          <br/><Bold>Interpretation:</Bold> pectinase breaks down apple tissue, releasing sugars in solution. More juice collects in warm conditions because the enzyme works faster; colder temperatures slow the process.
+          <br/><Bold>Extension:</Bold> compare cellulase and amylase with pectinase (and combinations) to see which is most effective.
+        </p>
+
+        <div style={sub}>7.2 Biological washing powder</div>
+        <p style={p}>
+          Break an egg into a plastic beaker and whisk thoroughly. Cut four 10×10 cm squares of white cloth, smear egg evenly onto each and leave to dry. Set up four 250 cm³ beakers as follows:
+        </p>
+        <ul style={{ fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8, paddingLeft: 22 }}>
+          <li><Bold>A</Bold> — 100 cm³ warm water with no washing powder (control).</li>
+          <li><Bold>B</Bold> — 5 cm³ non-biological powder in 100 cm³ warm water.</li>
+          <li><Bold>C</Bold> — 5 cm³ biological powder in 100 cm³ warm water.</li>
+          <li><Bold>D</Bold> — 5 cm³ biological powder boiled for 5 minutes in 100 cm³ water, then cooled.</li>
+        </ul>
+        <p style={p}>
+          Place an egg-stained cloth in each beaker for 30 minutes, then remove and compare cleanliness.
+          <br/><Bold>Result:</Bold> C cleans best, then B, then D; A is largely unchanged.
+          <br/><Bold>Interpretation:</Bold> the enzymes in biological powder digest proteins and fats in the egg to soluble amino acids, fatty acids and glycerol, which can wash out. Non-biological powder (B) cleans only by the detergent's surfactant action — less effective. Boiled biological powder (D) is no better because the enzymes have been <Bold>denatured</Bold>. Beaker A is a control with no detergent or enzymes, so the cloth stays stained.
+        </p>
+
+        <div style={sub}>7.3 Action of lactase</div>
+        <p style={p}>
+          Uses glucose test strips (Diastix), which react only to glucose (not to lactose or sucrose). Pour 25 cm³ warm fresh milk into a beaker. Test the milk for glucose with a test strip. Add 2 cm³ of 2 % lactase using a syringe or pipette. Stir and leave for a few minutes.
+          <br/><Bold>Result:</Bold> the untreated milk gives a negative test for glucose; the milk treated with lactase gives a positive test.
+          <br/><Bold>Interpretation:</Bold> lactase breaks down lactose in milk → glucose + galactose. Now glucose is present, so the test strip reacts.
+        </p>
+
+        <div style={sub}>7.4 Practical work questions</div>
+        <p style={p}>
+          <Bold>Q1</Bold> When studying the effect of temperature on fruit-juice production, two factors that should be controlled to make results reliable: (i) the <Bold>volume and concentration of pectinase</Bold> used in each beaker, and (ii) the <Bold>type / mass of apple purée</Bold> used. Other valid answers: time, particle size, container shape.
+          <br/><Bold>Q2</Bold> To convert the qualitative washing-powder test to a quantitative one: cut all cloth squares to the <Bold>same size and mass</Bold>; weigh each cloth after washing and drying, or measure the colour intensity of the stain using a <Bold>colorimeter</Bold>, or measure the volume of stain remaining by scanning.
+          <br/><Bold>Q3a</Bold> Without Diastix you could test for glucose with <Bold>Benedict's reagent</Bold>: add equal volume of the test liquid, heat in a water bath — a colour change from blue through green to brick red indicates glucose.
+          <br/><Bold>Q3b</Bold> The Benedict's test is <Bold>semi-quantitative</Bold>: a small trace of glucose gives a green/yellow precipitate, a large amount gives a brick-red precipitate. So the depth of colour distinguishes a trace from a large amount.
+        </p>
+      </div>
+
+      {/* 8. REVISION SUMMARY */}
+      <div style={section}>
+        <div style={h}>8 · Revision checklist (Hodder summary)</div>
+        <p style={p}>
+          After studying Chapter 21, you should know and understand the following:
+        </p>
+        <ul style={{ fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8, paddingLeft: 22 }}>
+          <li>Bacteria are useful in biotechnology and genetic modification because of their ability to make complex molecules and their rapid reproduction.</li>
+          <li>Bacteria are useful because there is no ethical concern over their manipulation and growth.</li>
+          <li>The genetic code in bacteria is shared with all other organisms — foreign genes can be expressed.</li>
+          <li>Bacteria contain plasmids which can be cut open and used to insert genes.</li>
+          <li>Biotechnology = the application of living organisms, systems or processes in industry — often microorganisms in fermentation.</li>
+          <li>The product can be the organism itself (mycoprotein) or its product (ethanol, antibiotic, insulin).</li>
+          <li>Yeasts are used in biofuel and bread production.</li>
+          <li>Pectinase is used to extract fruit juices.</li>
+          <li>Lipase and protease are used in biological washing powders.</li>
+          <li>Lactase is used to make lactose-free milk.</li>
+          <li>Fermenters are used in the industrial production of antibiotics like penicillin.</li>
+          <li><Ext/> Genetic modification = changing the genetic material by removing, changing or inserting individual genes.</li>
+          <li><Ext/> Examples of GM include inserting human genes into bacteria to make human proteins (e.g. insulin), inserting genes into crops to give pest/herbicide resistance, or improving nutritional quality.</li>
+          <li><Ext/> In the GM process: human gene is isolated using restriction enzymes (sticky ends); plasmid is cut with the same enzyme; gene + plasmid joined by <Bold>DNA ligase</Bold> → recombinant plasmid; plasmid inserted into bacteria; bacteria reproduce; bacteria make human protein as they express the gene. Plasmids and viruses are vectors.</li>
+          <li><Ext/> Crop plants can be GM to resist insect pests and herbicides.</li>
+          <li><Ext/> Advantages of GM crops: pest resistance, herbicide tolerance, better nutrition.</li>
+          <li><Ext/> Concerns: GM genes might spread to wild plants.</li>
+        </ul>
+      </div>
+
+    </div>
+  );
+}
+
+/* ============================================================================
+   FLASHCARD TAB · 40 cards · SME-style flip cards · teal palette
+   ============================================================================ */
+function FlashcardTab() {
+  const [flipped, setFlipped] = useState({});
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setFlipped(p => ({ ...p, [id]: !p[id] }));
+
+  const cards = [
+    // Bacteria & DNA (1-3)
+    { id: "f1",  topic: "bact",    front: "Define: biotechnology.", back: "Biotechnology is the use of living organisms to make products that are useful to humans." },
+    { id: "f2",  topic: "bact",    front: "Why are bacteria useful in biotechnology?", back: "Bacteria are useful because: (1) they have a rapid reproduction rate; (2) they can make complex molecules; (3) there are few ethical concerns about their use (EXT); (4) they contain plasmids (EXT)." },
+    { id: "f3",  topic: "bact",    front: "Why does the presence of plasmids in bacteria make them useful in biotechnology? (EXT)", back: "Plasmids provide an easy route for inserting new genes into bacteria during genetic modification — the gene of interest can be placed into a plasmid and taken up by the bacterium." },
+
+    // Yeast: biofuels and bread (4-6)
+    { id: "f4",  topic: "yeast",   front: "How do yeast cells produce ethanol for biofuels?", back: "Yeast cells produce ethanol during anaerobic respiration: glucose → ethanol + carbon dioxide. The ethanol is collected and used as a renewable biofuel." },
+    { id: "f5",  topic: "yeast",   front: "True or False? Yeast requires oxygen to respire.", back: "False. Yeast can carry out anaerobic respiration in the absence of oxygen — this is how it makes ethanol in biofuels and CO₂ in bread-making." },
+    { id: "f6",  topic: "yeast",   front: "What is the role of yeast in bread-making?", back: "In bread-making, yeast uses sugars for anaerobic respiration, producing carbon dioxide gas. The CO₂ bubbles become trapped in the dough and make it rise." },
+
+    // Enzymes in industry: pectinase, washing powder, lactase (7-9)
+    { id: "f7",  topic: "enzymes", front: "True or False? Pectinase enzyme is involved in the production of cloudy fruit juices.", back: "False. Pectinase is used to produce clear fruit juices — it breaks down pectin so the juice flows out of the fruit pulp and looks clear rather than cloudy." },
+    { id: "f8",  topic: "enzymes", front: "What is the benefit of adding enzymes to washing powders?", back: "(1) The enzymes (proteases and lipases) break down biological stains containing fats and proteins; (2) The enzymes work effectively at lower temperatures, so washing temperatures can be reduced, saving energy." },
+    { id: "f9",  topic: "enzymes", front: "How can enzymes be used in the production of lactose-free milk? (EXT)", back: "Lactose-free milk is made using lactase enzymes, which break down the lactose in milk (into glucose and galactose) so that lactose-intolerant people can drink it without symptoms." },
+
+    // Fermenters: products, mycoprotein, conditions (10-13)
+    { id: "f10", topic: "ferment", front: "What products can be produced on a large scale using industrial fermenters? (EXT)", back: "Products made in industrial fermenters include: insulin, penicillin, and mycoprotein." },
+    { id: "f11", topic: "ferment", front: "What is mycoprotein?", back: "Mycoprotein is a protein-rich food produced by a fungus (Fusarium venenatum). It is suitable for vegetarians and is often used as a meat substitute (e.g. Quorn)." },
+    { id: "f12", topic: "ferment", front: "Which conditions need to be controlled inside a fermenter? (EXT)", back: "Conditions to control: (1) temperature; (2) pH; (3) oxygen concentration; (4) nutrient supply; (5) concentration of waste products." },
+    { id: "f13", topic: "ferment", front: "Why does temperature need to be controlled inside fermenters? (EXT)", back: "Respiring microorganisms release heat as they respire. The fermenter must be kept cool, otherwise the temperature would rise high enough to denature the microbial enzymes and stop the process." },
+
+    // Genetic modification (14-22)
+    { id: "f14", topic: "gm",      front: "What is genetic modification?", back: "Genetic modification involves changing the genetic material of an organism by removing, changing or inserting individual genes." },
+    { id: "f15", topic: "gm",      front: "True or False? Human genes can be inserted into bacteria, which then produce human proteins.", back: "True. Human genes (such as the insulin gene) can be inserted into bacteria, which then express the gene and produce the human protein on an industrial scale." },
+    { id: "f16", topic: "gm",      front: "Why might crop varieties be genetically modified?", back: "Crops are GM to introduce: (1) herbicide resistance; (2) pest resistance; (3) new nutritional qualities (e.g. higher vitamin or mineral content)." },
+    { id: "f17", topic: "gm",      front: "What is the role of restriction enzymes in genetic modification? (EXT)", back: "Restriction enzymes cut DNA at specific nucleotide sequences, isolating the desired gene. The cut produces fragments with single-stranded overhangs called sticky ends." },
+    { id: "f18", topic: "gm",      front: "True or False? The desired gene is isolated using the same restriction enzyme that is used to cut the plasmid during genetic modification. (EXT)", back: "True. The same restriction enzyme is used on both the human gene and the plasmid so that they have complementary bases on their sticky ends — this allows the sticky ends to pair and bond together." },
+    { id: "f19", topic: "gm",      front: "What is recombinant DNA? (EXT)", back: "Recombinant DNA is DNA taken from two different organisms and combined into a single strand — for example, a plasmid containing a human gene." },
+    { id: "f20", topic: "gm",      front: "What is the role of plasmids in genetic modification? (EXT)", back: "Plasmids act as vectors that allow DNA to be transferred into bacterial cells." },
+    { id: "f21", topic: "gm",      front: "How do bacteria produce more copies of the recombinant plasmids? (EXT)", back: "Bacteria copy the recombinant DNA inside them as they reproduce by asexual reproduction. Each new daughter cell receives a copy of the recombinant DNA, so the gene is multiplied rapidly." },
+    { id: "f22", topic: "gm",      front: "Why are genetically engineered bacteria useful in producing specific proteins, e.g. insulin? (EXT)", back: "Once the bacteria have been modified to carry the correct gene, they reproduce quickly and synthesise the specific protein required in large quantities." },
+
+    // GM crops (23-25)
+    { id: "f23", topic: "gmcrop",  front: "How has rice been genetically modified to increase its health benefits? (EXT)", back: "Rice has been GM to produce Golden Rice, which contains an increased amount of vitamin A (from added β-carotene) to help prevent vitamin A deficiency." },
+    { id: "f24", topic: "gmcrop",  front: "True or False? Soya has been GM to produce Bt toxin which kills insect pests. (EXT)", back: "False. Soya has been GM to provide herbicide resistance, so it can be sprayed with weedkiller without harming the crop. Bt toxin is produced by GM maize and GM cotton." },
+    { id: "f25", topic: "gmcrop",  front: "What are some advantages and disadvantages of genetic modification in crops? (EXT)", back: "ADVANTAGES: improved nutritional content; reduction in pesticide use (pest-resistant crops); increased yield. DISADVANTAGES: seeds are more expensive; risk of new genes escaping into wild plant populations; GM crops may produce toxins that harm non-target species as well as pests." },
+  ];
+
+  const topics = [
+    { id: "all", label: "All", count: cards.length },
+    { id: "bact", label: "Bacteria & DNA", count: cards.filter(c => c.topic === "bact").length },
+    { id: "yeast", label: "Yeast/Bread/Biofuel", count: cards.filter(c => c.topic === "yeast").length },
+    { id: "enzymes", label: "Industrial Enzymes", count: cards.filter(c => c.topic === "enzymes").length },
+    { id: "ferment", label: "Fermenters", count: cards.filter(c => c.topic === "ferment").length },
+    { id: "gm", label: "Genetic Modification", count: cards.filter(c => c.topic === "gm").length },
+    { id: "gmcrop", label: "GM Crops", count: cards.filter(c => c.topic === "gmcrop").length },
+  ];
+
+  const filtered = topic === "all" ? cards : cards.filter(c => c.topic === topic);
+  const flippedCount = filtered.filter(c => flipped[c.id]).length;
+
+  return (
+    <div>
+      <div style={{ background: TLL, border: `1px solid ${TL}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: TL, fontWeight: 600 }}>
+        🃏 <Bold>SME Flashcards</Bold> · {cards.length} cards · click any card to flip
+      </div>
+
+      {/* Topic filter */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {topics.map(t => (
+          <button key={t.id} onClick={() => setTopic(t.id)} style={{
+            padding: "6px 10px", borderRadius: 6,
+            border: topic === t.id ? `1.5px solid ${TL}` : `1px solid ${BD}`,
+            background: topic === t.id ? TL : "#fff",
+            color: topic === t.id ? "#fff" : TL,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {t.label} ({t.count})
+          </button>
+        ))}
+      </div>
+
+      {/* Stats */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "8px 12px", background: "#f7f7f4", borderRadius: 6, fontSize: 11,
+        color: GR, marginBottom: 14, border: `1px solid ${BD}` }}>
+        <span><Bold>{filtered.length}</Bold> cards · <Bold>{flippedCount}</Bold> revealed</span>
+        <button onClick={() => setFlipped({})} style={{
+          padding: "4px 10px", fontSize: 10, fontWeight: 700,
+          background: "#fff", color: GR, border: `1px solid ${BD}`,
+          borderRadius: 4, cursor: "pointer",
+        }}>Reset all</button>
+      </div>
+
+      {/* Card grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+        gap: 10 }}>
+        {filtered.map(c => {
+          const isFlipped = flipped[c.id];
+          return (
+            <div key={c.id} onClick={() => toggle(c.id)} style={{
+              background: isFlipped ? TLL : "#fff",
+              border: `1.5px solid ${isFlipped ? TL : BD}`,
+              borderRadius: 8, padding: "12px 14px",
+              minHeight: 110, cursor: "pointer",
+              transition: "all .15s",
+              display: "flex", flexDirection: "column",
+            }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: isFlipped ? TL : "#999",
+                letterSpacing: 1, marginBottom: 6 }}>
+                {isFlipped ? "DEFINITION" : "TERM / QUESTION"} · {c.id.toUpperCase()}
+              </div>
+              <div style={{ fontSize: isFlipped ? 11.5 : 13.5, lineHeight: 1.5, color: GR,
+                fontWeight: isFlipped ? 500 : 700, flex: 1 }}>
+                {isFlipped ? c.back : c.front}
+              </div>
+              <div style={{ fontSize: 9, color: "#bbb", marginTop: 8, textAlign: "right" }}>
+                click to {isFlipped ? "show term" : "reveal"}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 16, padding: "10px 14px", background: "#f7f7f4",
+        borderRadius: 6, fontSize: 10, color: "#888", textAlign: "center", border: `1px solid ${BD}` }}>
+        Save My Exams style · {CHAPTER_META.flashcardCount} cards total · self-testing mode
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [active, setActive] = useState("essence");
+  const tab = TABS.find(t => t.id === active);
+
+  return (
+    <div style={{ fontFamily: "'Segoe UI', Arial, sans-serif", maxWidth: 800, margin: "0 auto", padding: "20px 16px", color: GR }}>
+      {/* Top nav: Index button on the left */}
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 12 }}>
+        <a href="contents.html" style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          fontSize: 12, fontWeight: 600, color: G, textDecoration: "none",
+          padding: "5px 10px 5px 6px", borderRadius: 6,
+          border: `1px solid ${BD}`, background: "#fff", transition: "all .15s",
+        }}>
+          <span style={{ fontSize: 14, lineHeight: 1 }}>‹</span>
+          <span>Index</span>
+        </a>
+      </div>
+
+            {/* Header */}
+      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 14 }}>
+        <div className="chapter-kicker">IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
+        <div>
+          <span className="chapter-title">{CHAPTER_META.title}</span>
+        </div>
+        <div className="chapter-subtitle">
+          {CHAPTER_META.subtitle}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 4, flexWrap: "wrap" }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setActive(t.id)} style={{
+            padding: "9px 16px", borderRadius: 8,
+            border: active === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+            background: active === t.id ? t.color : "#fff",
+            color: active === t.id ? "#fff" : t.color,
+            fontSize: 12, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+          }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, color: tab.color, marginBottom: 16, paddingLeft: 4 }}>{tab.sub}</div>
+
+      {active === "essence"   && <EssenceTab />}
+      {active === "exam"      && <ExamTab />}
+      {active === "summary"   && <SummaryTab />}
+      {active === "textbook"  && <TextbookTab />}
+      {active === "flashcard" && <FlashcardTab />}
+
+      <div style={{ marginTop: 24, padding: "10px 16px", background: "#f5f5f3", borderRadius: 8, fontSize: 11, color: "#999", textAlign: "center" }}>
+        Hodder Cambridge IGCSE Biology Ch.{CHAPTER_META.number} · All English · NLCS Jeju — Extended (Paper 1, 4, 6)
+      </div>
+    </div>
+  );
+}
+
+
+const __rootEl = document.getElementById('root');
+const __root = ReactDOM.createRoot(__rootEl);
+__root.render(<App />);
+const __loader = document.getElementById('loader');
+if (__loader) {
+  setTimeout(() => {
+    __loader.classList.add('hidden');
+    setTimeout(() => __loader.remove(), 350);
+  }, 100);
+}
+</script>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('nlcs-bio-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

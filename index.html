@@ -26,25 +26,29 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     height: 100%;
-    background: #2d6a4f;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     overflow: hidden;
     transition: background 0.3s;
   }
+  html { background: #2d6a4f; }
+  html.dark { background: #051a10; }
+
   body {
     color: #fff;
-    background: linear-gradient(180deg, #2d6a4f 0%, #1a4631 100%);
+    background: linear-gradient(160deg, #2d6a4f 0%, #1a4631 60%, #0f3a26 100%);
     background-attachment: fixed;
   }
-
-  /* Dark mode for cover - even darker greens */
   html.dark body {
-    background: linear-gradient(180deg, #0f3a26 0%, #051a10 100%);
+    background:
+      radial-gradient(circle at 80% 10%, rgba(182, 255, 60, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(93, 202, 165, 0.05) 0%, transparent 50%),
+      linear-gradient(160deg, #0f3a26 0%, #051a10 100%);
     background-attachment: fixed;
   }
 
+  /* ─── Cover layout ────────────────────────────────────────────────────── */
   .cover {
     height: 100vh;
     height: 100dvh;
@@ -57,43 +61,141 @@
     text-decoration: none;
     color: inherit;
   }
+
+  /* Decorative orbs */
   .cover::before {
     content: ""; position: absolute;
-    top: -150px; right: -150px;
-    width: 400px; height: 400px;
+    top: -180px; right: -180px;
+    width: 480px; height: 480px;
     border-radius: 50%;
-    background: rgba(82, 183, 136, 0.15);
+    background: rgba(82, 183, 136, 0.18);
     pointer-events: none;
+    filter: blur(20px);
   }
+  html.dark .cover::before { background: rgba(182, 255, 60, 0.10); filter: blur(30px); }
   .cover::after {
     content: ""; position: absolute;
-    bottom: -200px; left: -150px;
-    width: 500px; height: 500px;
+    bottom: -220px; left: -180px;
+    width: 560px; height: 560px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     pointer-events: none;
+    filter: blur(20px);
   }
-  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; z-index: 1; }
-  .school strong { display: block; font-weight: 600; margin-bottom: 4px; letter-spacing: 2.5px; font-size: 11px; }
-  .school span { font-size: 10px; letter-spacing: 1.5px; opacity: 0.7; }
-  .badge { border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 4px 12px; font-size: 10px; letter-spacing: 1px; opacity: 0.8; }
-  .cover-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; z-index: 1; gap: 24px; }
-  .icon-circle { width: 96px; height: 96px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; }
-  .icon-circle svg { width: 48px; height: 48px; stroke: #fff; stroke-width: 1.5; fill: none; }
-  .title { font-size: 56px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
-  .subtitle { font-size: 15px; opacity: 0.85; font-weight: 400; letter-spacing: 0.3px; }
-  .divider { width: 32px; height: 1px; background: rgba(255, 255, 255, 0.4); margin: 4px 0; }
-  .meta { font-size: 11px; opacity: 0.6; letter-spacing: 1px; text-transform: uppercase; }
-  .cover-bottom { display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 1; transition: transform 0.3s ease; }
-  .cover:hover .cover-bottom { transform: translateY(-4px); }
-  .enter-pill { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: rgba(255, 255, 255, 0.95); color: #2d6a4f; border-radius: 999px; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; transition: all 0.2s; }
-  html.dark .enter-pill { background: rgba(232, 232, 232, 0.95); color: #0f3a26; }
-  .cover:hover .enter-pill { background: #fff; transform: scale(1.03); }
-  .enter-pill .arrow { display: inline-block; transition: transform 0.2s; }
-  .cover:hover .enter-pill .arrow { transform: translateX(3px); }
-  .footer-meta { display: flex; justify-content: space-between; width: 100%; max-width: 320px; font-size: 10px; opacity: 0.5; letter-spacing: 0.8px; }
+  html.dark .cover::after { background: rgba(93, 202, 165, 0.08); filter: blur(30px); }
 
-  /* Theme toggle button */
+  /* ─── Top bar ─────────────────────────────────────────────────────────── */
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; z-index: 2; }
+  .school strong {
+    display: block; font-weight: 700; margin-bottom: 5px;
+    letter-spacing: 3px; font-size: 11px;
+  }
+  .school span { font-size: 10px; letter-spacing: 1.8px; opacity: 0.7; }
+  .badge {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    padding: 5px 14px; font-size: 10px;
+    letter-spacing: 1.2px; opacity: 0.85;
+    font-weight: 600;
+  }
+  html.dark .badge {
+    border-color: rgba(182, 255, 60, 0.35);
+    color: #b6ff3c;
+    background: rgba(182, 255, 60, 0.05);
+  }
+
+  /* ─── Center hero ─────────────────────────────────────────────────────── */
+  .cover-center {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; z-index: 2; gap: 22px;
+  }
+  .icon-circle {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s;
+  }
+  html.dark .icon-circle {
+    background: rgba(182, 255, 60, 0.08);
+    border-color: rgba(182, 255, 60, 0.3);
+    box-shadow: 0 0 30px rgba(182, 255, 60, 0.15);
+  }
+  .icon-circle svg { width: 50px; height: 50px; stroke: #fff; stroke-width: 1.5; fill: none; }
+  html.dark .icon-circle svg { stroke: #b6ff3c; }
+  .cover:hover .icon-circle { transform: scale(1.05); }
+
+  .title {
+    font-size: 62px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    -webkit-text-stroke: 0.5px #fff;
+  }
+  html.dark .title {
+    color: #b6ff3c;
+    -webkit-text-stroke: 0.5px #b6ff3c;
+    text-shadow:
+      0 0 10px rgba(182, 255, 60, 0.9),
+      0 0 20px rgba(182, 255, 60, 0.6),
+      0 0 40px rgba(182, 255, 60, 0.4);
+  }
+  .subtitle { font-size: 15px; opacity: 0.9; font-weight: 500; letter-spacing: 0.3px; }
+  .divider {
+    width: 40px; height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+    margin: 2px 0;
+  }
+  html.dark .divider { background: rgba(182, 255, 60, 0.5); }
+  .meta { font-size: 11px; opacity: 0.65; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; }
+
+  /* ─── Bottom enter pill ───────────────────────────────────────────────── */
+  .cover-bottom {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 22px; z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  .cover:hover .cover-bottom { transform: translateY(-4px); }
+  .enter-pill {
+    display: flex; align-items: center; gap: 12px;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #2d6a4f;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.4px;
+    transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+  html.dark .enter-pill {
+    background: #b6ff3c;
+    color: #0a1a05;
+    box-shadow:
+      0 0 24px rgba(182, 255, 60, 0.5),
+      0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .cover:hover .enter-pill { background: #fff; transform: scale(1.04); }
+  html.dark .cover:hover .enter-pill {
+    background: #d4ff5e;
+    box-shadow:
+      0 0 32px rgba(182, 255, 60, 0.7),
+      0 10px 28px rgba(0, 0, 0, 0.3);
+  }
+  .enter-pill .arrow { display: inline-block; transition: transform 0.2s; font-size: 16px; }
+  .cover:hover .enter-pill .arrow { transform: translateX(4px); }
+
+  .footer-meta {
+    display: flex; justify-content: space-between;
+    width: 100%; max-width: 340px;
+    font-size: 10px; opacity: 0.55;
+    letter-spacing: 1px; font-weight: 500;
+  }
+
+  /* ─── Theme toggle ────────────────────────────────────────────────────── */
   .theme-toggle {
     position: fixed;
     top: max(env(safe-area-inset-top), 14px);
@@ -102,27 +204,29 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    cursor: pointer;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     transition: all 0.2s;
   }
+  html.dark .theme-toggle {
+    background: rgba(182, 255, 60, 0.08);
+    border-color: rgba(182, 255, 60, 0.3);
+  }
   .theme-toggle:hover { transform: scale(1.08); background: rgba(255, 255, 255, 0.22); }
+  html.dark .theme-toggle:hover { background: rgba(182, 255, 60, 0.15); }
   .theme-toggle svg { width: 18px; height: 18px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: #fff; }
+  html.dark .theme-toggle svg { stroke: #b6ff3c; }
   .theme-toggle .icon-sun { display: none; }
   .theme-toggle .icon-moon { display: block; }
-  html.dark .theme-toggle svg { stroke: #f3d488; }
   html.dark .theme-toggle .icon-sun { display: block; }
   html.dark .theme-toggle .icon-moon { display: none; }
 
   @media (max-width: 480px) {
-    .title { font-size: 44px; }
-    .icon-circle { width: 80px; height: 80px; }
-    .icon-circle svg { width: 40px; height: 40px; }
+    .title { font-size: 48px; }
+    .icon-circle { width: 84px; height: 84px; }
+    .icon-circle svg { width: 42px; height: 42px; }
   }
 </style>
 </head>
@@ -162,7 +266,7 @@
       <span class="arrow">→</span>
     </div>
     <div class="footer-meta">
-      <span>4 chapters</span>
+      <span>21 chapters</span>
       <span>NLCS JEJU 2026</span>
     </div>
   </div>

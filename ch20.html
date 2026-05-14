@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Ch.20 — Human Influences on Ecosystems</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjE4IiBmaWxsPSIjMmQ2YTRmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmb250LXNpemU9IjU1IiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QjwvdGV4dD48L3N2Zz4=" />
+
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('nlcs-bio-theme');
+      if (saved === null || saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch(e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #fafaf7;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  .loader { position: fixed; inset: 0; background: #fafaf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 100; transition: opacity 0.3s; }
+  .loader.hidden { opacity: 0; pointer-events: none; }
+  .loader-spinner { width: 36px; height: 36px; border: 3px solid #d8f3dc; border-top-color: #2d6a4f; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .loader-text { font-size: 13px; color: #888; letter-spacing: 0.5px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    top: max(env(safe-area-inset-top), 14px);
+    right: 14px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e4e4e0;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .theme-toggle:hover { transform: scale(1.08); }
+  .theme-toggle svg { width: 18px; height: 18px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: #2d6a4f; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     CHAPTER TITLE — punchy black on light, neon green on dark
+     ═══════════════════════════════════════════════════════════════════════ */
+  .chapter-title {
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #1f4d36;
+    -webkit-text-stroke: 0.3px #1f4d36;
+  }
+  html.dark .chapter-title {
+    color: #b6ff3c;
+    -webkit-text-stroke: 0.3px #b6ff3c;
+    text-shadow:
+      0 0 6px rgba(182, 255, 60, 0.85),
+      0 0 14px rgba(182, 255, 60, 0.55),
+      0 0 28px rgba(182, 255, 60, 0.35);
+  }
+  .chapter-kicker {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  html.dark .chapter-kicker {
+    color: #b6ff3c;
+    text-shadow: 0 0 8px rgba(182, 255, 60, 0.5);
+  }
+  .chapter-subtitle {
+    font-size: 13px;
+    color: #555;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+  html.dark .chapter-subtitle { color: #b8b8b8; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     DARK MODE
+     ═══════════════════════════════════════════════════════════════════════ */
+  html.dark { background: #1a1a1a; }
+  html.dark body { background: #1a1a1a; color: #e8e8e8; }
+  html.dark .loader { background: #1a1a1a; }
+  html.dark .loader-text { color: #999; }
+  html.dark .theme-toggle { background: rgba(40, 40, 40, 0.92); border-color: #3a3a3a; }
+  html.dark .theme-toggle svg { stroke: #f3d488; }
+  html.dark .theme-toggle .icon-sun { display: block; }
+  html.dark .theme-toggle .icon-moon { display: none; }
+
+  /* ─── Pure white & off-white backgrounds → dark ─── */
+  html.dark #root [style*="background: rgb(255, 255, 255)"],
+  html.dark #root [style*="background:#fff"],
+  html.dark #root [style*="background: #fff"] {
+    background: #2a2a2a !important;
+  }
+  html.dark #root [style*="rgb(245, 245, 243)"],
+  html.dark #root [style*="#f5f5f3"] { background: #232323 !important; }
+  html.dark #root [style*="rgb(248, 248, 246)"],
+  html.dark #root [style*="#f8f8f6"] { background: #252525 !important; }
+  html.dark #root [style*="rgb(250, 250, 247)"],
+  html.dark #root [style*="#fafaf7"] { background: #1a1a1a !important; }
+
+  /* ─── Pastel backgrounds (exam cards, flashcard backs) → dark ─── */
+  /* RL #fdf0f0 - light red/pink (exam card hard) */
+  html.dark #root [style*="rgb(253, 240, 240)"],
+  html.dark #root [style*="#fdf0f0"] { background: #2a1a1a !important; color: #e8e8e8 !important; }
+  /* AL #fff3e0 - light amber */
+  html.dark #root [style*="rgb(255, 243, 224)"],
+  html.dark #root [style*="#fff3e0"] { background: #2a200f !important; color: #e8e8e8 !important; }
+  /* PL #ede9fe - light purple */
+  html.dark #root [style*="rgb(237, 233, 254)"],
+  html.dark #root [style*="#ede9fe"] { background: #1f1c2e !important; color: #e8e8e8 !important; }
+  /* GL #d8f3dc - light green */
+  html.dark #root [style*="rgb(216, 243, 220)"],
+  html.dark #root [style*="#d8f3dc"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  /* TLL #e6f4f2 - light teal */
+  html.dark #root [style*="rgb(230, 244, 242)"],
+  html.dark #root [style*="#e6f4f2"] { background: #1a2a28 !important; color: #e8e8e8 !important; }
+  /* Flashcard back: #fffdf6 - cream */
+  html.dark #root [style*="rgb(255, 253, 246)"],
+  html.dark #root [style*="#fffdf6"] { background: #2a2820 !important; color: #e8e8e8 !important; }
+  /* Exam card backgrounds (e8f7ec, fff4e6, fdf0f0 used in diffMeta.bg) */
+  html.dark #root [style*="rgb(232, 247, 236)"],
+  html.dark #root [style*="#e8f7ec"] { background: #182a1e !important; color: #e8e8e8 !important; }
+  html.dark #root [style*="rgb(255, 244, 230)"],
+  html.dark #root [style*="#fff4e6"] { background: #2a200f !important; color: #e8e8e8 !important; }
+
+  /* Default text */
+  html.dark #root > div { color: #e8e8e8 !important; }
+
+  /* Grey text → light */
+  html.dark #root [style*="color: rgb(61, 61, 61)"],
+  html.dark #root [style*="color:#3d3d3d"],
+  html.dark #root [style*="color: #3d3d3d"] { color: #e8e8e8 !important; }
+  html.dark #root [style*="color: rgb(102, 102, 102)"],
+  html.dark #root [style*="color:#666"],
+  html.dark #root [style*="color: #666"] { color: #b8b8b8 !important; }
+  html.dark #root [style*="color: rgb(136, 136, 136)"],
+  html.dark #root [style*="color:#888"],
+  html.dark #root [style*="color: #888"] { color: #999 !important; }
+  html.dark #root [style*="color: rgb(153, 153, 153)"],
+  html.dark #root [style*="color:#999"],
+  html.dark #root [style*="color: #999"] { color: #888 !important; }
+
+  /* Border default */
+  html.dark #root [style*="rgb(228, 228, 224)"],
+  html.dark #root [style*="#e4e4e0"] { border-color: #3a3a3a !important; }
+
+  /* Dark text on colored backgrounds (exam card question text "#2a0000") → light */
+  html.dark #root [style*="rgb(42, 0, 0)"],
+  html.dark #root [style*="#2a0000"] { color: #f0d4d4 !important; }
+  /* Dark amber text on AL background */
+  html.dark #root [style*="rgb(42, 16, 0)"],
+  html.dark #root [style*="#2a1000"] { color: #f0d8b5 !important; }
+  /* Highlighted dark red */
+  html.dark #root [style*="rgb(58, 0, 0)"],
+  html.dark #root [style*="#3a0000"] { color: #f0c8c8 !important; }
+
+  /* SVG diagrams: keep white card */
+  html.dark #root svg[viewBox] {
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb { background: #444; }
+
+  html.dark #root strong[style*="color: rgb(61, 61, 61)"],
+  html.dark #root strong[style*="#3d3d3d"] { color: #f0f0f0 !important; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     TAB COLORS — vibrant neon for the 5 main tab buttons
+     ═══════════════════════════════════════════════════════════════════════ */
+  /* Tab text color (when not active) */
+  html.dark #root button[style*="color: rgb(181, 84, 10)"],
+  html.dark #root button[style*="color:#b5540a"],
+  html.dark #root button[style*="color: #b5540a"] { color: #ffa726 !important; }
+  html.dark #root button[style*="color: rgb(176, 32, 32)"],
+  html.dark #root button[style*="color:#b02020"],
+  html.dark #root button[style*="color: #b02020"] { color: #ff6b6b !important; }
+  html.dark #root button[style*="color: rgb(91, 63, 166)"],
+  html.dark #root button[style*="color:#5b3fa6"],
+  html.dark #root button[style*="color: #5b3fa6"] { color: #a78bfa !important; }
+  html.dark #root button[style*="color: rgb(45, 106, 79)"],
+  html.dark #root button[style*="color:#2d6a4f"],
+  html.dark #root button[style*="color: #2d6a4f"] { color: #5dcaa5 !important; }
+  html.dark #root button[style*="color: rgb(26, 122, 110)"],
+  html.dark #root button[style*="color:#1a7a6e"],
+  html.dark #root button[style*="color: #1a7a6e"] { color: #5eead4 !important; }
+
+  /* Tab active background */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"] { background-color: #ffa726 !important; border-color: #ffa726 !important; }
+  html.dark #root button[style*="background: rgb(176, 32, 32)"] { background-color: #ff6b6b !important; border-color: #ff6b6b !important; }
+  html.dark #root button[style*="background: rgb(91, 63, 166)"] { background-color: #a78bfa !important; border-color: #a78bfa !important; }
+  html.dark #root button[style*="background: rgb(45, 106, 79)"] { background-color: #5dcaa5 !important; border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="background: rgb(26, 122, 110)"] { background-color: #5eead4 !important; border-color: #5eead4 !important; }
+
+  /* Active tab: white text → dark text on neon bg */
+  html.dark #root button[style*="background: rgb(181, 84, 10)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(176, 32, 32)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(91, 63, 166)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(45, 106, 79)"][style*="color: rgb(255, 255, 255)"],
+  html.dark #root button[style*="background: rgb(26, 122, 110)"][style*="color: rgb(255, 255, 255)"] {
+    color: #1a1a1a !important;
+  }
+
+  /* Tab borders */
+  html.dark #root button[style*="2px solid rgb(181, 84, 10)"] { border-color: #ffa726 !important; }
+  html.dark #root button[style*="2px solid rgb(176, 32, 32)"] { border-color: #ff6b6b !important; }
+  html.dark #root button[style*="2px solid rgb(91, 63, 166)"] { border-color: #a78bfa !important; }
+  html.dark #root button[style*="2px solid rgb(45, 106, 79)"] { border-color: #5dcaa5 !important; }
+  html.dark #root button[style*="2px solid rgb(26, 122, 110)"] { border-color: #5eead4 !important; }
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<div class="loader" id="loader"><div class="loader-spinner"></div><div class="loader-text">Loading Ch.20…</div></div>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+// ── Colour palette ──────────────────────────────────────────────────────────
+const G = "#2d6a4f";   // forest green (chapter colour)
+const GL = "#d8f3dc";  // light green
+const GM = "#52b788";  // mid green
+const AM = "#b5540a";  // amber
+const AL = "#fff3e0";  // light amber
+const PU = "#5b3fa6";  // purple
+const PL = "#ede9fe";  // light purple
+const RD = "#b02020";  // red
+const RL = "#fdf0f0";  // light red
+const GR = "#3d3d3d";  // dark grey text
+const BD = "#e4e4e0";  // border
+
+// ── Highlight / keyword helper ───────────────────────────────────────────────
+const KW = ({ c = G, children }) => (
+  <span style={{ background: c === G ? GL : c === AM ? AL : c === PU ? PL : RL,
+    color: c, fontWeight: 700, borderRadius: 3, padding: "1px 5px", fontSize: "0.95em" }}>
+    {children}
+  </span>
+);
+const Bold = ({ children }) => <strong style={{ color: GR }}>{children}</strong>;
+const Ext = () => (
+  <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: PL, color: PU, fontWeight: 700, marginLeft: 4 }}>EXT</span>
+);
+
+// ── Tab config ───────────────────────────────────────────────────────────────
+const TL = "#1a7a6e";   // teal (flashcard tab)
+const TLL = "#e6f4f2";  // light teal
+
+// ════════════════════════════════════════════════════════════════════════════
+// CHAPTER METADATA — only edit this block when creating a new chapter
+// ════════════════════════════════════════════════════════════════════════════
+const CHAPTER_META = {
+  number: 20,
+  title: "Human Influences on Ecosystems",
+  subtitle: "Food Supply · Habitat Destruction · Pollution · Eutrophication · Greenhouse Effect · Conservation",
+  flashcardCount: 34,
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// TABS — standard 5-tab structure, identical across all chapters
+// Do NOT modify this array; only CHAPTER_META above is chapter-specific.
+// ════════════════════════════════════════════════════════════════════════════
+const TABS = [
+  { id: "essence",   label: "① Quick Essence",  color: AM, bg: AL,  sub: "Last-minute 5-min review" },
+  { id: "exam",      label: "② Exam Practice",  color: RD, bg: RL,  sub: "Past & predicted questions" },
+  { id: "summary",   label: "③ Summary",        color: PU, bg: PL,  sub: "Concept flow & key tables" },
+  { id: "textbook",  label: "④ Textbook",       color: G,  bg: GL,  sub: "Hodder complete notes" },
+  { id: "flashcard", label: "⑤ SME Flashcard",  color: TL, bg: TLL, sub: "Save My Exams · click to flip" },
+];
+
+// ════════════════════════════════════════════════════════════════════════════
+// SVG DIAGRAMS — freshly redesigned for Ch.20
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Eutrophication flow chart ────────────────────────────────────────────────
+function EutrophicationSVG() {
+  return (
+    <svg viewBox="0 0 720 480" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="480" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Eutrophication — sequence of death in a water ecosystem
+      </text>
+
+      {/* Step 1 */}
+      <rect x="120" y="50" width="480" height="50" rx="6" fill="#fde0e0" stroke={RD} strokeWidth="1.5"/>
+      <text x="360" y="72" textAnchor="middle" fontSize="12" fontWeight="700" fill={RD}>1 · Nitrate / phosphate runs into the water</text>
+      <text x="360" y="89" textAnchor="middle" fontSize="10" fill={GR}>from fertilisers, untreated sewage, factory effluent or animal slurry</text>
+      <line x1="360" y1="105" x2="360" y2="130" stroke={RD} strokeWidth="2.5" markerEnd="url(#arrPU)"/>
+
+      {/* Step 2 */}
+      <rect x="120" y="135" width="480" height="50" rx="6" fill="#e8f7ec" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="157" textAnchor="middle" fontSize="12" fontWeight="700" fill={G}>2 · Algae and aquatic plants grow rapidly (algal bloom)</text>
+      <text x="360" y="174" textAnchor="middle" fontSize="10" fill={GR}>extra nutrients allow microscopic plants to multiply at the surface</text>
+      <line x1="360" y1="190" x2="360" y2="215" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU)"/>
+
+      {/* Step 3 */}
+      <rect x="120" y="220" width="480" height="50" rx="6" fill="#fff4e6" stroke={AM} strokeWidth="1.5"/>
+      <text x="360" y="242" textAnchor="middle" fontSize="12" fontWeight="700" fill={AM}>3 · Surface mat blocks light from algae below</text>
+      <text x="360" y="259" textAnchor="middle" fontSize="10" fill={GR}>plants below the bloom can no longer photosynthesise</text>
+      <line x1="360" y1="275" x2="360" y2="300" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU)"/>
+
+      {/* Step 4 */}
+      <rect x="120" y="305" width="480" height="50" rx="6" fill="#f5eef5" stroke={PU} strokeWidth="1.5"/>
+      <text x="360" y="327" textAnchor="middle" fontSize="12" fontWeight="700" fill={PU}>4 · Algae die · bacteria decompose them &amp; respire</text>
+      <text x="360" y="344" textAnchor="middle" fontSize="10" fill={GR}>aerobic decomposition uses up oxygen dissolved in the water</text>
+      <line x1="360" y1="360" x2="360" y2="385" stroke={PU} strokeWidth="2.5" markerEnd="url(#arrPU)"/>
+
+      {/* Step 5 */}
+      <rect x="120" y="390" width="480" height="60" rx="6" fill="#fdf0f0" stroke={RD} strokeWidth="2"/>
+      <text x="360" y="412" textAnchor="middle" fontSize="12" fontWeight="700" fill={RD}>5 · Fish and other aerobic animals die from lack of oxygen</text>
+      <text x="360" y="430" textAnchor="middle" fontSize="10" fill={GR}>the water becomes deoxygenated · whole ecosystem collapses</text>
+      <text x="360" y="445" textAnchor="middle" fontSize="9" fill="#666" fontStyle="italic">"dead zone" — high BOD (biochemical oxygen demand)</text>
+
+      <defs>
+        <marker id="arrPU" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={PU}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Greenhouse effect ────────────────────────────────────────────────────────
+function GreenhouseSVG() {
+  return (
+    <svg viewBox="0 0 720 360" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="360" rx="12" fill="#e6f1ff" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        The greenhouse effect &amp; enhanced warming
+      </text>
+
+      {/* Sun */}
+      <circle cx="120" cy="80" r="32" fill="#ffd866" stroke="#b8860b" strokeWidth="2"/>
+      <text x="120" y="86" textAnchor="middle" fontSize="11" fontWeight="700" fill="#7a5300">SUN</text>
+
+      {/* Greenhouse gas layer */}
+      <rect x="60" y="160" width="600" height="40" rx="6" fill="#cbd6e8" stroke="#6f7d99" strokeWidth="1.5" strokeDasharray="6 3" opacity="0.85"/>
+      <text x="360" y="184" textAnchor="middle" fontSize="11" fontWeight="700" fill="#3a4768">layer of greenhouse gases (CO₂, CH₄)</text>
+
+      {/* Earth surface */}
+      <rect x="40" y="290" width="640" height="55" rx="6" fill="#8a6a45" stroke="#5a4a30" strokeWidth="1.5"/>
+      <text x="360" y="312" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">Earth's surface</text>
+      <text x="360" y="328" textAnchor="middle" fontSize="10" fill="#f5f2e8" fontStyle="italic">absorbs short waves, re-radiates as long waves (heat)</text>
+
+      {/* Incoming short waves (penetrating) */}
+      <g stroke="#f0a020" strokeWidth="2" fill="none">
+        <path d="M 145 105 Q 160 130, 175 160 L 175 200 L 175 285"/>
+        <path d="M 175 105 Q 195 135, 215 160 L 215 200 L 215 285"/>
+        <path d="M 210 110 Q 235 140, 260 160 L 260 200 L 260 285"/>
+      </g>
+      <polygon points="175,285 171,278 179,278" fill="#f0a020"/>
+      <polygon points="215,285 211,278 219,278" fill="#f0a020"/>
+      <polygon points="260,285 256,278 264,278" fill="#f0a020"/>
+      <text x="180" y="135" fontSize="10" fill="#9c6500" fontWeight="700">short waves</text>
+      <text x="180" y="148" fontSize="9" fill="#666">(penetrate atmosphere)</text>
+
+      {/* Outgoing long waves — most trapped */}
+      <g stroke={RD} strokeWidth="2" fill="none">
+        <path d="M 380 285 L 380 205" strokeDasharray="3 2"/>
+        <path d="M 420 285 L 420 205" strokeDasharray="3 2"/>
+        <path d="M 460 285 L 460 205" strokeDasharray="3 2"/>
+        {/* trapped — bounce back */}
+        <path d="M 380 200 Q 360 230, 380 285" strokeDasharray="3 2"/>
+        <path d="M 420 200 Q 440 230, 420 285" strokeDasharray="3 2"/>
+      </g>
+      <polygon points="380,285 376,278 384,278" fill={RD}/>
+      <polygon points="420,285 416,278 424,278" fill={RD}/>
+      <text x="490" y="240" fontSize="10" fill={RD} fontWeight="700">long waves</text>
+      <text x="490" y="253" fontSize="9" fill="#666">(absorbed &amp; re-emitted)</text>
+      <text x="490" y="265" fontSize="9" fill="#666">surface warms up</text>
+
+      {/* One escapes */}
+      <line x1="600" y1="285" x2="600" y2="100" stroke={RD} strokeWidth="2" strokeDasharray="3 2"/>
+      <polygon points="600,100 596,108 604,108" fill={RD}/>
+      <text x="565" y="95" fontSize="9" fill="#666">small amount escapes</text>
+    </svg>
+  );
+}
+
+// ── DDT bioaccumulation through food chain ───────────────────────────────────
+function BioaccumulationSVG() {
+  return (
+    <svg viewBox="0 0 720 240" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="240" rx="12" fill="#fafafa" stroke={RD} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={RD}>
+        Bioaccumulation — toxin grows stronger up the chain
+      </text>
+
+      {/* Stages with progressively darker red */}
+      <g>
+        {/* Water + algae */}
+        <rect x="20" y="60" width="120" height="115" rx="8" fill="#fde8e8" stroke={RD} strokeWidth="1.5"/>
+        <text x="80" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>water + algae</text>
+        <text x="80" y="100" textAnchor="middle" fontSize="9" fill={GR}>insecticide dilute</text>
+        <text x="80" y="115" textAnchor="middle" fontSize="9" fill={GR}>0.000 1 ppm</text>
+        <circle cx="80" cy="145" r="14" fill="#a8d5a8" stroke={G} strokeWidth="1"/>
+        <text x="80" y="170" textAnchor="middle" fontSize="9" fill={G}>producers</text>
+
+        <line x1="145" y1="115" x2="180" y2="115" stroke={RD} strokeWidth="2.5" markerEnd="url(#arrRD)"/>
+
+        {/* Zooplankton */}
+        <rect x="185" y="60" width="120" height="115" rx="8" fill="#fbc6c6" stroke={RD} strokeWidth="1.5"/>
+        <text x="245" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>zooplankton</text>
+        <text x="245" y="100" textAnchor="middle" fontSize="9" fill={GR}>each eats MANY</text>
+        <text x="245" y="115" textAnchor="middle" fontSize="9" fill={GR}>0.04 ppm</text>
+        <circle cx="245" cy="145" r="9" fill="#fbb" stroke={AM} strokeWidth="1"/>
+        <text x="245" y="170" textAnchor="middle" fontSize="9" fill={AM}>primary cons.</text>
+
+        <line x1="310" y1="115" x2="345" y2="115" stroke={RD} strokeWidth="2.5" markerEnd="url(#arrRD)"/>
+
+        {/* Small fish */}
+        <rect x="350" y="60" width="120" height="115" rx="8" fill="#f99595" stroke={RD} strokeWidth="1.5"/>
+        <text x="410" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill="#7a1010">small fish</text>
+        <text x="410" y="100" textAnchor="middle" fontSize="9" fill={GR}>each eats many</text>
+        <text x="410" y="115" textAnchor="middle" fontSize="9" fill={GR}>0.5 ppm</text>
+        <ellipse cx="410" cy="145" rx="14" ry="7" fill="#d97070" stroke="#7a1010" strokeWidth="1"/>
+        <text x="410" y="170" textAnchor="middle" fontSize="9" fill="#7a1010">secondary</text>
+
+        <line x1="475" y1="115" x2="510" y2="115" stroke={RD} strokeWidth="2.5" markerEnd="url(#arrRD)"/>
+
+        {/* Large fish */}
+        <rect x="515" y="60" width="120" height="115" rx="8" fill="#d96565" stroke="#5a0a0a" strokeWidth="1.5"/>
+        <text x="575" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">large fish</text>
+        <text x="575" y="100" textAnchor="middle" fontSize="9" fill="#fff">2 ppm</text>
+        <ellipse cx="575" cy="145" rx="18" ry="9" fill="#a82020" stroke="#5a0a0a" strokeWidth="1"/>
+        <text x="575" y="170" textAnchor="middle" fontSize="9" fill="#fff">tertiary</text>
+
+        <line x1="638" y1="115" x2="668" y2="115" stroke="#5a0a0a" strokeWidth="2.5" markerEnd="url(#arrRD)"/>
+
+        {/* Bird (top predator) — concentrated */}
+        <circle cx="690" cy="115" r="22" fill="#5a0a0a" stroke="#3a0505" strokeWidth="2"/>
+        <text x="690" y="118" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">grebe</text>
+        <text x="690" y="160" textAnchor="middle" fontSize="9" fill="#5a0a0a" fontWeight="700">25 ppm</text>
+      </g>
+
+      <text x="360" y="208" textAnchor="middle" fontSize="11" fill={PU} fontStyle="italic">
+        Each step concentrates the toxin further → top predators reach lethal levels
+      </text>
+      <text x="360" y="225" textAnchor="middle" fontSize="9" fill="#666">
+        e.g. mercury in Minamata Bay, DDT in fish-eating birds
+      </text>
+
+      <defs>
+        <marker id="arrRD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={RD}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Deforestation: chain of consequences ─────────────────────────────────────
+function DeforestationSVG() {
+  return (
+    <svg viewBox="0 0 720 360" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="360" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Effects of deforestation
+      </text>
+
+      {/* Central node */}
+      <rect x="270" y="50" width="180" height="50" rx="8" fill={GL} stroke={G} strokeWidth="2"/>
+      <text x="360" y="72" textAnchor="middle" fontSize="13" fontWeight="700" fill={G}>DEFORESTATION</text>
+      <text x="360" y="89" textAnchor="middle" fontSize="9" fill={GR}>removal of trees on a large scale</text>
+
+      {/* Six branches */}
+      {/* Branch 1: biodiversity loss */}
+      <line x1="320" y1="100" x2="120" y2="160" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="40" y="160" width="180" height="46" rx="6" fill="#fde0e0" stroke={RD} strokeWidth="1.5"/>
+      <text x="130" y="180" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>Biodiversity loss</text>
+      <text x="130" y="196" textAnchor="middle" fontSize="9" fill={GR}>animals lose homes &amp; food</text>
+
+      {/* Branch 2: soil erosion */}
+      <line x1="360" y1="105" x2="360" y2="160" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="270" y="160" width="180" height="46" rx="6" fill="#fff4e6" stroke={AM} strokeWidth="1.5"/>
+      <text x="360" y="180" textAnchor="middle" fontSize="11" fontWeight="700" fill={AM}>Soil erosion</text>
+      <text x="360" y="196" textAnchor="middle" fontSize="9" fill={GR}>roots no longer bind topsoil</text>
+
+      {/* Branch 3: flooding */}
+      <line x1="400" y1="100" x2="600" y2="160" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="500" y="160" width="180" height="46" rx="6" fill="#e6f1ff" stroke="#3a5fa8" strokeWidth="1.5"/>
+      <text x="590" y="180" textAnchor="middle" fontSize="11" fontWeight="700" fill="#3a5fa8">Flooding &amp; silting</text>
+      <text x="590" y="196" textAnchor="middle" fontSize="9" fill={GR}>no soil to absorb rainwater</text>
+
+      {/* Branch 4: CO₂ rise */}
+      <line x1="320" y1="100" x2="120" y2="260" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="40" y="260" width="180" height="46" rx="6" fill={PL} stroke={PU} strokeWidth="1.5"/>
+      <text x="130" y="280" textAnchor="middle" fontSize="11" fontWeight="700" fill={PU}>Rising CO₂</text>
+      <text x="130" y="296" textAnchor="middle" fontSize="9" fill={GR}>less photosynthesis · burning trees</text>
+
+      {/* Branch 5: extinction */}
+      <line x1="360" y1="105" x2="360" y2="260" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="270" y="260" width="180" height="46" rx="6" fill={RL} stroke={RD} strokeWidth="1.5"/>
+      <text x="360" y="280" textAnchor="middle" fontSize="11" fontWeight="700" fill={RD}>Extinction risk</text>
+      <text x="360" y="296" textAnchor="middle" fontSize="9" fill={GR}>27% of Amazon by 2030</text>
+
+      {/* Branch 6: climate change (local) */}
+      <line x1="400" y1="100" x2="600" y2="260" stroke={G} strokeWidth="1.5" markerEnd="url(#arrG2)"/>
+      <rect x="500" y="260" width="180" height="46" rx="6" fill="#fff4e6" stroke={AM} strokeWidth="1.5"/>
+      <text x="590" y="280" textAnchor="middle" fontSize="11" fontWeight="700" fill={AM}>Climate change</text>
+      <text x="590" y="296" textAnchor="middle" fontSize="9" fill={GR}>less transpiration · drier climate</text>
+
+      <text x="360" y="340" textAnchor="middle" fontSize="11" fill={G} fontStyle="italic">
+        Forests act as environmental buffers — water, soil, climate
+      </text>
+
+      <defs>
+        <marker id="arrG2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={G}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+// ── Conservation strategies overview ─────────────────────────────────────────
+function ConservationSVG() {
+  return (
+    <svg viewBox="0 0 720 380" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="380" rx="12" fill="#fafafa" stroke={G} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={G}>
+        Conservation strategies — forests · fish · species
+      </text>
+
+      {/* Column 1: Forests */}
+      <rect x="20" y="50" width="220" height="310" rx="10" fill={GL} stroke={G} strokeWidth="2"/>
+      <text x="130" y="74" textAnchor="middle" fontSize="13" fontWeight="700" fill={G}>FORESTS</text>
+      <line x1="40" y1="84" x2="220" y2="84" stroke={G} strokeWidth="1"/>
+      <text x="40" y="110" fontSize="11" fontWeight="700" fill={GR}>· Education</text>
+      <text x="55" y="124" fontSize="10" fill={GR}>(Rainforest Alliance)</text>
+      <text x="40" y="146" fontSize="11" fontWeight="700" fill={GR}>· Protected areas</text>
+      <text x="55" y="160" fontSize="10" fill={GR}>(tree preservation orders)</text>
+      <text x="40" y="182" fontSize="11" fontWeight="700" fill={GR}>· Legal quotas</text>
+      <text x="55" y="196" fontSize="10" fill={GR}>(Smartlogging certificates)</text>
+      <text x="40" y="218" fontSize="11" fontWeight="700" fill={GR}>· Replanting</text>
+      <text x="55" y="232" fontSize="10" fill={GR}>(Brazil, India, Pakistan)</text>
+      <text x="40" y="254" fontSize="11" fontWeight="700" fill={GR}>· Recycling paper</text>
+      <text x="55" y="268" fontSize="10" fill={GR}>(1 tonne ≈ 17 trees)</text>
+
+      {/* Column 2: Fish stocks */}
+      <rect x="250" y="50" width="220" height="310" rx="10" fill="#e6f1ff" stroke="#3a5fa8" strokeWidth="2"/>
+      <text x="360" y="74" textAnchor="middle" fontSize="13" fontWeight="700" fill="#3a5fa8">FISH STOCKS</text>
+      <line x1="270" y1="84" x2="450" y2="84" stroke="#3a5fa8" strokeWidth="1"/>
+      <text x="270" y="110" fontSize="11" fontWeight="700" fill={GR}>· Education of fishers</text>
+      <text x="270" y="142" fontSize="11" fontWeight="700" fill={GR}>· Closed seasons</text>
+      <text x="285" y="156" fontSize="10" fill={GR}>(let fish breed)</text>
+      <text x="270" y="178" fontSize="11" fontWeight="700" fill={GR}>· Marine protected areas</text>
+      <text x="270" y="210" fontSize="11" fontWeight="700" fill={GR}>· Net &amp; mesh control</text>
+      <text x="285" y="224" fontSize="10" fill={GR}>(no trawl in reefs)</text>
+      <text x="270" y="246" fontSize="11" fontWeight="700" fill={GR}>· Legal quotas</text>
+      <text x="285" y="260" fontSize="10" fill={GR}>(EU Common Fisheries)</text>
+      <text x="270" y="282" fontSize="11" fontWeight="700" fill={GR}>· Monitoring patrols</text>
+
+      {/* Column 3: Species */}
+      <rect x="480" y="50" width="220" height="310" rx="10" fill={PL} stroke={PU} strokeWidth="2"/>
+      <text x="590" y="74" textAnchor="middle" fontSize="13" fontWeight="700" fill={PU}>ENDANGERED SPECIES</text>
+      <line x1="500" y1="84" x2="680" y2="84" stroke={PU} strokeWidth="1"/>
+      <text x="500" y="110" fontSize="11" fontWeight="700" fill={GR}>· Habitat protection</text>
+      <text x="515" y="124" fontSize="10" fill={GR}>(wardens, public access)</text>
+      <text x="500" y="146" fontSize="11" fontWeight="700" fill={GR}>· CITES</text>
+      <text x="515" y="160" fontSize="10" fill={GR}>(trade ban: 5800 spp.)</text>
+      <text x="500" y="182" fontSize="11" fontWeight="700" fill={GR}>· Captive breeding</text>
+      <text x="515" y="196" fontSize="10" fill={GR}>(macaque, vulture)</text>
+      <text x="500" y="218" fontSize="11" fontWeight="700" fill={GR}>· AI &amp; IVF</text>
+      <text x="515" y="232" fontSize="10" fill={GR}>(rhinos, tigers)</text>
+      <text x="500" y="254" fontSize="11" fontWeight="700" fill={GR}>· Seed banks</text>
+      <text x="515" y="268" fontSize="10" fill={GR}>(Millennium Seed Bank)</text>
+      <text x="500" y="290" fontSize="11" fontWeight="700" fill={GR}>· Education / media</text>
+    </svg>
+  );
+}
+
+// ── Global temperature & CO₂ trend ───────────────────────────────────────────
+function ClimateGraphSVG() {
+  return (
+    <svg viewBox="0 0 720 320" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="320" rx="12" fill="#fafafa" stroke={PU} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={PU}>
+        Global temperature &amp; CO₂ since 1880
+      </text>
+
+      {/* Axes */}
+      <line x1="80" y1="60" x2="80" y2="260" stroke={GR} strokeWidth="1.5"/>
+      <line x1="80" y1="260" x2="660" y2="260" stroke={GR} strokeWidth="1.5"/>
+      <line x1="660" y1="60" x2="660" y2="260" stroke={GR} strokeWidth="1.5"/>
+
+      {/* Y-left (temp) */}
+      <text x="40" y="65" fontSize="10" fill={RD} fontWeight="700">15.7°C</text>
+      <text x="40" y="160" fontSize="10" fill={RD}>14.5°C</text>
+      <text x="40" y="255" fontSize="10" fill={RD}>13.6°C</text>
+      <text x="20" y="160" fontSize="10" fill={RD} fontWeight="700" transform="rotate(-90 20 160)">Temperature</text>
+
+      {/* Y-right (CO₂) */}
+      <text x="668" y="65" fontSize="10" fill={G} fontWeight="700">400</text>
+      <text x="668" y="160" fontSize="10" fill={G}>340</text>
+      <text x="668" y="255" fontSize="10" fill={G}>290</text>
+      <text x="700" y="160" fontSize="10" fill={G} fontWeight="700" transform="rotate(90 700 160)">CO₂ (ppm)</text>
+
+      {/* X-axis */}
+      <text x="100" y="278" fontSize="10" fill={GR}>1880</text>
+      <text x="220" y="278" fontSize="10" fill={GR}>1920</text>
+      <text x="340" y="278" fontSize="10" fill={GR}>1960</text>
+      <text x="460" y="278" fontSize="10" fill={GR}>1990</text>
+      <text x="580" y="278" fontSize="10" fill={GR}>2010</text>
+      <text x="660" y="278" fontSize="10" fill={GR}>year</text>
+
+      {/* Temperature line - jagged but rising */}
+      <polyline fill="none" stroke={RD} strokeWidth="2"
+        points="90,235 110,240 130,232 150,228 170,235 190,222 210,225 230,218 250,222 270,215 290,212 310,218 330,205 350,200 370,195 390,200 410,182 430,178 450,172 470,160 490,150 510,135 530,130 550,118 570,108 590,100 610,90 630,82"/>
+      <text x="500" y="124" fontSize="10" fill={RD} fontWeight="700">temperature</text>
+
+      {/* CO₂ smooth curve */}
+      <path d="M 90 248 Q 250 245, 350 220 T 540 130 Q 600 95, 640 70" fill="none" stroke={G} strokeWidth="2.5"/>
+      <text x="200" y="240" fontSize="10" fill={G} fontWeight="700">CO₂</text>
+
+      <text x="360" y="305" textAnchor="middle" fontSize="11" fill={PU} fontStyle="italic">
+        Temperature has risen 0.7–0.9°C since 1880; CO₂ from 290 to over 400 ppm
+      </text>
+    </svg>
+  );
+}
+
+// ── Soil erosion on a hillside ───────────────────────────────────────────────
+function SoilErosionSVG() {
+  return (
+    <svg viewBox="0 0 720 320" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="320" rx="12" fill="#e9f4ff" stroke={AM} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={AM}>
+        Soil erosion on a deforested hillside
+      </text>
+
+      {/* Rain */}
+      <g stroke="#3a5fa8" strokeWidth="1.5" opacity="0.7">
+        <line x1="120" y1="48" x2="115" y2="80"/>
+        <line x1="180" y1="42" x2="175" y2="78"/>
+        <line x1="240" y1="50" x2="235" y2="85"/>
+        <line x1="300" y1="44" x2="295" y2="80"/>
+        <line x1="360" y1="48" x2="355" y2="82"/>
+        <line x1="420" y1="42" x2="415" y2="78"/>
+        <line x1="480" y1="48" x2="475" y2="80"/>
+        <line x1="540" y1="44" x2="535" y2="78"/>
+        <line x1="600" y1="50" x2="595" y2="82"/>
+      </g>
+      <text x="135" y="60" fontSize="10" fill="#3a5fa8" fontWeight="700">heavy rain</text>
+
+      {/* Hillside - curved slope */}
+      <path d="M 30 280 L 30 250 Q 100 230, 200 210 Q 350 175, 500 120 L 700 90 L 700 280 Z" fill="#a4956a" stroke="#5a4a30" strokeWidth="1.5"/>
+
+      {/* River at bottom */}
+      <rect x="30" y="280" width="170" height="30" fill="#5a8acf" opacity="0.7"/>
+      <text x="115" y="300" textAnchor="middle" fontSize="10" fill="#fff" fontWeight="700">choked river</text>
+
+      {/* Tree stumps at top (cut down) */}
+      <rect x="540" y="105" width="6" height="14" fill="#5a4a30"/>
+      <rect x="570" y="100" width="6" height="14" fill="#5a4a30"/>
+      <rect x="600" y="98" width="6" height="14" fill="#5a4a30"/>
+      <text x="555" y="86" fontSize="9" fill={RD} fontWeight="700">trees cut</text>
+
+      {/* Gullies — water washing down */}
+      <g stroke="#7a5b3a" strokeWidth="2" fill="none">
+        <path d="M 540 120 Q 460 165, 380 215 Q 280 260, 200 285" strokeDasharray="2 1"/>
+        <path d="M 480 130 Q 400 180, 320 225 Q 240 265, 180 290" strokeDasharray="2 1"/>
+        <path d="M 420 145 Q 350 195, 280 235 Q 200 275, 150 295" strokeDasharray="2 1"/>
+      </g>
+
+      {/* Annotations along the slope */}
+      <text x="640" y="116" fontSize="9" fill={RD} fontWeight="700">thin soil washed</text>
+      <text x="640" y="128" fontSize="9" fill={RD} fontWeight="700">away by rain</text>
+
+      <text x="480" y="180" fontSize="9" fill={AM} fontWeight="700">overgrazed pasture</text>
+      <text x="480" y="192" fontSize="9" fill={AM}>(grass eaten to roots)</text>
+
+      <text x="330" y="225" fontSize="9" fill={RD} fontWeight="700">ploughed slope</text>
+      <text x="330" y="237" fontSize="9" fill={GR}>gullies form along furrows</text>
+
+      <text x="180" y="265" fontSize="9" fill={RD} fontWeight="700">topsoil flows into river</text>
+
+      <text x="360" y="312" textAnchor="middle" fontSize="9" fill={PU} fontStyle="italic">
+        Removal of roots + grass cover → rain cannot soak in → soil structure deteriorates → floods downstream
+      </text>
+    </svg>
+  );
+}
+
+// ── Aquaponic system (Tomatofish) — Going Further EXT ────────────────────────
+function AquaponicSVG() {
+  return (
+    <svg viewBox="0 0 720 320" style={{ width: "100%", maxWidth: 720, display: "block", margin: "10px auto" }}>
+      <rect width="720" height="320" rx="12" fill="#fafafa" stroke={TL} strokeWidth="1.5"/>
+      <text x="360" y="24" textAnchor="middle" fontFamily="Georgia,serif" fontSize="15" fontWeight="700" fill={TL}>
+        Aquaponic loop · Nile tilapia + tomatoes (ASTAF-PRO)
+      </text>
+
+      {/* Centre: CO₂ / O₂ exchange */}
+      <circle cx="360" cy="170" r="48" fill="#fff" stroke={GR} strokeWidth="1.5"/>
+      <text x="360" y="165" textAnchor="middle" fontSize="11" fontWeight="700" fill={GR}>CO₂ ⇌ O₂</text>
+      <text x="360" y="182" textAnchor="middle" fontSize="9" fill={GR}>exchange</text>
+
+      {/* Fish tank (left) */}
+      <rect x="40" y="80" width="180" height="80" rx="8" fill="#bcdfe7" stroke="#3a5fa8" strokeWidth="1.5"/>
+      <text x="130" y="105" textAnchor="middle" fontSize="12" fontWeight="700" fill="#3a5fa8">Fish tank</text>
+      <text x="130" y="122" textAnchor="middle" fontSize="10" fill={GR}>Nile tilapia at 27 °C</text>
+      <text x="130" y="138" textAnchor="middle" fontSize="9" fill={GR}>omnivorous · no fishmeal</text>
+      <text x="130" y="152" textAnchor="middle" fontSize="9" fill={GR}>needed (plant pellets)</text>
+
+      {/* Biofilter */}
+      <rect x="40" y="200" width="180" height="50" rx="8" fill="#fff4e6" stroke={AM} strokeWidth="1.5"/>
+      <text x="130" y="222" textAnchor="middle" fontSize="11" fontWeight="700" fill={AM}>Biofilter</text>
+      <text x="130" y="238" textAnchor="middle" fontSize="9" fill={GR}>bacteria → nitrates</text>
+
+      {/* Tomatoes (right) */}
+      <rect x="500" y="80" width="180" height="80" rx="8" fill="#fde0e0" stroke={RD} strokeWidth="1.5"/>
+      <text x="590" y="105" textAnchor="middle" fontSize="12" fontWeight="700" fill={RD}>Tomato beds</text>
+      <text x="590" y="122" textAnchor="middle" fontSize="10" fill={GR}>hydroponic on mineral wool</text>
+      <text x="590" y="138" textAnchor="middle" fontSize="9" fill={GR}>nutrients from fish water</text>
+      <text x="590" y="152" textAnchor="middle" fontSize="9" fill={GR}>(no soil — no peat needed)</text>
+
+      {/* Condensation trap */}
+      <rect x="500" y="200" width="180" height="50" rx="8" fill={TLL} stroke={TL} strokeWidth="1.5"/>
+      <text x="590" y="222" textAnchor="middle" fontSize="11" fontWeight="700" fill={TL}>Condensation trap</text>
+      <text x="590" y="238" textAnchor="middle" fontSize="9" fill={GR}>water recycled back</text>
+
+      {/* Arrows of flow */}
+      <line x1="220" y1="140" x2="310" y2="160" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+      <text x="240" y="135" fontSize="9" fill={TL} fontWeight="700">water + nutrients</text>
+
+      <line x1="410" y1="160" x2="500" y2="140" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+
+      <line x1="590" y1="160" x2="590" y2="200" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+      <text x="600" y="184" fontSize="9" fill={TL}>transpiration</text>
+
+      <line x1="500" y1="225" x2="410" y2="190" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+      <text x="425" y="218" fontSize="9" fill={TL}>condensed water</text>
+
+      <line x1="220" y1="225" x2="310" y2="190" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+      <text x="245" y="218" fontSize="9" fill={TL}>filtered water</text>
+
+      <line x1="130" y1="160" x2="130" y2="200" stroke={TL} strokeWidth="2" markerEnd="url(#arrTL)"/>
+      <text x="140" y="184" fontSize="9" fill={TL}>fish waste</text>
+
+      <text x="360" y="285" textAnchor="middle" fontSize="11" fill={PU} fontStyle="italic">
+        Closed loop · solar-powered · near-zero emissions · sustainable food
+      </text>
+
+      <defs>
+        <marker id="arrTL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill={TL}/>
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ① QUICK ESSENCE TAB — 5-minute review
+// ════════════════════════════════════════════════════════════════════════════
+function EssenceTab() {
+  const card = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${AM}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 12 };
+  const h = { fontSize: 13, fontWeight: 800, color: AM, marginBottom: 8, letterSpacing: 0.3 };
+  const li = { fontSize: 12.5, lineHeight: 1.65, marginBottom: 5, color: GR };
+
+  return (
+    <div>
+      <div style={{ background: AL, border: `1px solid ${AM}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: AM, fontWeight: 600 }}>
+        ⚡ <Bold>The 5-minute Essence</Bold> — read this the morning of the exam
+      </div>
+
+      <div style={card}>
+        <div style={h}>① INTENSIFICATION OF AGRICULTURE</div>
+        <div style={li}>· <KW c={AM}>Modern machinery</KW> + larger fields (hedges removed) → faster, more efficient farming.</div>
+        <div style={li}>· <KW c={AM}>Chemical fertilisers</KW> (NPK, ammonium nitrate, ammonium sulfate) replace minerals removed by crops — boost yield but no organic matter; can pollute rivers (eutrophication).</div>
+        <div style={li}>· <KW c={AM}>Pesticides</KW> = herbicides (kill weeds) + insecticides (kill insect pests). Trouble: they often kill harmless/beneficial species (bees, ladybirds) and can <Bold>bioaccumulate</Bold> up food chains.</div>
+        <div style={li}>· <KW c={AM}>Monoculture</KW> = dense single-species crop. Higher yield + machine-friendly, BUT very prone to pests/disease and reduces biodiversity.</div>
+        <div style={li}>· <KW c={AM}>Intensive livestock production</KW> (factory farming) — high yield but slurry pollutes water, animals more disease-prone.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>② HABITAT DESTRUCTION &amp; DEFORESTATION</div>
+        <div style={li}>· Reasons: <KW c={AM}>farming, urbanisation, mining, oil extraction, timber, firewood</KW>.</div>
+        <div style={li}>· Effects of deforestation: loss of biodiversity, <Bold>soil erosion</Bold>, flooding, silting of rivers, less photosynthesis → rising atmospheric <Bold>CO₂</Bold>, drier local climate.</div>
+        <div style={li}>· Tropical-forest soils are <Bold>nutrient-poor</Bold> — most nutrients are in the canopy; cleared land is fertile only for 1–2 years.</div>
+        <div style={li}>· <KW c={AM}>Biodiversity</KW> = the number of different species living in an area. Forests host half the world's 10 million species.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>③ POLLUTION — SOURCES &amp; HARM</div>
+        <div style={li}>· <KW c={AM}>Untreated sewage</KW> → spread of typhoid, cholera + nitrates/phosphates → eutrophication.</div>
+        <div style={li}>· <KW c={AM}>Chemical waste</KW> (mercury, cyanide, copper) — Minamata Bay disaster (1971): factory mercury → fish → 45 deaths via <Bold>bioaccumulation</Bold>.</div>
+        <div style={li}>· <KW c={AM}>Oil spills</KW> — kill seabirds, fish, intertidal life. Plastics — <Bold>non-biodegradable</Bold>, trap animals, fragment into microplastics, choke marine animals.</div>
+        <div style={li}>· <KW c={AM}>Pesticides</KW> (e.g. DDT, dieldrin) — persist in environment, magnify up food chain, poison top predators (birds of prey, fish-eating birds).</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>④ EUTROPHICATION (5-step chain)</div>
+        <div style={li}>· <Bold>1</Bold> Nitrates &amp; phosphates from fertilisers/sewage/detergents enter water.</div>
+        <div style={li}>· <Bold>2</Bold> <KW c={AM}>Algae bloom</KW> rapidly at surface.</div>
+        <div style={li}>· <Bold>3</Bold> Surface mat <Bold>blocks light</Bold>; submerged plants &amp; algae die.</div>
+        <div style={li}>· <Bold>4</Bold> Aerobic <Bold>bacteria decompose dead plants</Bold>, using up dissolved O₂.</div>
+        <div style={li}>· <Bold>5</Bold> Water becomes deoxygenated → <KW c={AM}>fish suffocate</KW> → "dead zone". High BOD = polluted.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑤ GREENHOUSE EFFECT &amp; CLIMATE CHANGE</div>
+        <div style={li}>· Main greenhouse gases: <KW c={AM}>CO₂</KW> (combustion, deforestation, respiration) and <KW c={AM}>CH₄</KW> (rice paddies, cattle stomachs, decay).</div>
+        <div style={li}>· Short waves penetrate atmosphere → Earth re-radiates long waves → <Bold>trapped by greenhouse gases</Bold> → surface warms.</div>
+        <div style={li}>· <KW c={AM}>Enhanced greenhouse effect</KW>: ice caps melt → sea-level rise · extreme weather · arable land lost · extinction of species unable to adapt.</div>
+        <div style={li}>· CO₂ levels rose from 0.029% (1860) → over 400 ppm today; temperature up 0.7–0.9 °C since 1880.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑥ CONSERVATION — DEFINITIONS</div>
+        <div style={li}>· <KW c={AM}>Sustainable resource</KW> = one produced as rapidly as it is removed, so it does not run out.</div>
+        <div style={li}>· <KW c={AM}>Biodiversity</KW> = number of different species in an area.</div>
+        <div style={li}>· Reasons for conservation programmes: maintain biodiversity, reduce extinction, protect vulnerable ecosystems, maintain ecosystem functions.</div>
+        <div style={li}>· If population falls → less <Bold>genetic variation</Bold> → less able to adapt → higher extinction risk.</div>
+      </div>
+
+      <div style={card}>
+        <div style={h}>⑦ CONSERVATION STRATEGIES</div>
+        <div style={li}>· <KW c={AM}>Forests</KW>: education (Rainforest Alliance), protected areas, legal quotas (Smartlogging), replanting, recycle paper.</div>
+        <div style={li}>· <KW c={AM}>Fish stocks</KW>: education, closed seasons, marine protected areas, net &amp; mesh control, quotas (EU CFP), patrol monitoring.</div>
+        <div style={li}>· <KW c={AM}>Species</KW>: laws (CITES, IWC), habitat protection, captive breeding (lion-tailed macaque, white-rumped vulture), seed banks (Millennium Seed Bank).</div>
+        <div style={li}>· <KW c={AM}>AI (artificial insemination) &amp; IVF</KW> <Ext/> — used in captive breeding programmes for animals that won't mate naturally; can transport frozen sperm to other centres.</div>
+      </div>
+
+      <div style={{ background: AL, border: `1px solid ${AM}`, borderRadius: 8,
+        padding: "12px 16px", marginTop: 14, fontSize: 12, color: GR }}>
+        <Bold>Key word check</Bold>: monoculture, fertiliser, herbicide, insecticide, eutrophication, bioaccumulation, biodiversity, deforestation, non-biodegradable, sustainable resource, enhanced greenhouse effect, captive breeding, artificial insemination, in vitro fertilisation, CITES, seed bank, biochemical oxygen demand (BOD).
+      </div>
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ② EXAM PRACTICE TAB — infinite test bank
+// ════════════════════════════════════════════════════════════════════════════
+function ExamTab() {
+  const [rev, setRev] = useState({});
+  const [diff, setDiff] = useState("all");
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setRev(p => ({ ...p, [id]: !p[id] }));
+
+  const qs = [
+    // ─────────────────── EASY ───────────────────
+    { id: "e1", diff: "easy", topic: "agri", marks: 2, star: "★★★",
+      q: "Explain why farmers use chemical fertilisers.",
+      hint: "Crops removed → minerals lost",
+      a: <>Crops harvested from a field <Bold>remove minerals</Bold> from the soil [1]. Chemical fertilisers replace nitrates, phosphates and potassium ions so the next crop can grow well and give a high yield [1].</> },
+
+    { id: "e2", diff: "easy", topic: "agri", marks: 2, star: "★★★",
+      q: "State two examples of chemical fertilisers and the minerals they supply.",
+      hint: "NPK",
+      a: <>Any two: <Bold>ammonium nitrate</Bold> (nitrogen) [1], <Bold>ammonium sulfate</Bold> (nitrogen + sulfur) [1], <Bold>compound NPK fertiliser</Bold> (nitrogen, phosphorus, potassium) [1].</> },
+
+    { id: "e3", diff: "easy", topic: "agri", marks: 2, star: "★★★",
+      q: "Define the term monoculture.",
+      hint: "Single species, repeated",
+      a: <>A monoculture is a <Bold>dense population of a single crop species</Bold> [1], planted repeatedly over the same land year after year [1].</> },
+
+    { id: "e4", diff: "easy", topic: "agri", marks: 3, star: "★★★",
+      q: "State three drawbacks of monoculture farming.",
+      hint: "Pests, soil, biodiversity",
+      a: <>Any three of: very prone to <Bold>insect pests</Bold> and <Bold>fungal disease</Bold> [1]; whole crop can be lost to disease, flood or drought [1]; <Bold>loss of soil nutrients</Bold> and soil erosion [1]; <Bold>reduced biodiversity</Bold> as natural plant/animal communities are displaced [1].</> },
+
+    { id: "e5", diff: "easy", topic: "agri", marks: 2, star: "★★★",
+      q: "Distinguish between a herbicide and an insecticide.",
+      hint: "Weeds vs insects",
+      a: <>A <Bold>herbicide</Bold> kills weeds (plants that compete with the crop for water, ions and light) [1]. An <Bold>insecticide</Bold> kills insect pests that eat or damage the crop [1].</> },
+
+    { id: "e6", diff: "easy", topic: "agri", marks: 2, star: "★★★",
+      q: "Give one example of a beneficial insect that pesticides may harm and explain why this matters.",
+      hint: "Bees pollinate",
+      a: <>Examples: <Bold>bees</Bold> — they pollinate crops and wild plants, so losing them reduces fruit set and biodiversity [1]; or <Bold>ladybirds</Bold> — they eat aphids (natural pest control), so losing them allows aphid populations to explode [1].</> },
+
+    { id: "e7", diff: "easy", topic: "habitat", marks: 2, star: "★★★",
+      q: "Define the term biodiversity.",
+      hint: "Variety in an area",
+      a: <>Biodiversity is the <Bold>number of different species</Bold> [1] that live in an area [1].</> },
+
+    { id: "e8", diff: "easy", topic: "habitat", marks: 3, star: "★★★",
+      q: "State three human activities that destroy habitats.",
+      hint: "Farming, mining, building",
+      a: <>Any three of: <Bold>intensive agriculture</Bold> (removal of hedges, monoculture, ploughing) [1]; <Bold>deforestation</Bold> (timber, roads, settlements, firewood) [1]; <Bold>mining</Bold> (open-pit mines, spoil heaps, water contamination) [1]; <Bold>urbanisation</Bold> (towns, cities) [1]; <Bold>oil spillage</Bold> [1].</> },
+
+    { id: "e9", diff: "easy", topic: "habitat", marks: 3, star: "★★★",
+      q: "State three negative effects of deforestation.",
+      hint: "Soil, flooding, CO₂",
+      a: <>Any three of: <Bold>reduced biodiversity</Bold> (loss of habitat and food) [1]; <Bold>soil erosion</Bold> (no roots to hold the soil) [1]; <Bold>flooding</Bold> (less soil to absorb rain) [1]; <Bold>increased atmospheric CO₂</Bold> (less photosynthesis + burning of timber) [1]; <Bold>local climate change</Bold> (less transpiration → drier) [1].</> },
+
+    { id: "e10", diff: "easy", topic: "pollution", marks: 2, star: "★★★",
+      q: "Give two reasons why untreated sewage should not be released into rivers.",
+      hint: "Disease + eutrophication",
+      a: <><Bold>It spreads disease</Bold> (typhoid and cholera bacteria pass via faeces into drinking water) [1]. It supplies <Bold>excess nitrates and phosphates</Bold> that lead to eutrophication [1].</> },
+
+    { id: "e11", diff: "easy", topic: "pollution", marks: 2, star: "★★★",
+      q: "State two ways non-biodegradable plastics can harm marine life.",
+      hint: "Trap + stomach",
+      a: <>Any two: <Bold>seals, dolphins and birds become entangled</Bold> in nets/lines (e.g. seals in discarded fishing nets) [1]; <Bold>turtles and birds swallow plastic fragments / microplastics</Bold>, which fill the stomach and cause sickness [1]; plastics block the <Bold>gills of fish</Bold> [1].</> },
+
+    { id: "e12", diff: "easy", topic: "greenhouse", marks: 2, star: "★★★",
+      q: "Name two greenhouse gases and one source of each.",
+      hint: "CO₂ + CH₄",
+      a: <><Bold>Carbon dioxide</Bold> — combustion of fossil fuels / deforestation / respiration [1]. <Bold>Methane</Bold> — anaerobic decay in wet rice fields / cattle digestion / oil &amp; coal extraction [1].</> },
+
+    { id: "e13", diff: "easy", topic: "greenhouse", marks: 3, star: "★★★",
+      q: "Outline how the greenhouse effect works.",
+      hint: "Short waves in, long waves trapped",
+      a: <><Bold>Short-wavelength radiation</Bold> from the Sun passes through the atmosphere [1]. The Earth's surface absorbs it, warms, and re-radiates energy as <Bold>longer wavelengths</Bold> (heat) [1]. Greenhouse gases (CO₂, methane) <Bold>absorb the long waves</Bold> in the atmosphere, trapping heat near the surface [1].</> },
+
+    { id: "e14", diff: "easy", topic: "conservation", marks: 1, star: "★★★",
+      q: "Define the term sustainable resource.",
+      hint: "Replaced as fast as removed",
+      a: <>A sustainable resource is one that is <Bold>produced as rapidly as it is removed</Bold> from the environment, so that it does not run out [1].</> },
+
+    { id: "e15", diff: "easy", topic: "conservation", marks: 3, star: "★★★",
+      q: "State three reasons why conservation programmes are set up.",
+      hint: "Diversity, extinction, ecosystems",
+      a: <>Any three: maintain or increase <Bold>biodiversity</Bold> [1]; <Bold>reduce extinction</Bold> rates [1]; protect <Bold>vulnerable ecosystems</Bold> and rare habitats [1]; maintain <Bold>ecosystem functions</Bold> (nutrient cycles, pollination, water supply) [1].</> },
+
+    { id: "e16", diff: "easy", topic: "conservation", marks: 3, star: "★★★",
+      q: "State three ways forests can be conserved.",
+      hint: "Education, protection, quotas, replanting",
+      a: <>Any three of: <Bold>education</Bold> of local communities (Rainforest Alliance) [1]; <Bold>protected areas</Bold> with tree preservation orders [1]; <Bold>legal quotas</Bold> on logging (Smartlogging) [1]; <Bold>replanting</Bold> (Brazil, India, Pakistan) [1]; <Bold>recycling paper</Bold> [1].</> },
+
+    { id: "e17", diff: "easy", topic: "conservation", marks: 4, star: "★★★",
+      q: "Outline four measures used to conserve fish stocks.",
+      hint: "Closed season, MPA, mesh, quotas",
+      a: <>Any four: <Bold>closed seasons</Bold> (no fishing while species breed) [1]; <Bold>marine protected areas</Bold> [1]; <Bold>control of net types &amp; mesh size</Bold> (no trawl on reefs; gillnets let undersized fish escape) [1]; <Bold>legal quotas</Bold> (EU Common Fisheries Policy) [1]; <Bold>monitoring</Bold> with patrol vessels [1].</> },
+
+    { id: "e18", diff: "easy", topic: "conservation", marks: 4, star: "★★★",
+      q: "State four factors that endanger a species.",
+      hint: "Habitat, hunting, climate, introduced spp.",
+      a: <>Any four: <Bold>habitat destruction</Bold> [1]; <Bold>hunting / overharvesting</Bold> [1]; <Bold>international trade</Bold> (e.g. tigers for skin/bones) [1]; <Bold>pollution</Bold> [1]; <Bold>climate change</Bold> [1]; <Bold>introduction of foreign species</Bold> [1].</> },
+
+    { id: "e19", diff: "easy", topic: "conservation", marks: 2, star: "★★★",
+      q: "What is a seed bank and why is it useful?",
+      hint: "Store + extinction insurance",
+      a: <>A seed bank is a <Bold>store of seeds from many plant species</Bold> (food crops + rare species) [1] which acts as a <Bold>gene bank</Bold>, protecting plants from extinction so genetic material can be used in future breeding [1].</> },
+
+    { id: "e20", diff: "easy", topic: "eutroph", marks: 1, star: "★★★",
+      q: "Define eutrophication.",
+      hint: "Enrichment + nutrients",
+      a: <>Eutrophication is the <Bold>enrichment of water with nutrients</Bold> (especially nitrates and phosphates), leading to excessive plant growth and oxygen depletion [1].</> },
+
+    { id: "e21", diff: "easy", topic: "habitat", marks: 2, star: "★★",
+      q: "Why does cutting a road through a rainforest cause damage beyond the road itself?",
+      hint: "Access + further exploitation",
+      a: <>The road provides <Bold>access</Bold> [1] for further activities (logging, settlement, mining, hunting), so the surrounding forest is increasingly exploited [1].</> },
+
+    { id: "e22", diff: "easy", topic: "agri", marks: 2, star: "★★",
+      q: "Explain why intensive livestock farming can pollute water.",
+      hint: "Slurry → nitrates/phosphates",
+      a: <>Animals are kept indoors; their urine + faeces are washed out as <Bold>slurry</Bold> [1]. If slurry enters streams it provides excess <Bold>nitrates and phosphates</Bold>, leading to eutrophication [1].</> },
+
+    // ─────────────────── MEDIUM ───────────────────
+    { id: "m1", diff: "medium", topic: "agri", marks: 4, star: "★★★",
+      q: "Outline the advantages and disadvantages of using pesticides.",
+      hint: "Yield + non-target + bioaccumulation",
+      a: <><Bold>Advantages</Bold>: pesticides destroy pests/weeds [1], so crop yields rise and food quality improves [1]. <Bold>Disadvantages</Bold>: they kill harmless or beneficial species (bees, ladybirds, soil invertebrates) [1]; many persist in the environment and <Bold>bioaccumulate</Bold> up the food chain, poisoning top predators [1].</> },
+
+    { id: "m2", diff: "medium", topic: "agri", marks: 4, star: "★★",
+      q: "A systemic insecticide is sprayed onto leaves but kills insects feeding on stems, shoots and any new leaves later. Using your knowledge of plant transport systems, suggest how.",
+      hint: "Phloem distribution",
+      a: <>The insecticide is <Bold>absorbed into the leaves</Bold> [1] then dissolved in the plant's transport tissue and moved through the <Bold>phloem (translocation)</Bold> [1]. It is distributed throughout the plant — to stems, shoots and new leaves [1]. Insects that <Bold>feed anywhere on the plant</Bold> take in the poison and are killed [1].</> },
+
+    { id: "m3", diff: "medium", topic: "habitat", marks: 4, star: "★★★",
+      q: "Describe four disadvantages farmers below a deforested hillside might experience.",
+      hint: "Soil, flooding, water, climate",
+      a: <>Any four: <Bold>soil from the hillside is washed onto their land</Bold>, covering / damaging crops [1]; <Bold>rivers silt up</Bold> and overflow, causing floods that ruin crops [1]; <Bold>thin remaining hillside soil</Bold> reduces grazing/cropping potential nearby [1]; <Bold>less rainfall in the region</Bold> because transpiration falls (local climate becomes drier) [1]; loss of pollinators &amp; pest-controlling animals [1].</> },
+
+    { id: "m4", diff: "medium", topic: "habitat", marks: 4, star: "★★★",
+      q: "Suggest the effects of clearing a hillside forest on plants and animals living in the surrounding habitat.",
+      hint: "Habitat loss + chain reactions",
+      a: <>Loss of <Bold>shelter and food</Bold> for forest animals — many die or migrate [1]. Specialist species (those that depend on specific trees) may become <Bold>extinct locally</Bold> [1]. With fewer plants, <Bold>herbivores decline</Bold>, so the <Bold>carnivores that ate them also decline</Bold> [1]. Loss of soil and shade also damages <Bold>stream ecosystems</Bold> below the hill (fish die from sediment) [1].</> },
+
+    { id: "m5", diff: "medium", topic: "pollution", marks: 4, star: "★★★",
+      type: "calc",
+      q: "A factory poured mercury into the sea. Levels were measured: unpolluted seawater 1.0 × 10⁻¹ ppb; polluted seawater 2.0 ppb; plankton 8.0 × 10¹ ppb; small fish 2.0 × 10² ppb; large fish 1.0 × 10⁴ ppb. (a) Draw a food chain to show how local people become poisoned. (b) Calculate the percentage increase in mercury between the plankton and the large fish.",
+      hint: "% increase = (new − old)/old × 100",
+      a: <>(a) plankton → small fish → large fish → humans [3]. (b) Increase = 1.0 × 10⁴ − 8.0 × 10¹ = 9920 ppb. % increase = (9920 / 80) × 100 = <Bold>12 400 %</Bold> (allow 1.24 × 10⁴ %) [1].</> },
+
+    { id: "m6", diff: "medium", topic: "pollution", marks: 5, star: "★★★",
+      q: "(a) Define non-biodegradable. (b) State three ways non-biodegradable plastics could pollute the environment.",
+      hint: "Decomposers can't break it down",
+      a: <>(a) Non-biodegradable means a material that <Bold>cannot be broken down by decomposers / microorganisms</Bold> [1], so it remains in the environment for a very long time [1]. (b) Any three: take up space in <Bold>landfill sites</Bold> [1]; cause <Bold>visual pollution</Bold> on beaches/streets [1]; trap and kill <Bold>marine animals</Bold> (seals, turtles, birds) [1]; fragment into <Bold>microplastics</Bold> that are eaten by fish and travel up the food chain [1].</> },
+
+    { id: "m7", diff: "medium", topic: "eutroph", marks: 5, star: "★★★",
+      type: "diagram",
+      q: "Draw a flow chart with five clearly labelled stages to show the process of eutrophication in a lake.",
+      hint: "Nutrients → bloom → light blocked → decay → no O₂",
+      a: <><Bold>1</Bold> Nitrates &amp; phosphates from fertilisers / sewage / detergents enter the lake [1]. <Bold>2</Bold> Microscopic algae and aquatic plants grow rapidly forming an <Bold>algal bloom</Bold> at the surface [1]. <Bold>3</Bold> The bloom <Bold>blocks light</Bold> so algae &amp; plants below cannot photosynthesise and die [1]. <Bold>4</Bold> Aerobic <Bold>bacteria decompose dead algae</Bold> and respire, removing dissolved oxygen [1]. <Bold>5</Bold> Fish &amp; other aerobic animals <Bold>suffocate</Bold> from lack of O₂; the water becomes a "dead zone" [1]. <i>(Mark 1 per labelled stage; max 5 with arrows in correct order; 8 marks possible with full annotation.)</i></> },
+
+    { id: "m8", diff: "medium", topic: "eutroph", marks: 3, star: "★★★",
+      q: "Suggest three measures that would reduce the rate of eutrophication in rivers.",
+      hint: "Detergents, fertilisers, manure",
+      a: <>· Use <Bold>detergents with less phosphate</Bold> (or phosphate-free) [1]. · Use <Bold>fertilisers that do not dissolve so easily</Bold> (slow-release) so they stay in the soil [1]. · Spread <Bold>animal waste on land</Bold> instead of letting it reach rivers [1].</> },
+
+    { id: "m9", diff: "medium", topic: "greenhouse", marks: 4, star: "★★★",
+      q: "Describe four likely consequences of an enhanced greenhouse effect.",
+      hint: "Ice caps, weather, agriculture, extinction",
+      a: <>· <Bold>Polar ice caps melt</Bold> → sea level rises, flooding low-lying land [1]. · <Bold>Extreme weather</Bold> becomes more common (droughts, hurricanes, heatwaves) [1]. · Arable land may turn to desert / pattern of <Bold>world agriculture is disrupted</Bold> [1]. · Some species <Bold>cannot adapt</Bold> to higher temperatures and become extinct [1].</> },
+
+    { id: "m10", diff: "medium", topic: "conservation", marks: 4, star: "★★",
+      q: "Explain why captive breeding programmes use artificial insemination (AI) and IVF.",
+      hint: "Reluctance + transport + freeze",
+      a: <>Some animals are <Bold>reluctant to mate</Bold> in captivity [1]. AI involves collecting sperm from the male and introducing it into the female artificially [1]. Sperm can be <Bold>frozen and stored / transported</Bold> between centres, increasing genetic diversity [1]. <Bold>IVF</Bold> allows fertilised eggs to be developed even when females won't breed naturally, and embryos can be transferred to surrogate females [1].</> },
+
+    { id: "m11", diff: "medium", topic: "conservation", marks: 4, star: "★★★",
+      q: "Outline why pressure leads to destruction of tropical forests.",
+      hint: "Timber, farming, fuel, growth",
+      a: <>Forests are cut for: <Bold>timber</Bold> for building and furniture [1]; <Bold>land for agriculture</Bold> (cattle, soybean, palm oil) and for roads/settlements [1]; <Bold>firewood</Bold> [1]; pressure also comes from <Bold>population growth</Bold> and <Bold>greater demand for raw materials</Bold> (mining, oil) [1].</> },
+
+    { id: "m12", diff: "medium", topic: "conservation", marks: 3, star: "★★★",
+      q: "Give three important reasons to preserve tropical rainforests.",
+      hint: "Biodiversity, climate, drugs",
+      a: <>Any three: contain <Bold>vast biodiversity</Bold> (half the world's species) [1]; help <Bold>regulate climate</Bold> — absorb CO₂, transpire to make rainfall, reflect sunlight [1]; source of <Bold>medicines</Bold> (70% of anti-cancer plants come from rainforests) [1]; <Bold>prevent soil erosion</Bold> and protect watersheds [1].</> },
+
+    { id: "m13", diff: "medium", topic: "conservation", marks: 3, star: "★★★",
+      q: "Why is paper considered a sustainable resource?",
+      hint: "Trees regrow + recycle",
+      a: <>Paper is made from <Bold>wood pulp</Bold> [1]. New trees can be <Bold>replanted</Bold> at the same rate they are harvested, so the supply does not run out [1]. In addition, <Bold>waste paper is recycled</Bold> (1 tonne ≈ 17 trees saved), further reducing demand [1].</> },
+
+    { id: "m14", diff: "medium", topic: "pollution", marks: 2, star: "★★★",
+      q: "Mercury at 0.000 1 ppm in seawater eventually reached lethal levels in humans at Minamata Bay. Explain.",
+      hint: "Bioaccumulation up food chain",
+      a: <>Mercury is <Bold>not excreted</Bold> by the organisms that absorb it [1]. As each predator eats many prey, mercury becomes <Bold>more concentrated</Bold> at every step of the food chain (bioaccumulation / biomagnification), reaching toxic levels in fish eaten by humans [1].</> },
+
+    { id: "m15", diff: "medium", topic: "habitat", marks: 4, star: "★★★",
+      type: "calc",
+      q: "Argentina spends $10 million per year dredging silt from the River Plate estuary. 80% of the sediment comes from a deforested region 1800 km upstream covering 4% of the river's catchment. (a) Calculate the cost of dredging attributable to that 4% of the catchment. (b) Suggest why the silt comes mostly from this small area.",
+      hint: "% × total cost; tree roots gone",
+      a: <>(a) 80% × $10 million = <Bold>$8 million per year</Bold> [2]. (b) That region has been <Bold>deforested and overgrazed</Bold> [1], so there are no roots to hold the soil and rainfall washes large amounts of topsoil into the rivers [1].</> },
+
+    { id: "m16", diff: "medium", topic: "agri", marks: 3, star: "★★",
+      q: "Describe how monocultures can affect communities of plants and animals.",
+      hint: "Loss of diversity + chain effects",
+      a: <>Monoculture <Bold>displaces native plant and animal communities</Bold>, so biodiversity falls in farmland [1]. <Bold>Pollinators and natural pest predators</Bold> lose food and shelter, so their numbers fall [1]. Wildlife is restricted to small areas of <Bold>uncultivated land</Bold>, where populations are isolated and vulnerable [1].</> },
+
+    // ─────────────────── HARD / Extended ───────────────────
+    { id: "h1", diff: "hard", topic: "pollution", ext: true, marks: 6, star: "★★★",
+      q: "Compare and contrast the environmental impact of (i) using pesticides like dieldrin and (ii) using biological control to manage crop pests.",
+      hint: "Persistence + non-target + research",
+      a: <><Bold>Pesticides</Bold>: kill pests <Bold>quickly</Bold> [1] but are often <Bold>non-specific</Bold> — kill bees, ladybirds, soil invertebrates [1] and <Bold>persist in the environment</Bold>, bioaccumulating up the food chain so birds of prey are poisoned [1]. <Bold>Biological control</Bold>: introduces a natural predator/parasite of the pest, so it is <Bold>specific</Bold> and leaves no chemical residue [1]; however it requires <Bold>thorough research and testing</Bold> [1] — if released without care, the introduced species can become a pest itself or disrupt other food chains (e.g. Cactoblastis moth) [1].</> },
+
+    { id: "h2", diff: "hard", topic: "eutroph", ext: true, marks: 6, star: "★★★",
+      q: "Explain in detail how nitrates from fertilisers leaking into a river can lead to the deaths of fish.",
+      hint: "Five-step chain, name bacteria",
+      a: <>Nitrate (and phosphate) ions enrich the water, supplying nutrients that <Bold>aquatic algae use to grow rapidly</Bold> (algal bloom) [1]. The surface bloom <Bold>blocks sunlight</Bold>, so plants and algae below cannot photosynthesise and die [1]. <Bold>Aerobic bacteria</Bold> decompose the dead algae [1] and use <Bold>dissolved oxygen</Bold> in respiration [1]. The water becomes <Bold>deoxygenated</Bold> [1]. Fish and other aerobic animals <Bold>suffocate</Bold> because they cannot extract enough oxygen from the water [1].</> },
+
+    { id: "h3", diff: "hard", topic: "conservation", ext: true, marks: 5, star: "★★★",
+      q: "Explain why a small population is at greater risk of extinction than a large one.",
+      hint: "Genetic variation + adaptation",
+      a: <>A smaller population has a smaller <Bold>gene pool</Bold> and therefore <Bold>less genetic variation</Bold> [1]. With fewer alleles available, the species has <Bold>less chance of carrying advantageous alleles</Bold> that allow individuals to survive environmental change (new disease, climate shift) [1]. Inbreeding is more likely and may expose <Bold>harmful recessive alleles</Bold> [1]. The species' ability to adapt by <Bold>natural selection is reduced</Bold> [1], so even small changes can wipe the population out → extinction [1].</> },
+
+    { id: "h4", diff: "hard", topic: "conservation", ext: true, marks: 6, star: "★★",
+      q: "Define a sustainable resource using a named example, then explain how that resource is being managed sustainably.",
+      hint: "Forest or fish + 2-3 methods",
+      a: <>A sustainable resource is one <Bold>produced as rapidly as it is removed</Bold>, so it does not run out [1]. Named example: <Bold>commercial fish stocks</Bold> [1]. Management: <Bold>closed seasons</Bold> allow fish to spawn and breed without being caught [1]; <Bold>legal quotas</Bold> (e.g. EU Common Fisheries Policy) limit the tonnage and minimum size that can be landed [1]; <Bold>marine protected areas</Bold> exclude fishing entirely so populations rebuild [1]; <Bold>monitoring</Bold> by patrol vessels ensures rules are obeyed [1]. (Forest example with replanting + Smartlogging + protected areas also acceptable.)</> },
+
+    { id: "h5", diff: "hard", topic: "greenhouse", ext: true, marks: 4, star: "★★★",
+      q: "Explain why renewable energy sources are less likely to pollute than coal and oil.",
+      hint: "No combustion + no CO₂",
+      a: <>Renewables (solar, wind, hydro, tidal, wave) <Bold>do not burn fuel</Bold> [1], so they release <Bold>no CO₂</Bold> at the point of generation [1]. They also produce no SO₂ or NOₓ (acid-rain gases) [1] and no toxic particulates, smoke or fly ash, unlike combustion of coal or oil [1].</> },
+
+    { id: "h6", diff: "hard", topic: "greenhouse", ext: true, marks: 4, star: "★★★",
+      q: "Explain why CO₂ and methane are described as greenhouse gases.",
+      hint: "Absorb long-wave radiation",
+      a: <>They form a layer in the atmosphere [1] that <Bold>absorbs long-wavelength (infrared) radiation</Bold> re-emitted from the Earth's surface [1]. The trapped heat warms the lower atmosphere — similar to how the glass of a greenhouse traps heat [1]. This raises the surface temperature; an increase in their concentration leads to the <Bold>enhanced greenhouse effect</Bold> and global warming [1].</> },
+
+    { id: "h7", diff: "hard", topic: "conservation", ext: true, marks: 6, star: "★★★",
+      q: "Explain how the loss of a single plant species might affect (a) human health and (b) the prospect of developing new drought-resistant crop varieties.",
+      hint: "Drugs + gene pool",
+      a: <>(a) Many <Bold>modern medicines</Bold> are derived from plant compounds (e.g. quinine, aspirin, anti-cancer drugs from rainforest species) [1]. Loss of any species removes a <Bold>potentially valuable source of new drugs</Bold> [1]. (b) Crop breeders cross cultivated plants with <Bold>wild relatives</Bold> to introduce useful alleles (drought resistance, disease resistance, salt tolerance) [1]. Losing a wild species means <Bold>those alleles disappear from the global gene pool forever</Bold> [1] — they cannot be recovered [1] — so it becomes harder to breed new varieties able to withstand future climate change [1].</> },
+
+    { id: "h8", diff: "hard", topic: "conservation", ext: true, marks: 6, star: "★★",
+      q: "Explain how CITES and the WWF differ in their roles in conservation, and identify where their work overlaps.",
+      hint: "Treaty vs charity",
+      a: <><Bold>CITES</Bold> (Convention on International Trade in Endangered Species) is a <Bold>legal treaty between governments</Bold> [1] that <Bold>restricts or bans trade</Bold> in endangered animals and plants (e.g. snake skins, rhino horns) [1]. In 2020 it covered 183 countries and ~5800 animals and 30000 plants [1]. <Bold>WWF</Bold> (World Wide Fund for Nature) is an <Bold>NGO/charity</Bold> that raises money for conservation projects in over 100 countries [1]; it identifies threats, lobbies governments, runs awareness campaigns and supports habitat protection [1]. <Bold>Overlap</Bold>: both work to protect endangered species and their habitats; WWF supports policy and research that helps CITES enforce its bans [1].</> },
+
+    { id: "h9", diff: "hard", topic: "pollution", ext: true, marks: 6, star: "★★",
+      q: "Effects of non-biodegradable plastics on (i) terrestrial ecosystems and (ii) aquatic ecosystems.",
+      hint: "Landfill / animals / soil vs trap / micro / gills",
+      a: <>(i) <Bold>Terrestrial</Bold>: take up large amounts of <Bold>landfill space</Bold> [1]; attract <Bold>vermin and insects</Bold>, which may spread disease [1]; if burned they release <Bold>toxic fumes</Bold> (air pollution) [1]. (ii) <Bold>Aquatic</Bold>: trap and kill marine mammals/birds (nets, bottles) [1]; <Bold>microplastics</Bold> are eaten by fish, accumulate in stomachs and pass up the food chain [1]; plastics clog the <Bold>gills</Bold>, reducing gas exchange [1].</> },
+
+    { id: "h10", diff: "hard", topic: "habitat", ext: true, marks: 5, star: "★★",
+      q: "A farmer ploughs a steeply sloping field. Suggest in what direction the furrows should run and explain how this reduces soil erosion.",
+      hint: "Contour ploughing",
+      a: <>Furrows should run <Bold>across the slope (along the contours)</Bold>, not up–down [2]. Water that runs down the slope is <Bold>trapped by each furrow</Bold> [1] rather than rushing along gullies running downhill. This <Bold>slows the flow</Bold> so water has time to <Bold>soak into the soil</Bold> [1] instead of carrying topsoil away [1].</> },
+
+    { id: "h11", diff: "hard", topic: "habitat", ext: true, marks: 4, star: "★★",
+      q: "Suggest possible connections between (a) cutting down trees on hillsides and flooding in the valleys, and (b) clear-felling tropical forests and local climate change.",
+      hint: "Roots, soil, transpiration, cloud",
+      a: <>(a) Tree <Bold>roots bind the soil and absorb rainwater</Bold>; once trees are gone, water runs straight off the slope [1], carrying soil into rivers, which then silt up and <Bold>overflow into the valleys</Bold> [1]. (b) About half the rain over rainforest comes from <Bold>transpiration</Bold> of the trees themselves [1]; without trees, <Bold>cloud cover drops, less rainfall, daily temperature range widens</Bold> — the local climate becomes hotter and drier [1].</> },
+
+    { id: "h12", diff: "hard", topic: "agri", ext: true, marks: 4, star: "★★",
+      q: "Explain why intensive livestock production has both economic advantages and serious environmental drawbacks.",
+      hint: "Yield + automation vs slurry, disease",
+      a: <><Bold>Advantages</Bold>: very high yields of meat/milk/eggs per hectare [1]; many processes (feeding, milking, egg collection) can be <Bold>automated</Bold> — cheaper and less labour intensive [1]. <Bold>Drawbacks</Bold>: large quantities of slurry pollute water (eutrophication) [1]; animals in close confinement are <Bold>more vulnerable to disease</Bold> and have less disease resistance; the methods often raise welfare concerns [1].</> },
+
+    { id: "h13", diff: "hard", topic: "eutroph", ext: true, marks: 4, star: "★★★",
+      q: "What does biochemical oxygen demand (BOD) measure, and how does it indicate pollution?",
+      hint: "O₂ used by sample over fixed time",
+      a: <>BOD is the <Bold>amount of oxygen used up by a sample of water</Bold> over a <Bold>fixed period of time</Bold> at a fixed temperature [2]. A high BOD means many <Bold>aerobic micro-organisms are present and respiring rapidly</Bold> (decomposing organic pollution) [1]. The more polluted the water (sewage, slurry, dead algae), the <Bold>higher the BOD</Bold> — so BOD is used as an indicator of organic pollution [1].</> },
+
+    { id: "h14", diff: "hard", topic: "pollution", ext: true, marks: 5, star: "★★",
+      q: "Suggest why the introduction of foreign species can have catastrophic effects on native communities, using a named example.",
+      hint: "No predators + unchecked + food-web",
+      a: <>An introduced species usually has <Bold>no natural predators</Bold> in the new ecosystem [1], so its population grows unchecked [1] and it <Bold>outcompetes</Bold> native species for food or space [1]. Example: <Bold>brown tree snake on Guam</Bold> — accidentally introduced, it wiped out 10 of the 12 native bird species [1], which had been essential for seed dispersal and pollination, so even the forest plants suffered [1]. <i>(Other valid examples: rats on Galapagos; Opuntia in Australia; sea lamprey in Great Lakes.)</i></> },
+
+    { id: "h15", diff: "hard", topic: "greenhouse", ext: true, marks: 4, star: "★★",
+      q: "Are biofuels truly carbon neutral? Explain.",
+      hint: "Photosynthesis vs harvesting + extraction",
+      a: <>In theory yes — CO₂ released when biofuels are burned was previously <Bold>absorbed by the crop in photosynthesis</Bold> [1]. However: <Bold>harvesting, extraction and distillation</Bold> use fuel and produce CO₂ [1]; clearing forest to grow fuel crops <Bold>removes a carbon sink</Bold> and burning the cleared trees releases stored carbon [1]. Land used for fuel reduces land for food crops, raising food prices [1]. The net effect on atmospheric CO₂ is therefore <Bold>questionable</Bold>.</> },
+
+    // ═══════════════ NEW SME QUESTIONS (Save My Exams 2026) ═══════════════
+    // ───── EASY ─────
+    { id: "e23", diff: "easy", topic: "agri", marks: 5, star: "★★★",
+      type: "table",
+      q: "Complete the table by stating one way each chemical is useful to humans: (a) antibiotic, (b) fertiliser, (c) herbicide, (d) insecticide, (e) pectinase.",
+      hint: "Disease, nutrients, weeds, insects, juice clarity",
+      a: <>(a) <Bold>Antibiotic</Bold> — kills bacteria / treats bacterial infections [1]. (b) <Bold>Fertiliser</Bold> — supplies mineral ions (N, P, K) to crops so they grow well and yield more [1]. (c) <Bold>Herbicide</Bold> — kills weeds that compete with crops for light, water and ions [1]. (d) <Bold>Insecticide</Bold> — kills insect pests that damage or eat the crop [1]. (e) <Bold>Pectinase</Bold> — breaks down pectin in plant cell walls to clarify and increase the yield of fruit juice [1].</> },
+
+    { id: "e24", diff: "easy", topic: "pollution", marks: 4, star: "★★★",
+      q: "State four sources of water pollution other than raw sewage.",
+      hint: "Fertilisers, pesticides, industry, oil, plastic, thermal",
+      a: <>Any four of: <Bold>chemical fertilisers</Bold> (nitrates / phosphates running off fields) [1]; <Bold>pesticides</Bold> (herbicides &amp; insecticides) [1]; <Bold>industrial discharge</Bold> (heavy metals such as mercury / cadmium / lead) [1]; <Bold>oil spills</Bold> from tankers / refineries [1]; <Bold>non-biodegradable plastics</Bold> and microplastics [1]; <Bold>hot water</Bold> from power stations (thermal pollution) [1]; <Bold>livestock slurry</Bold> from intensive farming [1].</> },
+
+    { id: "e25", diff: "easy", topic: "pollution", marks: 1, star: "★★★",
+      q: "Define the term pathogen.",
+      hint: "Organism causing disease",
+      a: <>A pathogen is a <Bold>disease-causing organism</Bold> (e.g. a bacterium, virus, fungus or protoctist) [1].</> },
+
+    { id: "e26", diff: "easy", topic: "habitat", marks: 1, star: "★★★",
+      q: "State the ecological importance of maintaining biodiversity in an area.",
+      hint: "Stable ecosystem, food webs, services",
+      a: <>High biodiversity gives a <Bold>more stable ecosystem</Bold> with complex food webs, so disturbance to one species has less impact, and it ensures continued ecosystem services (pollination, pest control, nutrient cycling, soil formation) [1].</> },
+
+    { id: "e27", diff: "easy", topic: "conservation", marks: 4, star: "★★★", ext: true,
+      q: "Give four examples of how forests can be managed sustainably.",
+      hint: "Replant, quotas, selective, education",
+      a: <>Any four: <Bold>replanting</Bold> trees at the same rate they are removed [1]; <Bold>selective logging</Bold> of mature trees only (Smartlogging) leaves younger trees intact [1]; <Bold>legal quotas</Bold> on the volume that can be cut each year [1]; <Bold>protected areas</Bold> / national parks where logging is banned [1]; <Bold>education</Bold> of local communities (Rainforest Alliance) [1]; <Bold>recycling</Bold> paper and wood products [1].</> },
+
+    { id: "e28", diff: "easy", topic: "conservation", marks: 2, star: "★★★",
+      q: "Lack of food can reduce the size of an animal population in an ecosystem. State two other factors that could decrease population size.",
+      hint: "Predation, disease, abiotic",
+      a: <>Any two of: <Bold>predation</Bold> [1]; <Bold>disease</Bold> [1]; <Bold>competition</Bold> for water, mates or space [1]; <Bold>unfavourable abiotic conditions</Bold> (drought, low temperature, lack of light) [1]; <Bold>habitat destruction</Bold> by humans [1]; <Bold>pollution</Bold> [1].</> },
+
+    // ───── MEDIUM ─────
+    { id: "m17", diff: "medium", topic: "conservation", marks: 2, star: "★★★",
+      q: "The chimpanzee is endangered because its population has decreased greatly. Suggest two reasons why the chimpanzee population has decreased.",
+      hint: "Habitat + hunting + disease",
+      a: <>Any two of: <Bold>habitat destruction</Bold> by deforestation in central/western Africa [1]; <Bold>hunting</Bold> for bushmeat or capture for the pet trade [1]; <Bold>disease</Bold> (e.g. respiratory infections, Ebola) [1]; competition with humans for food / land [1].</> },
+
+    { id: "m18", diff: "medium", topic: "conservation", marks: 2, star: "★★★",
+      q: "Describe how a captive breeding programme can help to conserve chimpanzees in the wild.",
+      hint: "Bred safely + released into wild",
+      a: <>Chimpanzees are bred in <Bold>protected captivity (zoos / breeding centres)</Bold> away from poachers and habitat loss, so numbers can increase safely [1]. Healthy offspring can be <Bold>released back into the wild</Bold> to boost the wild population and its gene pool [1].</> },
+
+    { id: "m19", diff: "medium", topic: "agri", marks: 1, star: "★★★",
+      type: "calc",
+      q: "Fig. 1 (energy mix, 2011): Coal 41%, Oil 23%, Natural gas 8%, Solid biomass &amp; waste 23%, Nuclear &amp; renewables 5%. Calculate the total percentage of energy that came from fossil fuels.",
+      hint: "Coal + oil + natural gas",
+      a: <>Fossil fuels = coal + oil + natural gas = 41 + 23 + 8 = <Bold>72%</Bold> [1].</> },
+
+    { id: "m20", diff: "medium", topic: "greenhouse", marks: 3, star: "★★★",
+      q: "In a simplified carbon cycle, arrows connect 'atmosphere ⇌ plants ⇌ animals' and 'fossil fuels → atmosphere'. (i) Name two processes (other than combustion) that release CO₂ into the atmosphere. (ii) Name one process that removes CO₂ from the atmosphere.",
+      hint: "Respiration, decomposition / photosynthesis",
+      a: <>(i) Any two of <Bold>respiration</Bold> (plants, animals, microbes) [1] and <Bold>decomposition / decay</Bold> of dead organisms by bacteria and fungi [1]. (ii) <Bold>Photosynthesis</Bold> by plants and algae fixes CO₂ into organic compounds [1].</> },
+
+    { id: "m21", diff: "medium", topic: "habitat", marks: 2, star: "★★★",
+      type: "calc",
+      q: "Forest cleared per year in Brazil: 2006 = 14 286 km²; 2007 = 12 651; 2008 = 11 911; 2009 = 7 464; 2010 = 7 000. (a) Calculate the mean area removed per year (2006–2010). (b) Describe the trend.",
+      hint: "Sum ÷ 5 → decreasing",
+      a: <>(a) Total = 14 286 + 12 651 + 11 911 + 7 464 + 7 000 = 53 312 km². Mean = 53 312 ÷ 5 = <Bold>10 662 km² per year</Bold> (accept 10 660) [2]. (b) The area of forest removed each year is <Bold>decreasing</Bold> (deforestation rate is falling year on year) [1].</> },
+
+    { id: "m22", diff: "medium", topic: "habitat", marks: 2, star: "★★",
+      q: "Suggest two reasons why annual deforestation in Brazil declined between 2006 and 2010.",
+      hint: "Policy + economy + protection",
+      a: <>Any two of: stronger <Bold>government legislation</Bold> and enforcement against illegal logging [1]; expansion of <Bold>protected areas / national parks</Bold> [1]; international <Bold>pressure and trade restrictions</Bold> on beef and soy from cleared land [1]; reduced demand or falling commodity prices [1]; greater <Bold>public awareness</Bold> and consumer pressure (e.g. Rainforest Alliance) [1].</> },
+
+    { id: "m23", diff: "medium", topic: "agri", marks: 5, star: "★★★", ext: true,
+      q: "Cattle manure contains protein. Explain how this protein is converted into the ions that plants can absorb from the soil.",
+      hint: "Decay → amino acids → ammonium → nitrite → nitrate",
+      a: <><Bold>Decomposers</Bold> (saprophytic bacteria and fungi) digest manure using extracellular enzymes [1]. Proteins are broken down to <Bold>amino acids</Bold> [1]; deamination releases <Bold>ammonium (NH₄⁺) ions</Bold> [1]. <Bold>Nitrifying bacteria</Bold> in the soil convert ammonium first to <Bold>nitrite (NO₂⁻)</Bold> then to <Bold>nitrate (NO₃⁻)</Bold> [1]. Nitrate ions are taken up by plant roots by <Bold>active transport</Bold> and used to build amino acids and proteins [1].</> },
+
+    { id: "m24", diff: "medium", topic: "agri", marks: 4, star: "★★★", ext: true,
+      type: "calc",
+      q: "Average root nodules per snap bean plant: Field 3 (large manure) = 155; Field 4 (no manure) = 95. (a) Calculate the percentage increase in nodule number when grown with large manure compared with no manure (2 s.f.). (b) Suggest the advantage to farmers of having many root nodules.",
+      hint: "% increase = (155−95)/95 × 100",
+      a: <>(a) Increase = 155 − 95 = 60. % increase = (60 ÷ 95) × 100 = 63.157…% = <Bold>63%</Bold> (2 s.f.) [3]. (b) Nodules contain <Bold>nitrogen-fixing bacteria</Bold> that convert atmospheric N₂ into ammonium / nitrates for the plant, so <Bold>less chemical fertiliser is needed</Bold> and yields stay high — saving money [1].</> },
+
+    { id: "m25", diff: "medium", topic: "conservation", marks: 2, star: "★★",
+      q: "Seeds of many endangered tree species are kept in seed banks. Suggest why it is important to collect seeds from many individual trees of each species rather than just one tree.",
+      hint: "Genetic diversity",
+      a: <>Different individuals carry <Bold>different alleles</Bold>, so collecting seeds from many trees preserves a <Bold>wider gene pool</Bold> [1]. A larger gene pool gives a better chance that some seeds will carry alleles for resistance to disease or climate change, so future populations can <Bold>adapt and avoid extinction</Bold> [1].</> },
+
+    // ───── HARD ─────
+    { id: "h16", diff: "hard", topic: "pollution", ext: true, marks: 3, star: "★★★",
+      type: "calc",
+      q: "Mean nitrate concentration: Site A (upstream of fertiliser factory) = 20 mg dm⁻³; Site B (downstream) = 63 mg dm⁻³. Calculate the percentage difference between A and B and state the nature of the difference.",
+      hint: "% diff = (63−20)/20 × 100",
+      a: <>Difference = 63 − 20 = 43 mg dm⁻³. % difference = (43 ÷ 20) × 100 = <Bold>215%</Bold> [2]. Site B (downstream of the factory) has a <Bold>much higher nitrate concentration</Bold> than Site A — the factory effluent is enriching the river with nitrates [1].</> },
+
+    { id: "h17", diff: "hard", topic: "pollution", ext: true, marks: 3, star: "★★",
+      q: "Tests showed high levels of cadmium (a heavy metal) in the water at Site B. Top carnivores contained the highest cadmium concentration, stored in fat. Suggest the risk this poses to the river ecosystem.",
+      hint: "Bioaccumulation + biomagnification + top predator deaths",
+      a: <>Cadmium is <Bold>not excreted or broken down</Bold>, so it accumulates in fat (bioaccumulation) [1]. At each step of the food chain, predators eat many prey, so cadmium becomes <Bold>more concentrated up the food chain</Bold> (biomagnification) [1]. Top carnivores reach <Bold>lethal levels</Bold> and die; loss of top predators destabilises the food web and reduces biodiversity throughout the river [1].</> },
+
+    { id: "h18", diff: "hard", topic: "agri", ext: true, marks: 3, star: "★★★",
+      q: "Explain three disadvantages of monoculture farming such as oil palm plantations.",
+      hint: "Pests/disease + nutrients + biodiversity",
+      a: <>Any three: a single crop is highly vulnerable to <Bold>pests and disease</Bold> that target that species — entire crop can be wiped out [1]; the same nutrients are removed every season, so <Bold>soil fertility falls</Bold> and large amounts of fertiliser are needed [1]; <Bold>biodiversity is severely reduced</Bold> — native plants and animals are displaced, pollinators and natural pest predators lose habitat [1]; reliance on a single product makes farmers <Bold>vulnerable to price collapse</Bold> in the world market [1].</> },
+
+    { id: "h19", diff: "hard", topic: "pollution", ext: true, marks: 4, star: "★★",
+      q: "Describe four results from the Pacific Ocean plastic-waste survey (1965–2015) shown in a typical bar chart: plastic concentration inside the Great Pacific Garbage Patch (GPGP) rose from ~0.4 to ~1.2 kg km⁻² and outside it rose from ~0.05 to ~0.35 kg km⁻².",
+      hint: "Use figures + compare + describe trend",
+      a: <>Plastic waste concentration <Bold>increased overall</Bold> across the whole study period (1965–2015) [1]. Concentrations were <Bold>always higher inside the GPGP than outside</Bold> in every time interval [1]. Inside the GPGP, levels were roughly stable around 0.4 kg km⁻² from 1965–1994, then rose sharply to ~1.2 kg km⁻² by 2015 — about a <Bold>threefold increase</Bold> [1]. Outside the GPGP the rise was more gradual: from ~0.05 to ~0.35 kg km⁻² — about a <Bold>sevenfold increase</Bold>, showing pollution is now spreading well beyond the patch itself [1].</> },
+
+    { id: "h20", diff: "hard", topic: "pollution", ext: true, marks: 2, star: "★★",
+      q: "Suggest two ways to reduce the quantity of plastic waste reaching the oceans.",
+      hint: "Reduce + reuse + recycle + biodegradable",
+      a: <>Any two of: <Bold>recycle</Bold> plastic into new products (bottles, fleece, building materials) [1]; <Bold>reuse</Bold> bottles, bags and containers (reusable shopping bags, deposit-return schemes) [1]; <Bold>ban or tax single-use plastics</Bold> (straws, bags, microbeads) [1]; develop <Bold>biodegradable</Bold> or plant-based alternatives [1]; improve <Bold>waste collection and disposal</Bold> in coastal regions [1].</> },
+
+    // ═══════════════ MULTIPLE CHOICE QUESTIONS (Save My Exams 2026) ═══════════════
+    // ───── EASY MCQ ─────
+    { id: "mcq1", diff: "easy", topic: "agri", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which of the following would be a <Bold>negative</Bold> feature of monoculture crops on an ecosystem?<br/>A. Monoculture crops produce more food.<br/>B. Monoculture crops produce less food.<br/>C. The genetic variation of organisms is reduced.<br/>D. Crops need harvesting at the same time.</>,
+      hint: "Single species → narrow gene pool",
+      a: <><Bold>C</Bold> — monoculture grows only one species, so wild plant/animal communities are displaced and overall genetic diversity in that land falls sharply [1].</> },
+
+    { id: "mcq2", diff: "easy", topic: "habitat", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which effect is <Bold>least likely</Bold> to result from deforestation?<br/>A. A greater risk of flooding.<br/>B. An increase in biodiversity.<br/>C. An increase in soil erosion.<br/>D. An increase in atmospheric carbon dioxide.</>,
+      hint: "Deforestation always reduces biodiversity",
+      a: <><Bold>B</Bold> — clearing trees removes habitats and food for many species, so biodiversity <Bold>decreases</Bold>, not increases [1]. A, C and D are all genuine consequences of deforestation.</> },
+
+    { id: "mcq3", diff: "easy", topic: "agri", marks: 1, star: "★★★", type: "mcq",
+      q: <>A non-selective herbicide is sprayed on a field; some runs off into a nearby stream. What is the effect on weeds in the field and plants in the stream?<br/>A. weeds more growth · stream less growth<br/>B. weeds less growth · stream more growth<br/>C. weeds less growth · stream less growth<br/>D. weeds more growth · stream more growth</>,
+      hint: "Non-selective = kills all plants",
+      a: <><Bold>C</Bold> — a non-selective herbicide kills <Bold>any plant</Bold> it contacts, so weeds in the field die and plants in the stream also die [1].</> },
+
+    { id: "mcq4", diff: "easy", topic: "agri", marks: 1, star: "★★★", type: "mcq",
+      q: <>Low concentrations of insecticide are sprayed on crops to raise yield, but insecticides also harm wildlife. Why?<br/>A. Insecticides kill other plants.<br/>B. Insecticides cause acid rain.<br/>C. Insecticides enter the food chain.<br/>D. Insecticides increase nitrates in the soil.</>,
+      hint: "Bioaccumulation up the food chain",
+      a: <><Bold>C</Bold> — insecticide residues are absorbed by insects (and other organisms), then build up in predators along the food chain (bioaccumulation), reaching toxic levels in top carnivores [1].</> },
+
+    { id: "mcq5", diff: "easy", topic: "pollution", marks: 1, star: "★★★", type: "mcq",
+      q: <>A factory empties pollutants into a river. Indicator species found near the outflow include rat-tailed maggot, sludge worm and blood worm; further downstream, mayfly nymph and stonefly nymph return. Which animal lives in the most polluted area?<br/>A. Shrimp<br/>B. Sludge worm<br/>C. Leech<br/>D. Snail</>,
+      hint: "Tolerant of very low oxygen",
+      a: <><Bold>B</Bold> — sludge worm (along with rat-tailed maggot and blood worm) tolerates very low oxygen levels and is found in the most polluted, organically-enriched zone right at the outflow [1].</> },
+
+    { id: "mcq6", diff: "easy", topic: "conservation", marks: 1, star: "★★★", type: "mcq",
+      q: <>What could help to prevent a species from becoming endangered?<br/>A. A captive breeding programme<br/>B. Deforestation<br/>C. Introduction of other species<br/>D. Pollution</>,
+      hint: "Boosts numbers in protected settings",
+      a: <><Bold>A</Bold> — captive breeding raises numbers in protected conditions and offspring can be released to boost wild populations [1]. B, C and D are all <Bold>causes</Bold> of endangerment.</> },
+
+    { id: "mcq7", diff: "easy", topic: "conservation", marks: 1, star: "★★★", type: "mcq",
+      q: <>What helps to maintain fish stocks?<br/>A. Fishing during all seasons<br/>B. Fishing in all areas of the oceans<br/>C. Maintaining protected areas<br/>D. Reducing the mesh size of nets</>,
+      hint: "Sanctuaries allow rebuilding",
+      a: <><Bold>C</Bold> — marine protected areas exclude fishing so populations can breed and recover [1]. A, B and smaller mesh sizes all <Bold>worsen</Bold> overfishing.</> },
+
+    { id: "mcq8", diff: "easy", topic: "eutroph", marks: 1, star: "★★★", type: "mcq",
+      q: <>During eutrophication, what is <Bold>directly</Bold> responsible for the rise in decomposers?<br/>A. A decrease in dissolved oxygen concentration<br/>B. An increase in nitrate concentration<br/>C. An increase in the population of algae<br/>D. An increase in the death of producers</>,
+      hint: "Decomposers eat dead organic matter",
+      a: <><Bold>D</Bold> — decomposers feed on <Bold>dead</Bold> producers (algae and underwater plants), so their numbers rise once these die off. (Higher nitrates and bigger algal blooms come earlier in the chain.)</> },
+
+    // ───── MEDIUM MCQ ─────
+    { id: "mcq9", diff: "medium", topic: "pollution", marks: 1, star: "★★★", type: "mcq",
+      q: <>A graph shows the number of lichen species falling sharply as sulfur dioxide concentration rises. Which statement best describes it?<br/>A. Sulfur dioxide levels do not affect lichen growth.<br/>B. As sulfur dioxide levels increase, the number of lichen species decreases.<br/>C. Lichens cannot survive if there is any sulfur dioxide present.<br/>D. As sulfur dioxide levels increase, so does the number of lichen species.</>,
+      hint: "Negative correlation, not zero tolerance",
+      a: <><Bold>B</Bold> — there is a clear negative correlation. The curve does not reach zero immediately, so C is too strong; lichens are good indicators of air quality because they are sensitive (but not absolutely) to SO₂ [1].</> },
+
+    { id: "mcq10", diff: "medium", topic: "pollution", marks: 1, star: "★★★", type: "mcq",
+      q: <>Plastic pollution statements: (1) Animals try to eat plastic or become entangled in it; (2) It breaks down into micro-particles that wash into rivers; (3) As plastic breaks down it releases toxins; (4) Filter feeders such as mussels ingest microparticles, entering the food chain. Which statements apply to <Bold>both</Bold> marine and terrestrial habitats?<br/>A. 1, 2 and 3<br/>B. 2 and 4 only<br/>C. 1 and 3 only<br/>D. 3 only</>,
+      hint: "Filter feeding = aquatic only",
+      a: <><Bold>C</Bold> — entanglement/ingestion (1) and toxin release (3) happen on land and in water. Run-off to rivers (2) and filter feeding (4) are inherently aquatic [1].</> },
+
+    { id: "mcq11", diff: "medium", topic: "agri", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which agricultural practice is most likely to cause <Bold>water pollution</Bold>?<br/>A. Cutting down trees to create space for crops.<br/>B. Adding fertilisers to the soil.<br/>C. Digging plant material into the crop.<br/>D. Growing high-yield crops.</>,
+      hint: "Soluble nitrates and phosphates run off",
+      a: <><Bold>B</Bold> — soluble nitrates and phosphates leach from soil into rivers and lakes, causing eutrophication [1]. Deforestation causes other harms but is not the main agricultural source of <Bold>water</Bold> pollution.</> },
+
+    { id: "mcq12", diff: "medium", topic: "greenhouse", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which pair of gases <Bold>both</Bold> contribute to climate change?<br/>A. Oxygen and methane<br/>B. Sulfur dioxide and methane<br/>C. Carbon dioxide and methane<br/>D. Carbon dioxide and sulfur dioxide</>,
+      hint: "Two main greenhouse gases",
+      a: <><Bold>C</Bold> — CO₂ and CH₄ are the two main greenhouse gases that trap long-wavelength radiation, enhancing the greenhouse effect [1]. Sulfur dioxide causes acid rain, not climate change.</> },
+
+    { id: "mcq13", diff: "medium", topic: "conservation", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which is a reason for conserving plant species?<br/>A. To obtain drugs for medicinal use.<br/>B. To decrease rainfall.<br/>C. To absorb oxygen from the air.<br/>D. To release carbon dioxide into the atmosphere.</>,
+      hint: "Many medicines are plant-derived",
+      a: <><Bold>A</Bold> — many medicines (quinine, aspirin, anti-cancer drugs) come from plant compounds. Losing a species removes a potential drug source [1]. Plants release O₂ and absorb CO₂, the opposite of C and D.</> },
+
+    { id: "mcq14", diff: "medium", topic: "agri", marks: 1, star: "★★★", type: "mcq",
+      q: <>What is a negative impact of large-scale monocultures?<br/>A. Crops need harvesting at the same time.<br/>B. Monocultures produce different types of food.<br/>C. Monocultures produce more food.<br/>D. The genetic variation of organisms is reduced.</>,
+      hint: "One species → narrow gene pool + biodiversity loss",
+      a: <><Bold>D</Bold> — only one species is grown, so the genetic variation of organisms in that landscape (including displaced wild species) falls sharply, making the system vulnerable to disease [1].</> },
+
+    { id: "mcq15", diff: "medium", topic: "greenhouse", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which factors are believed to have contributed to the rise in sea levels?<br/>A. Pollution of the air by carbon dioxide only.<br/>B. Pollution of the air by carbon dioxide and methane.<br/>C. Pollution of the sea by plastics only.<br/>D. Pollution of the sea by insecticides and nuclear fall-out.</>,
+      hint: "Two greenhouse gases drive warming → ice melts",
+      a: <><Bold>B</Bold> — CO₂ and methane enhance the greenhouse effect; the resulting global warming melts polar ice and causes thermal expansion of seawater, raising sea levels [1].</> },
+
+    { id: "mcq16", diff: "medium", topic: "eutroph", marks: 1, star: "★★★", type: "mcq",
+      q: <>Sequence after fertiliser runoff enters a lake: fertiliser runoff → algal bloom → <Bold>X</Bold> → dissolved oxygen decreases → fish die. What is process X?<br/>A. Increased respiration by decomposers.<br/>B. Increased photosynthesis by algae.<br/>C. Increased feeding by fish.<br/>D. Increased nitrate absorption by plants.</>,
+      hint: "What uses up the oxygen?",
+      a: <><Bold>A</Bold> — algae below the bloom die; aerobic decomposers break them down and use up dissolved oxygen during respiration, so fish suffocate [1].</> },
+
+    // ───── HARD MCQ ─────
+    { id: "mcq17", diff: "hard", topic: "eutroph", marks: 1, star: "★★★", type: "mcq",
+      q: <>A graph along a river shows dissolved oxygen (dashed line) and mineral ions (dotted line) at points A, B, C, D. Dissolved oxygen drops sharply just after A, reaches a minimum near C, then recovers. Mineral ions are low before A and spike high right after A. At which point does <Bold>raw sewage</Bold> enter the river?<br/>A · B · C · D</>,
+      hint: "Sewage adds nutrients (mineral spike) and depletes O₂",
+      a: <><Bold>A</Bold> — sewage immediately raises mineral ion (nitrate / phosphate) concentration. Microbial respiration on the organic content drops dissolved oxygen shortly afterwards. Further downstream, both recover as the pollution disperses [1].</> },
+
+    { id: "mcq18", diff: "hard", topic: "pollution", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which describes the effect of nuclear fall-out pollution?<br/>A. Acid rain<br/>B. Deforestation<br/>C. Global warming<br/>D. Increased mutation rate</>,
+      hint: "Ionising radiation alters DNA",
+      a: <><Bold>D</Bold> — ionising radiation from radioactive fall-out damages DNA, raising the rate of mutation in exposed organisms (including humans) and increasing the risk of cancers and inherited disorders [1].</> },
+
+    { id: "mcq19", diff: "hard", topic: "conservation", marks: 1, star: "★★★", ext: true, type: "mcq",
+      q: <>Conservation technique statements: (1) Artificial insemination removes the need for male and female to be in the same area; (2) AI offspring have less genetic variation than their parents; (3) IVF produces large numbers of offspring without gametes fusing; (4) These techniques increase species resilience and lower extinction risk. Which statements are <Bold>false</Bold>?<br/>A. 1, 2 and 3<br/>B. 2 and 3 only<br/>C. 2 and 4 only<br/>D. 1, 3 and 4</>,
+      hint: "AI/IVF still need gametes to fuse",
+      a: <><Bold>B</Bold> — (1) and (4) are true: AI removes the need for natural mating and these methods do improve resilience. (2) is false — offspring inherit a <Bold>recombination</Bold> of parental alleles, so they show normal genetic variation. (3) is false — IVF means <Bold>in vitro</Bold> fertilisation, so gametes <Bold>do</Bold> fuse, just outside the body [1].</> },
+
+    { id: "mcq20", diff: "hard", topic: "eutroph", marks: 1, star: "★★★", ext: true, type: "mcq",
+      q: <>Rapid algal growth follows nitrate runoff into a reservoir. Changes: (1) increased aerobic respiration by decomposers; (2) decrease in dissolved oxygen; (3) fish and aquatic animals die; (4) producers die and decomposition increases. In which order do these occur?<br/>A. 1 → 2 → 4 → 3<br/>B. 3 → 1 → 2 → 4<br/>C. 4 → 1 → 2 → 3<br/>D. 4 → 3 → 1 → 2</>,
+      hint: "Death of producers comes first, then bacteria",
+      a: <><Bold>C</Bold> — order: producers below the surface die (light blocked) → decomposers respire on the dead matter → oxygen falls → fish suffocate [1].</> },
+
+    { id: "mcq21", diff: "hard", topic: "conservation", marks: 1, star: "★★★", type: "mcq",
+      q: <>Which is the correct definition of a <Bold>sustainable resource</Bold>?<br/>A. A resource that can be replaced.<br/>B. A resource that is running out.<br/>C. Making sure that needs are met for future generations.<br/>D. A resource that can be replenished as quickly as it is used.</>,
+      hint: "Rate of replacement ≥ rate of removal",
+      a: <><Bold>D</Bold> — a sustainable resource is produced at least as rapidly as it is removed, so the supply does not run out [1]. C describes sustainable <Bold>development</Bold>, a related but broader concept.</> },
+  ];
+
+  // Topic palette
+  const topics = [
+    { id: "all", label: "All topics", color: RD },
+    { id: "agri", label: "Agriculture", color: "#b5540a" },
+    { id: "habitat", label: "Habitat / Deforestation", color: "#2d6a4f" },
+    { id: "pollution", label: "Pollution", color: "#9b2c2c" },
+    { id: "eutroph", label: "Eutrophication", color: "#3a5fa8" },
+    { id: "greenhouse", label: "Greenhouse / Climate", color: "#5b3fa6" },
+    { id: "conservation", label: "Conservation", color: "#1a7a6e" },
+  ];
+
+  const diffs = [
+    { id: "all",    label: "All",    color: RD,        bg: RL },
+    { id: "easy",   label: "Easy",   color: "#1a7a3a", bg: "#e8f7ec" },
+    { id: "medium", label: "Medium", color: "#b85c00", bg: "#fff4e6" },
+    { id: "hard",   label: "Hard",   color: "#b02020", bg: "#fdf0f0" },
+  ];
+
+  const filtered = qs.filter(q =>
+    (diff === "all" || q.diff === diff) &&
+    (topic === "all" || q.topic === topic)
+  );
+  const totalMarks = filtered.reduce((s, q) => s + q.marks, 0);
+  const revealedCount = filtered.filter(q => rev[q.id]).length;
+
+  const dCount = id => id === "all" ? qs.length : qs.filter(q => q.diff === id).length;
+  const tCount = id => id === "all" ? qs.length : qs.filter(q => q.topic === id).length;
+
+  return (
+    <div>
+      {/* Header banner */}
+      <div style={{ background: RL, border: `1px solid ${RD}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: RD, fontWeight: 600 }}>
+        🎯 <Bold>Exam Practice — Infinite Test Bank</Bold> · filter by difficulty and topic
+      </div>
+
+      {/* Difficulty filter */}
+      <div style={{ fontSize: 10, fontWeight: 700, color: "#888", letterSpacing: 1, marginBottom: 5 }}>DIFFICULTY</div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {diffs.map(d => (
+          <button key={d.id} onClick={() => setDiff(d.id)} style={{
+            padding: "6px 12px", borderRadius: 6,
+            border: diff === d.id ? `1.5px solid ${d.color}` : `1px solid ${BD}`,
+            background: diff === d.id ? d.color : "#fff",
+            color: diff === d.id ? "#fff" : d.color,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {d.label} ({dCount(d.id)})
+          </button>
+        ))}
+      </div>
+
+      {/* Topic filter */}
+      <div style={{ fontSize: 10, fontWeight: 700, color: "#888", letterSpacing: 1, marginBottom: 5 }}>TOPIC</div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {topics.map(t => (
+          <button key={t.id} onClick={() => setTopic(t.id)} style={{
+            padding: "6px 10px", borderRadius: 6,
+            border: topic === t.id ? `1.5px solid ${t.color}` : `1px solid ${BD}`,
+            background: topic === t.id ? t.color : "#fff",
+            color: topic === t.id ? "#fff" : t.color,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {t.label} ({tCount(t.id)})
+          </button>
+        ))}
+      </div>
+
+      {/* Stats */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "8px 12px", background: "#f7f7f4", borderRadius: 6, fontSize: 11,
+        color: GR, marginBottom: 14, border: `1px solid ${BD}` }}>
+        <span><Bold>{filtered.length}</Bold> questions · <Bold>{totalMarks}</Bold> marks · <Bold>{revealedCount}</Bold> revealed</span>
+        <button onClick={() => setRev({})} style={{
+          padding: "4px 10px", fontSize: 10, fontWeight: 700,
+          background: "#fff", color: GR, border: `1px solid ${BD}`,
+          borderRadius: 4, cursor: "pointer",
+        }}>Hide all</button>
+      </div>
+
+      {/* Question cards */}
+      {filtered.map(q => {
+        const dInfo = diffs.find(d => d.id === q.diff);
+        const tInfo = topics.find(t => t.id === q.topic);
+        const isRev = rev[q.id];
+        return (
+          <div key={q.id} style={{
+            background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${tInfo.color}`,
+            borderRadius: 8, padding: "12px 14px", marginBottom: 10,
+          }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", marginBottom: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: dInfo.bg, color: dInfo.color, borderRadius: 3 }}>{dInfo.label.toUpperCase()}</span>
+              <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: "#f5f5f3", color: tInfo.color, borderRadius: 3, border: `1px solid ${tInfo.color}33` }}>{tInfo.label}</span>
+              {q.ext && <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: PL, color: PU, borderRadius: 3 }}>EXT</span>}
+              {q.type && <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px",
+                background: "#eef", color: "#446", borderRadius: 3 }}>{q.type.toUpperCase()}</span>}
+              <span style={{ fontSize: 10, color: "#b85c00", marginLeft: 2 }}>{q.star}</span>
+              <span style={{ marginLeft: "auto", fontSize: 10, fontWeight: 700, color: GR,
+                background: "#f5f5f3", padding: "2px 8px", borderRadius: 4 }}>{q.marks} marks</span>
+            </div>
+
+            <div style={{ fontSize: 12.5, lineHeight: 1.55, color: GR, marginBottom: 8 }}>
+              <Bold>Q{q.id.toUpperCase()}.</Bold> {q.q}
+            </div>
+
+            {!isRev && q.hint && (
+              <div style={{ fontSize: 11, color: "#888", fontStyle: "italic", marginBottom: 8 }}>
+                💡 Hint: {q.hint}
+              </div>
+            )}
+
+            <button onClick={() => toggle(q.id)} style={{
+              padding: "5px 12px", fontSize: 11, fontWeight: 700,
+              background: isRev ? "#f5f5f3" : RD, color: isRev ? GR : "#fff",
+              border: isRev ? `1px solid ${BD}` : "none", borderRadius: 4, cursor: "pointer",
+            }}>
+              {isRev ? "Hide answer" : "Show answer"}
+            </button>
+
+            {isRev && (
+              <div style={{ marginTop: 10, padding: "10px 12px", background: RL,
+                borderRadius: 6, fontSize: 12, lineHeight: 1.6, color: GR, border: `1px solid ${RD}33` }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: RD, marginBottom: 4 }}>MODEL ANSWER</div>
+                {q.a}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <div style={{ marginTop: 16, padding: "10px 14px", background: "#f7f7f4",
+        borderRadius: 6, fontSize: 10, color: "#888", textAlign: "center", border: `1px solid ${BD}` }}>
+        Infinite test mode: <Bold>{qs.length}</Bold> questions loaded · filters applied
+      </div>
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ③ SUMMARY TAB — concept flow & key tables
+// ════════════════════════════════════════════════════════════════════════════
+function SummaryTab() {
+  const section = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${PU}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 14 };
+  const h = { fontSize: 13, fontWeight: 800, color: PU, marginBottom: 10, letterSpacing: 0.3 };
+  const td = { padding: "7px 9px", fontSize: 11.5, color: GR, border: `1px solid ${BD}` };
+  const th = { padding: "7px 9px", fontSize: 11, fontWeight: 700, color: "#fff", background: PU, border: `1px solid ${PU}`, textAlign: "left" };
+
+  return (
+    <div>
+      <div style={{ background: PL, border: `1px solid ${PU}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: PU, fontWeight: 600 }}>
+        📊 <Bold>Summary</Bold> · concept flow, comparison tables, and big-picture overview
+      </div>
+
+      {/* Key terms table */}
+      <div style={section}>
+        <div style={h}>★ KEY TERMS — definitions you must know</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Term</th><th style={th}>Definition</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Monoculture</Bold></td><td style={td}>Dense population of a single crop species, planted repeatedly.</td></tr>
+            <tr><td style={td}><Bold>Herbicide</Bold></td><td style={td}>Chemical that kills plants competing with the crop (weeds).</td></tr>
+            <tr><td style={td}><Bold>Insecticide</Bold></td><td style={td}>Chemical that kills insect pests of the crop.</td></tr>
+            <tr><td style={td}><Bold>Biodiversity</Bold></td><td style={td}>Number of different species living in an area.</td></tr>
+            <tr><td style={td}><Bold>Deforestation</Bold></td><td style={td}>Large-scale removal of trees from a forest area.</td></tr>
+            <tr><td style={td}><Bold>Eutrophication</Bold></td><td style={td}>Enrichment of water with nutrients, leading to excess plant growth and O₂ loss.</td></tr>
+            <tr><td style={td}><Bold>BOD</Bold></td><td style={td}>Biochemical oxygen demand — O₂ used by a water sample in a fixed time. Higher = more polluted.</td></tr>
+            <tr><td style={td}><Bold>Non-biodegradable</Bold></td><td style={td}>Material that decomposers cannot break down — persists in the environment.</td></tr>
+            <tr><td style={td}><Bold>Enhanced greenhouse effect</Bold></td><td style={td}>Extra warming caused by human-driven build-up of greenhouse gases.</td></tr>
+            <tr><td style={td}><Bold>Sustainable resource</Bold></td><td style={td}>One produced as fast as it is removed, so it does not run out.</td></tr>
+            <tr><td style={td}><Bold>Captive breeding</Bold></td><td style={td}>Boosting numbers of an endangered species by breeding it in protected conditions then releasing offspring.</td></tr>
+            <tr><td style={td}><Bold>AI</Bold> <Ext/></td><td style={td}>Artificial insemination — sperm collected from a male is introduced into the female's reproductive system.</td></tr>
+            <tr><td style={td}><Bold>IVF</Bold> <Ext/></td><td style={td}>In vitro fertilisation — eggs and sperm joined in laboratory glassware; embryos placed in the female.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Intensive livestock farming summary table (SME-aligned) */}
+      <div style={section}>
+        <div style={h}>★ INTENSIVE LIVESTOCK FARMING — advantages vs disadvantages</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Advantages</th><th style={th}>Disadvantages</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style={td}>Less land used per kg of food → much higher productivity per hectare.</td>
+              <td style={td}>Cruel treatment of animals — confinement, mutilation, no natural behaviour (ethical concerns).</td>
+            </tr>
+            <tr>
+              <td style={td}>Food produced year-round in controlled, heated indoor environments.</td>
+              <td style={td}>Habitats are destroyed to clear land for housing huge numbers of livestock.</td>
+            </tr>
+            <tr>
+              <td style={td}>Lower production cost → cheaper food for consumers.</td>
+              <td style={td}>Where land is used to graze cattle, only grass grows → effectively a monoculture → biodiversity falls.</td>
+            </tr>
+            <tr>
+              <td style={td}>Automation (feeding, milking, egg collection) reduces labour.</td>
+              <td style={td}>Overgrazing causes soil compaction and erosion.</td>
+            </tr>
+            <tr>
+              <td style={td}>Yield boosted by confined space (less movement), high-energy feeds, antibiotics and heated sheds.</td>
+              <td style={td}>Cattle produce large amounts of <Bold>methane</Bold> → enhanced greenhouse effect.</td>
+            </tr>
+            <tr>
+              <td style={td}>Animals sheltered from predators and bad weather.</td>
+              <td style={td}>Slurry washed into rivers → eutrophication; close confinement → rapid disease spread.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Eutrophication flowchart */}
+      <div style={section}>
+        <div style={h}>★ EUTROPHICATION — the 5-step death chain</div>
+        <EutrophicationSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          The key examiner expectations: <KW c={PU}>nitrates &amp; phosphates</KW> from fertilisers / sewage / detergents → <Bold>algal bloom</Bold> → <Bold>light blocked</Bold> → submerged plants die → <Bold>bacteria decompose &amp; use O₂</Bold> → fish suffocate. The water is then said to be deoxygenated and has a <Bold>high BOD</Bold>.
+        </div>
+      </div>
+
+      {/* Greenhouse effect */}
+      <div style={section}>
+        <div style={h}>★ GREENHOUSE EFFECT &amp; CLIMATE CHANGE</div>
+        <GreenhouseSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          <Bold>Short waves penetrate</Bold> → Earth absorbs and re-emits <Bold>long waves</Bold> → trapped by greenhouse gases → surface warms. The <KW c={PU}>enhanced</KW> greenhouse effect comes from extra <Bold>CO₂</Bold> (fossil fuels, deforestation) and <Bold>CH₄</Bold> (rice paddies, cattle, oil/coal extraction).
+        </div>
+        <ClimateGraphSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          Since 1880 average global temperature has risen by about <Bold>0.7–0.9 °C</Bold>; CO₂ has climbed from 290 ppm to over 400 ppm — both <Bold>strongly correlated</Bold>.
+        </div>
+      </div>
+
+      {/* Deforestation */}
+      <div style={section}>
+        <div style={h}>★ DEFORESTATION — chain of consequences</div>
+        <DeforestationSVG />
+        <SoilErosionSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          When the forest goes, <Bold>roots no longer bind soil</Bold> and <Bold>rain cannot soak in</Bold>. Topsoil washes into rivers (silting + flooding); the local climate becomes <Bold>drier</Bold> because there is less transpiration; CO₂ rises because there is less photosynthesis and burning of timber releases stored carbon.
+        </div>
+      </div>
+
+      {/* Pesticides + bioaccumulation */}
+      <div style={section}>
+        <div style={h}>★ PESTICIDES &amp; BIOACCUMULATION</div>
+        <BioaccumulationSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          Many pesticides (DDT, dieldrin, mercury compounds) are <Bold>not excreted</Bold>. Each predator eats many prey, so the chemical becomes <Bold>more concentrated up the food chain</Bold>. Examples: <Bold>Minamata Bay</Bold> 1971 — factory mercury → 45 deaths; <Bold>dieldrin</Bold> in soils poisoned soil animals and the birds that ate the seed.
+        </div>
+      </div>
+
+      {/* Sources of pollution table */}
+      <div style={section}>
+        <div style={h}>★ POLLUTANTS &amp; THEIR EFFECTS</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr><th style={th}>Pollutant</th><th style={th}>Source</th><th style={th}>Effect</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Untreated sewage</Bold></td><td style={td}>Human waste in rivers/sea</td><td style={td}>Cholera/typhoid spread; eutrophication</td></tr>
+            <tr><td style={td}><Bold>Nitrate / phosphate</Bold></td><td style={td}>Fertilisers, detergents, slurry</td><td style={td}>Algal bloom → O₂ depletion → fish die</td></tr>
+            <tr><td style={td}><Bold>Heavy metals</Bold> (Hg, Cu)</td><td style={td}>Factory effluent, electroplating</td><td style={td}>Bioaccumulate → brain damage, deformity</td></tr>
+            <tr><td style={td}><Bold>Oil</Bold></td><td style={td}>Tanker spills, oil wells</td><td style={td}>Coats sea birds; kills filter-feeders; poisons reefs</td></tr>
+            <tr><td style={td}><Bold>Plastics</Bold></td><td style={td}>Discarded litter, packaging</td><td style={td}>Non-biodegradable; trap animals; microplastics enter food web</td></tr>
+            <tr><td style={td}><Bold>Pesticides</Bold></td><td style={td}>Insecticides, herbicides</td><td style={td}>Kill non-target species; bioaccumulate</td></tr>
+            <tr><td style={td}><Bold>CO₂ / CH₄</Bold></td><td style={td}>Combustion, deforestation, cattle, rice</td><td style={td}>Enhanced greenhouse effect → climate change</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Conservation strategies */}
+      <div style={section}>
+        <div style={h}>★ CONSERVATION STRATEGIES — forests · fish · species</div>
+        <ConservationSVG />
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 8 }}>
+          <thead><tr><th style={th}>Resource</th><th style={th}>Threat</th><th style={th}>Conservation measures</th></tr></thead>
+          <tbody>
+            <tr><td style={td}><Bold>Forests</Bold></td><td style={td}>Logging, farming, fuel, urbanisation</td><td style={td}>Education · protected areas · quotas (Smartlogging) · replanting · recycle paper</td></tr>
+            <tr><td style={td}><Bold>Fish stocks</Bold></td><td style={td}>Overfishing, trawl/cyanide damage</td><td style={td}>Closed seasons · MPAs · mesh/net rules · quotas · patrol vessels · education</td></tr>
+            <tr><td style={td}><Bold>Endangered species</Bold></td><td style={td}>Habitat loss, hunting, trade, pollution, climate, introduced spp.</td><td style={td}>CITES bans · habitat protection · captive breeding · AI/IVF <Ext/> · seed banks · gene banks</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Going further: aquaponics */}
+      <div style={section}>
+        <div style={h}>★ ASTAF-PRO TOMATOFISH <Ext/> — sustainable closed loop</div>
+        <AquaponicSVG />
+        <div style={{ fontSize: 11.5, color: GR, lineHeight: 1.65, marginTop: 6 }}>
+          Fish and tomato share a <Bold>closed greenhouse system</Bold>. Nutrient-rich fish water feeds the tomatoes (hydroponics, no soil); plant transpiration is condensed and recycled to the fish. <Bold>Solar panels heat the system</Bold>; nearly zero emissions; no fishmeal needed (Nile tilapia is omnivorous). A model of sustainable food production.
+        </div>
+      </div>
+
+      {/* Why population size matters */}
+      <div style={section}>
+        <div style={h}>★ WHY POPULATION SIZE MATTERS <Ext/></div>
+        <div style={{ fontSize: 12, lineHeight: 1.7, color: GR }}>
+          A drop in population size <Bold>reduces genetic variation</Bold> (smaller gene pool). With less variation the species cannot respond to environmental change by natural selection, so it is more <Bold>vulnerable to disease, climate shift, new predators</Bold>. Once extinct, the genes are lost <Bold>permanently</Bold> — depriving humans of potential medicines, crop-improvement alleles, and the ecosystem services those species provided.
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ④ TEXTBOOK TAB — complete Hodder notes
+// ════════════════════════════════════════════════════════════════════════════
+function TextbookTab() {
+  const section = { background: "#fff", border: `1.5px solid ${BD}`, borderLeft: `4px solid ${G}`,
+    borderRadius: 8, padding: "14px 16px", marginBottom: 14 };
+  const h = { fontSize: 14, fontWeight: 800, color: G, marginBottom: 8, letterSpacing: 0.3 };
+  const sub = { fontSize: 12, fontWeight: 700, color: G, marginTop: 10, marginBottom: 5 };
+  const p = { fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8 };
+  const ul = { fontSize: 12, lineHeight: 1.7, color: GR, marginBottom: 8, paddingLeft: 20 };
+
+  return (
+    <div>
+      <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: G, fontWeight: 600 }}>
+        📚 <Bold>Textbook</Bold> · complete Hodder notes for Chapter 20
+      </div>
+
+      {/* 1. FOOD SUPPLY */}
+      <div style={section}>
+        <div style={h}>1 · Food supply &amp; intensification of agriculture</div>
+
+        <div style={sub}>1.1 Background</div>
+        <p style={p}>
+          A few thousand years ago, humans collected leaves, fruits, roots and hunted animals. Population size was limited by available food. Human waste and dead bodies passed naturally into the <KW>nitrogen cycle</KW> and humans fitted into the food web like any other animal. Once <KW>agriculture</KW> was developed, far larger populations could be supported — but the balance between humans and their environment was upset.
+        </p>
+
+        <div style={sub}>1.2 Mechanisation &amp; larger fields</div>
+        <p style={p}>
+          Forests and woodland are cut down for farmland. The World Wide Fund for Nature estimates that <Bold>27% of the Amazon will be without trees by 2030</Bold> if present rates continue. To work fields efficiently, <Bold>hedges are removed</Bold> to enlarge them and <KW>tractors and combine harvesters</KW> are used. Repeated ploughing of pasture has been shown to <Bold>reduce the number of soil species</Bold>.
+        </p>
+
+        <div style={sub}>1.3 Chemical fertilisers</div>
+        <p style={p}>
+          In a natural community the minerals removed and replaced in the soil are in balance. In agriculture, most of the crop is removed — so little or no organic matter is left for nitrifying bacteria to act on. On farms with animals, manure is ploughed back into the soil, replacing nitrates and giving good soil structure.
+        </p>
+        <p style={p}>
+          When manure is not available, <KW>chemical fertilisers</KW> are used. Examples: <Bold>ammonium sulfate</Bold> (N and S), <Bold>ammonium nitrate</Bold> (N), <Bold>compound NPK fertiliser</Bold> (N, P, K). These boost yields but contain <Bold>no organic matter</Bold>, so they do not improve soil structure. Their use can also pollute rivers (eutrophication).
+        </p>
+
+        <div style={sub}>1.4 Pesticides — herbicides &amp; insecticides</div>
+        <p style={p}>
+          A <KW>pesticide</KW> is a chemical that destroys agricultural pests or competitors. <KW>Herbicides</KW> kill weeds (plants that compete for water, ions, light). <KW>Insecticides</KW> kill insects that eat or damage the plants.
+        </p>
+        <p style={p}>
+          The trouble is that most pesticides <Bold>kill randomly</Bold> — they affect not just the pest, but also useful species like <Bold>bees</Bold> (pollination) and <Bold>ladybirds</Bold> (natural predators of aphids).
+        </p>
+        <p style={p}>
+          <Ext /> In about 1960, <Bold>aldrin and dieldrin</Bold> were used to kill wireworms. Aldrin halved the soil-animal species in a pasture. Dieldrin was used as a seed dressing — but birds dug up and ate the dressed seed; <Bold>thousands of birds were poisoned</Bold>, and the carnivorous mammals and birds of prey that ate them were also killed. Both are now banned in many countries (India banned them in 2003), but still persist in the environment.
+        </p>
+
+        <div style={sub}>1.5 Selective breeding</div>
+        <p style={p}>
+          Farmers and breeders pick the offspring with the best characteristics (large fruit, high milk yield, disease resistance) and breed only from those individuals. After many generations, a <Bold>true-breeding variety</Bold> with the desired trait is produced. Drawbacks: the whole set of genes is transferred (some may be harmful in a homozygous state), and the genetic <Bold>variability</Bold> of the population is reduced — so future adaptation becomes harder.
+        </p>
+
+        <div style={sub}>1.6 Monoculture</div>
+        <p style={p}>
+          A <KW>monoculture</KW> is a dense crop of a single species (e.g. wheat, soybean). Advantages: high yield, easy to harvest with machines, more profitable. Disadvantages: prone to insect pests and fungal disease; <Bold>one disease can wipe out the entire crop</Bold>; loss of soil nutrients and soil erosion; native plant and animal communities are displaced — biodiversity falls.
+        </p>
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 6, padding: "10px 12px", marginTop: 8, fontSize: 12, lineHeight: 1.55, color: GR }}>
+          <Bold>Case study — palm oil (SME)</Bold>: palm-oil plantations in Indonesia and Malaysia are a major modern monoculture. Production has risen rapidly over the last 30 years, but the conversion of rainforest into oil palm has caused massive habitat loss for orangutans and other rainforest species.
+          <div style={{ marginTop: 6 }}>
+            <Bold>The pesticide-resistance cascade</Bold>: where a single pest feeds on a vast monoculture, the pest population grows rapidly because food is abundant. Farmers spray repeatedly → harmless insects (pollinators, predators of pests) are killed → through natural selection the surviving pests become <Bold>resistant</Bold>, so the chemical loses its effectiveness. Higher and more frequent doses are then needed, worsening pollution.
+          </div>
+        </div>
+
+        <div style={sub}>1.7 Intensive livestock production (factory farming)</div>
+        <p style={p}>
+          Chickens and calves are reared in large sheds rather than open fields. Advantages: high yield; many systems automated (milking, feeding, egg collection); animals are sheltered from weather and disease. Disadvantages: <Bold>slurry</Bold> (urine + faeces washed out with water) supplies excess nitrate and phosphate to nearby rivers → eutrophication; <Bold>overgrazing</Bold> compacts the soil so rain cannot penetrate, causing soil erosion; close confinement means animals are <Bold>more vulnerable to disease</Bold>.
+        </p>
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 6, padding: "10px 12px", marginTop: 8, fontSize: 12, lineHeight: 1.55, color: GR }}>
+          <Bold>How intensive livestock raises yield — four mechanisms (SME)</Bold>
+          <ul style={{ margin: "4px 0 0", paddingLeft: 16 }}>
+            <li><Bold>Confined space</Bold> — animals move less, so less energy is wasted on muscular activity. More food energy is therefore converted into growth (biomass).</li>
+            <li><Bold>High-energy feed</Bold> — concentrate diets (grain, soybean meal) deliver more energy per kg ingested than pasture grazing, accelerating growth.</li>
+            <li><Bold>Routine antibiotics</Bold> — preventative dosing reduces disease in crowded sheds and limits energy lost to immune responses.</li>
+            <li><Bold>Heated housing</Bold> — keeping sheds artificially warm cuts the energy animals spend regulating body temperature.</li>
+          </ul>
+          <div style={{ marginTop: 6 }}>
+            <Bold>Trade-off</Bold>: cheaper food and year-round supply, but ethical concerns over welfare, antibiotic resistance, methane emissions and ecosystem damage from waste run-off.
+          </div>
+        </div>
+      </div>
+
+      {/* 2. HABITAT DESTRUCTION */}
+      <div style={section}>
+        <div style={h}>2 · Habitat destruction</div>
+
+        <div style={sub}>2.1 Key definition</div>
+        <p style={p}>
+          <KW>Biodiversity</KW> = the number of different species that live in an area.
+        </p>
+
+        <div style={sub}>2.2 Removal of habitats</div>
+        <p style={p}>
+          Farmland is not a natural habitat, but historically <Bold>hedgerows, hay meadows and stubble fields</Bold> supported many plants and animals. Intensive farming has destroyed these habitats: hedges removed for larger fields; monocultures of grass have replaced hay meadows; winter wheat means no stubble fields in autumn. Populations of butterflies, wildflowers and birds have fallen.
+        </p>
+        <p style={p}>
+          <Bold>Urbanisation</Bold> — town and city expansion — destroys natural habitat. Advice for farmers includes leaving <Bold>uncultivated strips</Bold> around fields and planting new hedgerows; these significantly raise insect populations.
+        </p>
+
+        <div style={sub}>2.3 Extraction of natural resources</div>
+        <p style={p}>
+          <Bold>Coal mining</Bold>: surface scraping and spoil heaps destroy habitats; spoil contains toxic metals preventing recolonisation. <Bold>Open-pit mining</Bold> (gold, iron, aluminium, silicon) leaves huge landscape scars and contaminates local water with toxic metals; sand &amp; gravel pits prevent habitats redeveloping. <Bold>Oil spillages</Bold> seep into soil/water — habitats destroyed.
+        </p>
+        <p style={p}>
+          The <Bold>World Charter for Nature</Bold> (UN, 1982, reaffirmed at Rio 1992) calls for habitat conservation. <Bold>IUCN</Bold> and <Bold>UNEP</Bold> coordinate global action.
+        </p>
+
+        <div style={sub}>2.4 Deforestation — negative effects</div>
+        <DeforestationSVG />
+        <ul style={ul}>
+          <li>Animals lose <Bold>shelter and food</Bold> — many species become extinct; reduced biodiversity.</li>
+          <li><Bold>Soil erosion</Bold> — no roots to hold the soil; rivers and lakes silt up.</li>
+          <li><Bold>Flooding</Bold> — soil cannot absorb rainwater; roots no longer slow run-off.</li>
+          <li><Bold>CO₂ rise</Bold> — fewer trees photosynthesising; burning releases stored carbon → global warming.</li>
+        </ul>
+        <SoilErosionSVG />
+        <p style={p}>
+          Tropical forest soils are <Bold>nutrient-poor</Bold> — most organic matter is in the canopy. After felling and burning, the soil produces good crops for 1–2 years but the nutrients are then exhausted. The agricultural benefit is <Bold>short-lived</Bold> and the forest cannot recover.
+        </p>
+
+        <div style={sub}>2.5 Forests &amp; climate</div>
+        <p style={p}>
+          About half the rain over tropical forests comes from the trees' <Bold>transpiration</Bold>. Cloud from this water keeps the region cool and humid. When forest is cleared, cloud cover falls; daily temperature range widens; rainfall reduces. In NE Brazil, deforestation has reached 60% — if it exceeds this level the climate may permanently change to <Bold>unproductive desert</Bold>.
+        </p>
+
+        <div style={sub}>2.6 Forests &amp; biodiversity</div>
+        <p style={p}>
+          A pine wood has 1–2 tree species; a Borneo rainforest has ~3000 tree species and over 1000 animal species. Half the world's 10 million species live in tropical forests. Destroying these forests destroys vast biodiversity and drives extinction. The US National Cancer Institute has identified <Bold>3000 plants active against cancer cells</Bold>; 70% of them come from rainforests.
+        </p>
+
+        <div style={{ marginTop: 10 }}>
+          <div style={{ fontSize: 11, fontWeight: 800, color: G, marginBottom: 4, letterSpacing: 0.5 }}>SME — DEFORESTATION CONSEQUENCE SUMMARY</div>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11.5, lineHeight: 1.45 }}>
+            <thead>
+              <tr style={{ background: GL }}>
+                <th style={{ border: `1px solid ${BD}`, padding: "5px 8px", textAlign: "left", color: G, width: "32%" }}>Effect</th>
+                <th style={{ border: `1px solid ${BD}`, padding: "5px 8px", textAlign: "left", color: G }}>Mechanism</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px", fontWeight: 700 }}>Loss of biodiversity / extinction</td>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px" }}>Tropical rainforest holds enormous species diversity, much of it endemic; clearance removes habitat and the endemic species cannot survive elsewhere.</td>
+              </tr>
+              <tr style={{ background: "#fafafa" }}>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px", fontWeight: 700 }}>Soil erosion</td>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px" }}>Roots no longer stabilise the soil. Without root uptake, nitrate and other ions are <Bold>leached</Bold> by rain into rivers; the nutrient loss is essentially permanent.</td>
+              </tr>
+              <tr>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px", fontWeight: 700 }}>Flooding &amp; landslides</td>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px" }}>Loose unstable topsoil is washed away by rain; flash flooding and landslides become much more frequent in cleared areas.</td>
+              </tr>
+              <tr style={{ background: "#fafafa" }}>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px", fontWeight: 700 }}>Atmospheric CO₂ rise</td>
+                <td style={{ border: `1px solid ${BD}`, padding: "5px 8px" }}>Less photosynthesis removes CO₂; burning of cleared timber (combustion) releases more CO₂ — enhancing the greenhouse effect and global warming.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style={{ background: "#fffbe6", border: `1px solid #f0c000`, borderLeft: `4px solid #f0c000`,
+          borderRadius: 6, padding: "8px 12px", fontSize: 11.5, lineHeight: 1.6, color: GR, marginTop: 8 }}>
+          💡 <Bold>Examiner Tip.</Bold> When asked about deforestation, link each effect to a <Bold>specific physical cause</Bold>: "no roots → soil washed away → river silts up → floods downstream". Vague answers like "it's bad for the environment" gain no marks.
+        </div>
+      </div>
+
+      {/* 3. POLLUTION */}
+      <div style={section}>
+        <div style={h}>3 · Pollution</div>
+
+        <div style={sub}>3.1 Sewage</div>
+        <p style={p}>
+          <Bold>Cholera and typhoid</Bold> bacteria pass out in human faeces; untreated sewage in drinking water spreads disease. Sewage is treated at works to remove solids and to break down organic matter using bacteria, but the resulting <Bold>nitrate and phosphate</Bold> still pass into rivers, encouraging excess plant growth.
+        </p>
+
+        <div style={sub}>3.2 Chemical waste</div>
+        <p style={p}>
+          Many industrial processes produce poisonous waste — electroplating produces copper and cyanide; the Ganga in India is polluted with heavy metals. Detergents containing <Bold>phosphate</Bold> are not removed by sewage treatment and end up in rivers, encouraging algal growth.
+        </p>
+
+        <div style={sub}>3.3 Bioaccumulation — Minamata Bay, mercury &amp; DDT</div>
+        <BioaccumulationSVG />
+        <p style={p}>
+          In 1971 at <Bold>Minamata Bay (Japan)</Bold>, a factory discharged mercury into the sea. Although the sea concentration was very low, mercury was <Bold>concentrated as it passed up the food chain</Bold> (insecticide weakly in water → microscopic plants → microscopic animals → small fish → large fish → grebe). By the time it reached people eating local fish, the concentration was high enough to cause <Bold>brain damage, deformity and death</Bold>: 45 deaths and 120 serious illnesses. High mercury has also been detected in the Baltic Sea and the Great Lakes of North America.
+        </p>
+
+        <div style={sub}>3.4 Oil pollution &amp; marine debris</div>
+        <p style={p}>
+          Tanker collisions and oil-well spills release lethal oil onto the sea surface. Light oils float and create hazards for any organism using the habitat — birds become oiled, cannot fly, poison themselves trying to clean their feathers; filter-feeders and molluscs die from taking in oil. Marine habitats are increasingly contaminated with <Bold>untreated sewage, fertilisers, pesticides and plastics</Bold>.
+        </p>
+
+        <div style={sub}>3.5 Plastics and the environment</div>
+        <p style={p}>
+          Plastics are <KW>non-biodegradable</KW> — decomposers cannot break them down. They persist in landfill or as litter; bottles trap small animals; nylon nets trap seals and dolphins; over time plastics fragment into <Bold>microplastics</Bold> eaten by fish and birds — they stay in the stomach, blocking gills and causing sickness. <Bold>"Dead zones"</Bold> with no oxygen develop where fertilisers and sewage enter the sea.
+        </p>
+        <p style={p}>
+          Bangladesh banned plastic bags in 2002. Ireland's bag fee cut single-use bag use from 1.2 billion to 230 million a year. Polythene waste is now recycled into car-seat covers, sports shoes, and even roads (<i>Plasphalt</i>).
+        </p>
+
+        <div style={sub}>3.6 Eutrophication</div>
+        <EutrophicationSVG />
+        <p style={p}>
+          <KW>Eutrophication</KW> is the enrichment of natural waters with nutrients that allow it to support an increasing amount of plant life. It occurs naturally in inland waters, but very slowly. Human activity has greatly accelerated it. Plants need nitrates (for proteins) and other ions; growth is normally limited by ion supply.
+        </p>
+        <p style={p}>
+          The <Bold>5-step sequence</Bold> (Going further EXT):
+        </p>
+        <ul style={ul}>
+          <li>Excess nitrate and phosphate enter water (sewage, fertilisers, animal waste, detergents).</li>
+          <li>Microscopic plants reproduce rapidly — an <Bold>algal bloom</Bold>.</li>
+          <li>Microscopic animals cannot keep them in check; many algae die.</li>
+          <li>Aerobic bacteria decompose the dead algae and use up oxygen.</li>
+          <li>Fish suffocate from lack of O₂. The water is deoxygenated.</li>
+        </ul>
+        <p style={p}>
+          <KW>BOD</KW> (biochemical oxygen demand) is the amount of oxygen used up by a sample of water in a fixed time — <Bold>higher BOD = more polluted water</Bold>. Eutrophication can be reduced by using low-phosphate detergents, slow-release fertilisers, and spreading animal waste on land rather than letting it reach rivers.
+        </p>
+
+        <div style={sub}>3.7 The greenhouse effect &amp; climate change</div>
+        <GreenhouseSVG />
+        <p style={p}>
+          CO₂ in the atmosphere is influenced by: deforestation (less photosynthesis), combustion of fossil fuels, and more animals (including humans) respiring. CO₂ forms a layer that <Bold>traps long-wavelength heat radiation</Bold> from the warmed Earth. <KW>Methane</KW> is also a greenhouse gas — much more powerful than CO₂. CH₄ comes from anaerobic decay in <Bold>wet rice fields</Bold>, the <Bold>stomachs of cattle and termites</Bold>, and is released from extraction of oil and coal.
+        </p>
+        <p style={p}>
+          The build-up of greenhouse gases causes the <KW>enhanced greenhouse effect</KW> — observable consequences include:
+        </p>
+        <ul style={ul}>
+          <li>Polar ice caps melt → <Bold>flooding of low-lying land</Bold>.</li>
+          <li>Weather conditions change — flooding or drought; arable land turns to desert; extreme weather more common.</li>
+          <li>Species unable to survive higher temperatures become <Bold>extinct</Bold>.</li>
+        </ul>
+        <p style={p}>
+          Since the Industrial Revolution, CO₂ has risen from 0.029% (1860) to over <Bold>0.039% / 407 ppm</Bold> (NOAA, 2018). Globally, temperature has risen <Bold>0.7–0.9 °C since 1880</Bold>; most of that rise has been recent. If warming continues, sea level could rise <Bold>0.2–1.5 m in 50–100 years</Bold>.
+        </p>
+        <ClimateGraphSVG />
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 6, padding: "10px 12px", marginTop: 8, fontSize: 12, lineHeight: 1.55, color: GR }}>
+          <Bold>Positive feedback — permafrost methane (SME)</Bold>: large amounts of methane are frozen in permafrost across the sub-polar regions (tundra, Siberia, northern Canada). Warming melts this permafrost, releasing methane — a much more powerful greenhouse gas than CO₂. The extra methane traps more heat → more warming → more permafrost thaws → still more methane released. This <Bold>self-amplifying loop</Bold> is one reason climate scientists worry about runaway warming.
+        </div>
+      </div>
+
+      {/* 4. CONSERVATION */}
+      <div style={section}>
+        <div style={h}>4 · Conservation</div>
+
+        <div style={sub}>4.1 Key definitions</div>
+        <p style={p}>
+          <KW>Sustainable resource</KW> = one produced as rapidly as it is removed from the environment, so that it does not run out. Forests and fish stocks <Bold>can</Bold> be sustainable if carefully managed.
+        </p>
+
+        <div style={sub}>4.2 Tomato fish project (ASTAF-PRO) <Ext /></div>
+        <AquaponicSVG />
+        <p style={p}>
+          The German <Bold>ASTAF-PRO</Bold> project rears <Bold>Nile tilapia</Bold> and tomatoes together in a closed greenhouse system. Both grow best at 27 °C. Benefits: nearly emission-free; all water recycled (transpiration → condensed); solar panels heat the greenhouse. Fish water (rich in nutrients) is filtered and fed to tomato plants growing on <Bold>mineral wool (hydroponics)</Bold>; no peat needed. Sold as "fish tomatoes".
+        </p>
+
+        <div style={sub}>4.3 Conservation of forests</div>
+        <ul style={ul}>
+          <li><Bold>Education</Bold> — Rainforest Alliance trains farmers in Costa Rica to value local forestry.</li>
+          <li><Bold>Protected areas</Bold> — Tree Preservation Orders (TPOs) prevent felling of named trees; Wildlife Alliance protects Southeast Asian forests.</li>
+          <li><Bold>Legal quotas</Bold> — <i>Smartlogging</i> certificates track timber legally from felling to export; bamboo quotas in China protect giant panda food.</li>
+          <li><Bold>Replanting</Bold> — Brazil (Conservation International + Ministry of Environment, 73 million trees by volunteers); India 2016 — 50 million trees in 24 hours; Pakistan 2017 — Billion Tree Tsunami.</li>
+          <li><Bold>Recycling paper</Bold> — 1 tonne of recycled paper saves ~17 trees and cuts a country's timber imports.</li>
+        </ul>
+
+        <div style={sub}>4.4 Conservation of fish stocks</div>
+        <ul style={ul}>
+          <li><Bold>Education</Bold> — fishermen learn destructive methods (dynamite, cyanide) destroy reefs and ruin future catches.</li>
+          <li><Bold>Closed seasons</Bold> — fishing banned during spawning (Ghana extended its 1-month to 2-month closed season in 2019).</li>
+          <li><Bold>Marine protected areas</Bold> — legally-enforced no-fish zones allow stocks to rebuild.</li>
+          <li><Bold>Net &amp; mesh control</Bold> — trawl nets banned over coral reefs; gillnets with LED lights reduce bycatch of turtles and dolphins; minimum mesh size lets undersized fish escape.</li>
+          <li><Bold>Legal quotas</Bold> — EU Common Fisheries Policy sets species-by-species limits.</li>
+          <li><Bold>Monitoring</Bold> — patrol vessels enforce licensing and quotas.</li>
+        </ul>
+
+        <div style={sub}>4.5 Endangering and extinction</div>
+        <p style={p}>
+          Factors that endanger species: <Bold>habitat destruction, introduction of foreign species, hunting, international trade, pollution, climate change</Bold>. The "background" extinction rate for birds is ~1 species per 100–1000 years; today, the rate is 10× to 1000× higher.
+        </p>
+        <p style={p}>
+          Examples of extinction-by-introduction: <Bold>sea lampreys</Bold> entered the Great Lakes via shipping canals and reduced the trout fishery from 7 000 000 kg/yr to 136 000 kg/yr; <Bold>rats and goats</Bold> on Polynesian-colonised islands wiped out 85% of 1000 plant species. <Bold>Coral bleaching</Bold>: just a 1–2 °C rise can kill the symbiotic algae of corals, leading to reef collapse (Indian Ocean 1994; surveys 2005 showed extinctions and population crashes).
+        </p>
+
+        <div style={sub}>4.6 Conservation of species</div>
+        <ul style={ul}>
+          <li><Bold>Laws &amp; treaties</Bold>: <KW>CITES</KW> (Convention on International Trade in Endangered Species) restricts trade in ~5800 animal and ~30000 plant species — 183 countries by 2020. <Bold>IWC</Bold> (International Whaling Commission) declared a complete ban on whaling in 1982, still in place.</li>
+          <li><Bold>Habitat protection</Bold>: national parks, wildlife sanctuaries, wetlands, bio-reserves (India). Wardens, restricted access, control of grazing.</li>
+          <li><Bold>Education &amp; media</Bold>: documentaries, news, school programmes raise awareness.</li>
+          <li><Bold>Captive breeding &amp; reintroduction</Bold>: lion-tailed macaque (India) — removed from "25 most endangered primates" list; white-rumped vulture (Nepal) — successfully bred &amp; released; sea eagles, red kites, ospreys reintroduced where they had died out.</li>
+          <li><Bold>Seed banks &amp; gene banks</Bold>: Millennium Seed Bank Partnership (Kew, London) — 95 countries; goal: 25% of plant species, ~75 000 plant species in storage.</li>
+        </ul>
+
+        <div style={sub}>4.7 Use of AI &amp; IVF in captive breeding <Ext /></div>
+        <p style={p}>
+          <KW>Artificial insemination (AI)</KW> involves collecting sperm from a male and introducing it artificially into a female. Sperm can be <Bold>frozen and stored</Bold>, then transported to other centres — vital for boosting genetic diversity in isolated populations. Used successfully on Houbara bustard (Saudi Arabia).
+        </p>
+        <p style={p}>
+          <KW>In vitro fertilisation (IVF)</KW> — 'in glass'. Fertility drugs cause the female to release several mature ova; ova are collected by <Bold>laparoscopy</Bold> through the abdominal wall, mixed with sperm in a Petri dish, and successfully dividing zygotes are returned to the uterus or stored. Used to breed white rhinos and tigers in captivity; eggs can be frozen and embryos transferred to surrogates.
+        </p>
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 6, padding: "10px 12px", marginTop: 8, fontSize: 12, lineHeight: 1.55, color: GR }}>
+          <Bold>Why AI &amp; IVF help conservation — gene-pool logic (SME)</Bold>
+          <ul style={{ margin: "4px 0 0", paddingLeft: 16 }}>
+            <li><Bold>AI moves genes, not animals</Bold> — frozen sperm is shipped between zoos and reserves worldwide. The receiving female reproduces with a 'foreign' male without the cost, risk or stress of transporting either animal.</li>
+            <li><Bold>IVF allows selection of known alleles</Bold> — biologists pair gametes from individuals with distant ancestry, maximising heterozygosity in the offspring and reducing the risk of inbreeding depression.</li>
+            <li><Bold>Surrogate use</Bold> — embryos of very rare species can be implanted into close relatives that breed more easily, expanding the breeding population beyond the existing females.</li>
+          </ul>
+        </div>
+
+        <div style={sub}>4.8 Why conserve? Reasons for conservation programmes</div>
+        <ul style={ul}>
+          <li><Bold>Maintain biodiversity</Bold> — preserve genetic resources for future crop improvement and drug discovery.</li>
+          <li><Bold>Reduce extinction</Bold> — once a species is gone, its genes are <Bold>lost forever</Bold>.</li>
+          <li><Bold>Protect vulnerable ecosystems</Bold> — wetlands, coral reefs, mangroves often need targeted help (e.g. Mekong delta in Vietnam).</li>
+          <li><Bold>Maintain ecosystem functions</Bold> — pollination, nutrient cycles, water purification. Example: overfishing top-predator catfish in Thailand allowed jungle perch to eat herbivores, leading to <Bold>algal bloom and reef damage</Bold>.</li>
+        </ul>
+
+        <div style={sub}>4.9 Risks of small populations <Ext /></div>
+        <p style={p}>
+          A population can shrink due to predation, disease, food shortage or emigration. A small population has a <Bold>smaller gene pool and less genetic variation</Bold>, so it has less ability to adapt to environmental change by natural selection — and is at <Bold>greater risk of extinction</Bold>.
+        </p>
+
+        <div style={{ background: GL, border: `1px solid ${G}`, borderRadius: 6, padding: "10px 12px", marginTop: 8, fontSize: 12, lineHeight: 1.55, color: GR }}>
+          <Bold>Sustainable development — balancing conflicting demands (SME, EXT)</Bold>
+          <div style={{ marginTop: 4 }}>
+            <i>Sustainable development</i> = development that meets the needs of an increasing human population <Bold>without harming the environment</Bold>. Achieving it requires balancing competing interests:
+          </div>
+          <ul style={{ margin: "4px 0 0", paddingLeft: 16 }}>
+            <li><Bold>Local users vs. large companies</Bold> — local people need forests and fish for daily subsistence; corporations want timber and large catches for profit.</li>
+            <li><Bold>Humans vs. wildlife</Bold> — resource extraction must not destroy habitats or drive extinction of the species that share the area.</li>
+            <li><Bold>Present vs. future generations</Bold> — harvesting everything available today (e.g. fishing all the cod we can) leaves nothing for our grandchildren.</li>
+          </ul>
+          <div style={{ marginTop: 6 }}>
+            Sustainable development therefore needs cooperation at <Bold>local, national and international</Bold> levels — through education, quotas, protected areas and treaties (CITES, IWC, etc.).
+          </div>
+        </div>
+
+        <div style={{ background: "#fffbe6", border: `1px solid #f0c000`, borderLeft: `4px solid #f0c000`,
+          borderRadius: 6, padding: "8px 12px", fontSize: 11.5, lineHeight: 1.6, color: GR, marginTop: 8 }}>
+          💡 <Bold>Examiner Tip.</Bold> Conservation answers need <Bold>specific named examples</Bold>: CITES, IWC, Millennium Seed Bank, Rainforest Alliance, Common Fisheries Policy. Generic "we should protect endangered animals" loses marks. Memorise one named species per technique: <i>lion-tailed macaque</i> (captive breeding), <i>Houbara bustard</i> (AI), <i>white rhino</i> (IVF), <i>Nile tilapia</i> (sustainable aquaculture).
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ════════════════════════════════════════════════════════════════════════════
+// ⑤ SME FLASHCARD TAB — click-to-flip self-test
+// ════════════════════════════════════════════════════════════════════════════
+function FlashcardTab() {
+  const [flipped, setFlipped] = useState({});
+  const [topic, setTopic] = useState("all");
+  const toggle = id => setFlipped(p => ({ ...p, [id]: !p[id] }));
+
+  const cards = [
+    // Agriculture & food production (1-8)
+    { id: "f1",  topic: "agri",         front: "How have humans increased food production?", back: "Through agricultural machinery, chemical fertilisers, insecticides, herbicides, and selective breeding." },
+    { id: "f2",  topic: "agri",         front: "Define: monoculture.", back: "Growing a single crop species on an area of land." },
+    { id: "f3",  topic: "agri",         front: "Advantages of large-scale crop monocultures.", back: "Farmers can choose the crop best suited to local conditions; yields are higher; the whole field can be treated with the same chemicals (fertiliser, herbicide, insecticide), making management efficient." },
+    { id: "f4",  topic: "agri",         front: "True or False: Monocultures benefit wildlife.", back: "False — monocultures reduce biodiversity because only one plant species exists across a wide area, removing food and habitat for other organisms." },
+    { id: "f5",  topic: "agri",         front: "Disadvantages of crop monocultures.", back: "Reduced biodiversity; the whole crop is vulnerable to the same pests and diseases; specific soil nutrients become depleted over repeated growing seasons." },
+    { id: "f6",  topic: "agri",         front: "Define: intensive farming.", back: "A method of farming that aims to maximise production within a limited land area — for example, raising livestock in confined spaces." },
+    { id: "f7",  topic: "agri",         front: "True or False: Allowing livestock to move freely increases food-production efficiency.", back: "False — restricting movement reduces energy lost in muscular activity, so more energy from food is used for growth instead." },
+    { id: "f8",  topic: "agri",         front: "Drawbacks of keeping livestock in confined spaces.", back: "Disease spreads easily between animals; animals may become distressed (poor welfare); aggression in cramped conditions can lead to injury." },
+
+    // Habitat destruction (9-12)
+    { id: "f9",  topic: "habitat",      front: "Define: biodiversity.", back: "The number of different species found in a habitat." },
+    { id: "f10", topic: "habitat",      front: "How do humans cause habitat destruction?", back: "By increasing land use for development and agriculture; by extracting resources (mining, deforestation); and by releasing pollution into freshwater or marine habitats." },
+    { id: "f11", topic: "habitat",      front: "True or False: Human activities can alter food chains and webs.", back: "True — humans can remove species from food chains, disrupting food webs and damaging entire habitats." },
+    { id: "f12", topic: "habitat",      front: "Harmful effects of deforestation.", back: "Biodiversity loss; extinction of species; soil erosion; flooding; rising atmospheric carbon dioxide." },
+
+    // Pollution (13-14, 17 → 13-15)
+    { id: "f13", topic: "pollution",    front: "Human activities that cause water pollution.", back: "Release of untreated sewage into waterways; run-off of agricultural chemicals (fertilisers, pesticides) into rivers and lakes." },
+    { id: "f14", topic: "pollution",    front: "Consequences of untreated sewage entering water systems.", back: "Aerobic microorganisms use sewage nutrients for respiration, depleting dissolved oxygen and killing aquatic organisms; toxic chemicals in sewage poison aquatic life; dangerous pathogens may harm human health." },
+    { id: "f15", topic: "pollution",    front: "How does plastic pollution affect terrestrial and aquatic environments?", back: "Plastics can injure wildlife (entanglement, ingestion); they fragment into microplastics that enter food chains; they degrade slowly and release toxic compounds into the environment." },
+
+    // Eutrophication (15-16 → 16-17)
+    { id: "f16", topic: "eutroph",      front: "Define: eutrophication. (EXT)", back: "The process in which increased nutrient availability in a body of water leads to a decrease in dissolved oxygen levels." },
+    { id: "f17", topic: "eutroph",      front: "Describe the process of eutrophication. (EXT)", back: "(1) Nutrient run-off causes increased plant/algal growth at the surface; (2) Many aquatic plants die because surface growth blocks light and deeper plants cannot photosynthesise; (3) Bacteria decompose dead plants, using oxygen in aerobic respiration; (4) Dissolved oxygen drops sharply; (5) Other aquatic organisms suffocate and die." },
+
+    // Greenhouse / climate change (18-21 → 18-21)
+    { id: "f18", topic: "greenhouse",   front: "Human activities that raise atmospheric CO₂.", back: "Burning fossil fuels (coal, oil, gas); burning organic matter such as wood and other plant materials (e.g. forest clearance fires)." },
+    { id: "f19", topic: "greenhouse",   front: "True or False: Methane is a greenhouse gas.", back: "True — methane traps more radiation per molecule than CO₂, making it a particularly powerful greenhouse gas." },
+    { id: "f20", topic: "greenhouse",   front: "Human activities that raise atmospheric methane.", back: "Cattle farming (cows release methane while digesting grass); rice paddy cultivation (anaerobic decay in flooded fields); disposal of organic waste in landfill sites." },
+    { id: "f21", topic: "greenhouse",   front: "How does releasing methane and CO₂ affect the environment?", back: "Both are greenhouse gases — their release causes an enhanced greenhouse effect, leading to climate change." },
+
+    // Conservation (22-34 → 22-34)
+    { id: "f22", topic: "conservation", front: "What makes a resource sustainable?", back: "A sustainable resource is one that can be produced (replenished) as rapidly as it is harvested, so it will not run out." },
+    { id: "f23", topic: "conservation", front: "Examples of natural resources that can be managed sustainably.", back: "Forests and fish stocks." },
+    { id: "f24", topic: "conservation", front: "How can forests be conserved? (EXT)", back: "Educating the public about the value of forests; designating forests as protected areas; introducing harvesting quotas (only a set amount of timber removed per year); replanting trees after felling." },
+    { id: "f25", topic: "conservation", front: "How can fish stocks be conserved? (EXT)", back: "Educate the public; restrict the times of year when fishing is allowed; designate marine protected areas; control the net type and mesh size used; introduce fishing quotas; monitor fishing activity and fish populations." },
+    { id: "f26", topic: "conservation", front: "What is an endangered species?", back: "A plant or animal species at risk of extinction." },
+    { id: "f27", topic: "conservation", front: "Factors that cause species to become endangered.", back: "Climate change, habitat destruction, hunting, overharvesting, pollution, and introduced (invasive) species." },
+    { id: "f28", topic: "conservation", front: "Methods used to conserve endangered species.", back: "Monitoring populations; protecting habitats; educating the public; captive breeding programmes; seed banks for plant species." },
+    { id: "f29", topic: "conservation", front: "How do breeding programmes conserve endangered species?", back: "They increase reproductive success in captivity, raising population size and helping to maintain genetic diversity, which improves the species' chance of long-term survival." },
+    { id: "f30", topic: "conservation", front: "True or False: A seed bank is a place where many plant species are grown in captivity.", back: "False — a seed bank is a collection of seeds from many plant species, stored under conditions that preserve them so that plants can be re-grown in the future." },
+    { id: "f31", topic: "conservation", front: "Why is conservation important?", back: "It maintains or increases biodiversity; reduces extinction; protects vulnerable ecosystems; and maintains ecosystem functions on which humans depend." },
+    { id: "f32", topic: "conservation", front: "What are ecosystem functions?", back: "Natural processes and features of ecosystems that benefit humans — for example nutrient cycling (locking up carbon in soil, maintaining soil fertility) and resource provision (food, medicines, fuel, useful genes)." },
+    { id: "f33", topic: "conservation", front: "True or False: Artificial insemination and IVF are important for the conservation of endangered species.", back: "True — both are key techniques in captive breeding programmes, allowing reproduction between individuals that may not breed successfully in captivity, including across distant populations." },
+    { id: "f34", topic: "conservation", front: "Why is maintaining a large population size essential to reducing extinction risk?", back: "Larger populations are more likely to be genetically diverse. Genetic diversity gives the population a better chance of containing alleles useful for surviving environmental change — so larger populations are less likely to go extinct." },
+  ];
+
+  const topics = [
+    { id: "all", label: "All", count: cards.length },
+    { id: "agri", label: "Agriculture", count: cards.filter(c => c.topic === "agri").length },
+    { id: "habitat", label: "Habitat", count: cards.filter(c => c.topic === "habitat").length },
+    { id: "pollution", label: "Pollution", count: cards.filter(c => c.topic === "pollution").length },
+    { id: "eutroph", label: "Eutrophication", count: cards.filter(c => c.topic === "eutroph").length },
+    { id: "greenhouse", label: "Greenhouse/Climate", count: cards.filter(c => c.topic === "greenhouse").length },
+    { id: "conservation", label: "Conservation", count: cards.filter(c => c.topic === "conservation").length },
+  ];
+
+  const filtered = topic === "all" ? cards : cards.filter(c => c.topic === topic);
+  const flippedCount = filtered.filter(c => flipped[c.id]).length;
+
+  return (
+    <div>
+      <div style={{ background: TLL, border: `1px solid ${TL}`, borderRadius: 8,
+        padding: "10px 14px", marginBottom: 14, fontSize: 12, color: TL, fontWeight: 600 }}>
+        🃏 <Bold>SME Flashcards</Bold> · {cards.length} cards · click any card to flip
+      </div>
+
+      {/* Topic filter */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        {topics.map(t => (
+          <button key={t.id} onClick={() => setTopic(t.id)} style={{
+            padding: "6px 10px", borderRadius: 6,
+            border: topic === t.id ? `1.5px solid ${TL}` : `1px solid ${BD}`,
+            background: topic === t.id ? TL : "#fff",
+            color: topic === t.id ? "#fff" : TL,
+            fontSize: 11, fontWeight: 700, cursor: "pointer",
+          }}>
+            {t.label} ({t.count})
+          </button>
+        ))}
+      </div>
+
+      {/* Stats */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "8px 12px", background: "#f7f7f4", borderRadius: 6, fontSize: 11,
+        color: GR, marginBottom: 14, border: `1px solid ${BD}` }}>
+        <span><Bold>{filtered.length}</Bold> cards · <Bold>{flippedCount}</Bold> revealed</span>
+        <button onClick={() => setFlipped({})} style={{
+          padding: "4px 10px", fontSize: 10, fontWeight: 700,
+          background: "#fff", color: GR, border: `1px solid ${BD}`,
+          borderRadius: 4, cursor: "pointer",
+        }}>Reset all</button>
+      </div>
+
+      {/* Card grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+        gap: 10 }}>
+        {filtered.map(c => {
+          const isFlipped = flipped[c.id];
+          return (
+            <div key={c.id} onClick={() => toggle(c.id)} style={{
+              background: isFlipped ? TLL : "#fff",
+              border: `1.5px solid ${isFlipped ? TL : BD}`,
+              borderRadius: 8, padding: "12px 14px",
+              minHeight: 110, cursor: "pointer",
+              transition: "all .15s",
+              display: "flex", flexDirection: "column",
+            }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: isFlipped ? TL : "#999",
+                letterSpacing: 1, marginBottom: 6 }}>
+                {isFlipped ? "DEFINITION" : "TERM / QUESTION"} · {c.id.toUpperCase()}
+              </div>
+              <div style={{ fontSize: isFlipped ? 11.5 : 13.5, lineHeight: 1.5, color: GR,
+                fontWeight: isFlipped ? 500 : 700, flex: 1 }}>
+                {isFlipped ? c.back : c.front}
+              </div>
+              <div style={{ fontSize: 9, color: "#bbb", marginTop: 8, textAlign: "right" }}>
+                click to {isFlipped ? "show term" : "reveal"}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 16, padding: "10px 14px", background: "#f7f7f4",
+        borderRadius: 6, fontSize: 10, color: "#888", textAlign: "center", border: `1px solid ${BD}` }}>
+        Save My Exams style · {CHAPTER_META.flashcardCount} cards total · self-testing mode
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [active, setActive] = useState("essence");
+  const tab = TABS.find(t => t.id === active);
+
+  return (
+    <div style={{ fontFamily: "'Segoe UI', Arial, sans-serif", maxWidth: 800, margin: "0 auto", padding: "20px 16px", color: GR }}>
+      {/* Top nav: Index button on the left */}
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 12 }}>
+        <a href="contents.html" style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          fontSize: 12, fontWeight: 600, color: G, textDecoration: "none",
+          padding: "5px 10px 5px 6px", borderRadius: 6,
+          border: `1px solid ${BD}`, background: "#fff", transition: "all .15s",
+        }}>
+          <span style={{ fontSize: 14, lineHeight: 1 }}>‹</span>
+          <span>Index</span>
+        </a>
+      </div>
+
+            {/* Header */}
+      <div style={{ marginBottom: 20, borderBottom: `2px solid ${G}`, paddingBottom: 14 }}>
+        <div className="chapter-kicker">IGCSE BIOLOGY · HODDER Ch.{CHAPTER_META.number} · NLCS JEJU</div>
+        <div>
+          <span className="chapter-title">{CHAPTER_META.title}</span>
+        </div>
+        <div className="chapter-subtitle">
+          {CHAPTER_META.subtitle}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 4, flexWrap: "wrap" }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setActive(t.id)} style={{
+            padding: "9px 16px", borderRadius: 8,
+            border: active === t.id ? `2px solid ${t.color}` : `1.5px solid ${BD}`,
+            background: active === t.id ? t.color : "#fff",
+            color: active === t.id ? "#fff" : t.color,
+            fontSize: 12, fontWeight: 700, cursor: "pointer", transition: "all .15s",
+          }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, color: tab.color, marginBottom: 16, paddingLeft: 4 }}>{tab.sub}</div>
+
+      {active === "essence"   && <EssenceTab />}
+      {active === "exam"      && <ExamTab />}
+      {active === "summary"   && <SummaryTab />}
+      {active === "textbook"  && <TextbookTab />}
+      {active === "flashcard" && <FlashcardTab />}
+
+      <div style={{ marginTop: 24, padding: "10px 16px", background: "#f5f5f3", borderRadius: 8, fontSize: 11, color: "#999", textAlign: "center" }}>
+        Hodder Cambridge IGCSE Biology Ch.{CHAPTER_META.number} · All English · NLCS Jeju — Extended (Paper 1, 4, 6)
+      </div>
+    </div>
+  );
+}
+
+
+const __rootEl = document.getElementById('root');
+const __root = ReactDOM.createRoot(__rootEl);
+__root.render(<App />);
+const __loader = document.getElementById('loader');
+if (__loader) {
+  setTimeout(() => {
+    __loader.classList.add('hidden');
+    setTimeout(() => __loader.remove(), 350);
+  }, 100);
+}
+</script>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('nlcs-bio-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
